@@ -3757,7 +3757,7 @@
 			"name": "Search",
 			"item": [
 				{
-					"name": "https://api.prismacloud.io/search/config",
+					"name": "RQL Config Search",
 					"event": [
 						{
 							"listen": "test",
@@ -3793,7 +3793,7 @@
 							"raw": "{\n    \"query\": \"config where api.name = 'aws-ec2-describe-instances' AND json.rule =  'networkInterfaces[*].ownerId is member of (154600454722,55555)' \",\n    \"timeRange\": {\n        \"type\": \"relative\",\n        \"value\": {\n            \"unit\": \"hour\",\n            \"amount\": 24\n        }\n    }\n}"
 						},
 						"url": {
-							"raw": "https://api.prismacloud.io/search/config",
+							"raw": "https://{{api-endpoint}}/search/config",
 							"protocol": "https",
 							"host": [
 								"api",
