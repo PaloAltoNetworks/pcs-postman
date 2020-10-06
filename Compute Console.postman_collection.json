@@ -1,0 +1,1069 @@
+{
+	"info": {
+		"_postman_id": "959507cd-e216-4a02-9695-2cb91a5527e2",
+		"name": "Compute Console",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Login Generate Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c7cf7cd4-eced-4cec-8c94-5e8a839bc306",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"compute-token\", jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "content-type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"username\":\"AccessKey\",\n \"password\":\"SecretKey\"\n}"
+						},
+						"url": {
+							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/authenticate",
+							"protocol": "https",
+							"host": [
+								"{{compute-api-endpoint}}{{console-port}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"authenticate"
+							]
+						},
+						"description": "Returns a JWT auth token for accessing the Prisma Cloud Compute APIs. To generate a token, you must have an access key and include the following values in the request body parameter — access key ID as the username and your secret key as the password. Prisma Cloud Compute requires this JWT in the request header to authorize API access."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Ping",
+			"item": [
+				{
+					"name": "Ping or Health Check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4e258219-d3a0-45d9-86fd-184a0a945884",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{compute-token}}",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/_ping",
+							"protocol": "https",
+							"host": [
+								"{{compute-api-endpoint}}{{console-port}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"_ping"
+							]
+						},
+						"description": "Checks if Console is reachable over the network from the host where you call the endpoint. If you get a response code of 200, the request succeeded, and Console is both alive and reachable."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Alert Profiles",
+			"item": [
+				{
+					"name": "Alert Profiles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fa682fa1-b686-4741-a250-0c6b71843ec1",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{compute-token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/alert-profiles",
+							"protocol": "https",
+							"host": [
+								"{{compute-api-endpoint}}{{console-port}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"alert-profiles"
+							]
+						},
+						"description": "Retrieve a list of all alert profiles created in the system."
+					},
+					"response": []
+				},
+				{
+					"name": "Add Alert Profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "15745ccf-1898-4c17-8eb6-3b780d0a047f",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{compute-token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"jira\",\n  \"_id\": \"jira\",\n  \"jira\": {\n    \"enabled\": true,\n    \"projectKey\": \"TWIS\",\n    \"issueType\": \"Task\",\n    \"priority\": \"High\",\n    \"labels\": [],\n    \"assignee\": \"\"\n  }\n}"
+						},
+						"url": {
+							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/alert-profiles",
+							"protocol": "https",
+							"host": [
+								"{{compute-api-endpoint}}{{console-port}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"alert-profiles"
+							]
+						},
+						"description": "The following example curl command uses basic auth to add a Jira Alert profile:\n\nBody\nMedia type: application/json\n\nType: object\n\nProperties\n-: (string)\nConsoleAddress is the console address used by the admin to access the console, used for redirecting to the Console container\n\n_id: (string)\nID is the alert profile ID\n\ndemisto: (object)\nDemistoSettings contains the Demisto alert profile settings\n\nenabled: (boolean)\nEnabled is the Demisto provider enabled/disabled indicator\n\ndisabled: (boolean)\nDisabled states if the rule is currently disabled\n\nemail: (object)\nEmailSettings contains the email alert profile settings\n\ncredentialId: (string)\nCredentialID is the Email authentication credentials id\n\nenabled: (boolean)\nfrom: (string)\nFrom is the from address of the mail\n\nlabels: (string)\nLabels are custom label names from which the mail recipients are extracted, allowing to dynamically extract the target of the alerts\n\nport: (integer)\nrecipients: (string)\nsmtpAddress: (string)\nssl: (boolean)\ngcpPubsub: (object)\nGcpPubsubSettings contains the GCP Pub/Sub alert profile settings\n\ncredentialId: (string)\nCredentialID is the GCP Pub/Sub authentication credentials id\n\nenabled: (boolean)\nEnabled indicates whether the GCP Pub/Sub settings are enabled\n\ntopic: (string)\nTopic is the GCP Pub/Sub topic (used by subscribers to listen for messages)\n\njira: (object)\nJIRASettings contains the JIRA alert profile settings\n\nassignee: (object)\nAssignee is the assignee of the issue\n\nlabels: (string)\nLabels are the dynamic labels of which the value is based on\n\nname: (string)\nName is the static string field\n\nbaseUrl: (string)\nBaseURL is the JIRA address\n\ncaCert: (string)\nCACert is the certificate used to verify the server\n\ncredentialId: (string)\nCredentialID is the JIRA authentication credentials id\n\nenabled: (boolean)\nEnabled controls whether the rule is enabled\n\nissueType: (string)\nIssueType is the type of the JIRA issue\n\nlabels: (object)\nLabels is the labels added to the created issue\n\nlabels: (string)\nLabels are the dynamic labels of which JIRA labels are based on\n\nnames: (string)\nNames are the static strings field\n\npriority: (string)\nPriority is the issue priority\n\nprojectKey: (object)\nProjectKey is the key of the project in which the issue will be created\n\nlabels: (string)\nLabels are the dynamic labels of which the value is based on\n\nname: (string)\nName is the static string field\n\nlastError: (string)\nLastError represents the last error when sending the profile\n\nmodified: (datetime)\nname: (string)\nnotes: (string)\nNotes are the rule's user notes\n\nowner: (string)\npagerduty: (object)\nPagerDutySettings contains the PagerDuty alert profile settings\n\nenabled: (boolean)\nEnabled is PagerDuty provider enabled/disabled indicator\n\nroutingKey: (object)\nRoutingKey is the unique PagerDuty service id\n\nencrypted: (string)\nplain: (string)\nPlain is the plain text value (remark: marshalling to JSON will be converted to encrypted value)\n\nseverity: (object)\nSeverity is the PagerDuty's event severity\n\nsummary: (string)\nSummary is the PagerDuty's event summary\n\npreviousName: (string)\nPreviousName is the rule previous name, required for rule renaming\n\nsecurityAdvisor: (object)\nSecurityAdvisor contains the IBM security advisor alert profile settings\n\nauto: (boolean)\nAutomatic means the configuration was automatically provisioned by security advisor, and only notes should be created\n\ncredentialID: (string)\nCredentialID is the IBM security advisor credential\n\nenabled: (boolean)\nEnabled indicates whether the overbridge settings are enabled\n\nfindingsURL: (string)\nFindingsURL is the URL to which findings should be sent\n\nproviderId: (string)\nProviderID is the configured providerID (default twistlock)\n\ntokenURL: (string)\nTokenURL is the url from which security tokens should be fetched\n\nsecurityCenter: (object)\nSecurityCenterSettings contains the security center alert profile settings\n\ncredentialId: (string)\nCredentialID is the Security Center authentication credentials id\n\nenabled: (boolean)\nsourceID: (string)\nSourceID is the google cloud security center organization source ID (used to construct security advisor findings)\n\nsecurityHub: (object)\nSecurityHub contains the AWS security hub alert profile settings\n\naccountID: (string)\nAccountID is the AWS account ID\n\ncredentialId: (string)\nCredentialID is the SecurityHub authentication credentials id\n\nenabled: (boolean)\nEnabled indicates whether the overbridge settings are enabled\n\nregion: (string)\nRegion is the overbridge region\n\nroleArn: (string)\nRoleARN is the Amazon Resource Name (ARN) of the role to assume\n\nuseAWSRole: (boolean)\nUseAWSRole is a flag indicates if local IAM role should be used for authentication (username and password would are ignored)\n\nslack: (object)\nSlackSettings contains the slack alert profile settings\n\nchannels: (string)\nenabled: (boolean)\nusers: (string)\nwebhookUrl: (string)\nwebhook: (object)\nWebhookSettings contains the Webhook alert profile settings\n\ncaCert: (string)\nCACert is the certificate used to verify the server\n\ncredentialId: (string)\nCredentialID is the id of the basic authentication credential\n\nenabled: (boolean)\nEnabled is Webhook provider enabled/disabled indicator\n\njson: (string)\nJson is the custom json we send to the url\n\nurl: (string)\nURL is the Webhook address"
+					},
+					"response": []
+				},
+				{
+					"name": "Alert Profiles Names",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ac0d1a1f-be46-409b-8568-9456e6f35169",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{compute-token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/alert-profiles/names",
+							"protocol": "https",
+							"host": [
+								"{{compute-api-endpoint}}{{console-port}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"alert-profiles",
+								"names"
+							]
+						},
+						"description": "Retrieve a list of only the names of all alert profiles created in the system."
+					},
+					"response": []
+				},
+				{
+					"name": "Alert Profile Test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c3780e7c-2814-4311-9296-fe2233da2cce",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{compute-token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "##This is from the GET Alert Profiles API call##\n"
+						},
+						"url": {
+							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/alert-profiles/test",
+							"protocol": "https",
+							"host": [
+								"{{compute-api-endpoint}}{{console-port}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"alert-profiles",
+								"test"
+							]
+						},
+						"description": "Sends a test alert to verify successful configuration of the alert profile settings."
+					},
+					"response": []
+				},
+				{
+					"name": "Alert Profile DELETE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6fd47b15-16d7-44cb-b635-a3fc3d2fc509",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{compute-token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "##This is from the GET Alert Profiles API call##\n"
+						},
+						"url": {
+							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/alert-profiles/ID",
+							"protocol": "https",
+							"host": [
+								"{{compute-api-endpoint}}{{console-port}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"alert-profiles",
+								"ID"
+							]
+						},
+						"description": "Deletes an alert profile entry by name. In the request payload, specify the alert profile name. This method has no response data."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Audits",
+			"item": [
+				{
+					"name": "Get Audit Access Logs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "67aa96f2-e728-4e0c-a922-b938803fe2a1",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{compute-token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/audits/access",
+							"protocol": "https",
+							"host": [
+								"{{compute-api-endpoint}}{{console-port}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"audits",
+								"access"
+							]
+						},
+						"description": "Query Parameters\nallow: (string)\nAllow indicated whether allowed requests should be shown\n\napi: (string)\nAPIs are apis to filter by\n\nhostname: (string)\nHosts are hosts to filter by\n\nruleName: (string)\nRuleNames are the rules names to filter by\n\ntype: (string)\nType is the audit type\n\nuser: (string)\nUsers are users to filter by\n\nBody\nMedia type: application/json\n\nType: object\n\nProperties\n_id: (object)\nID is id representation\n\naccountID: (string)\nAccountID is the cloud account ID where the audit was created\n\nallow: (boolean)\nAllow indicates whether the command was allowe or denied\n\napi: (string)\nAPI is the api that is being audited\n\ncollections: (string)\nCollections are collections to which this audit applies\n\ncontainerName: (string)\nContainerName is the name of the container\n\nfqdn: (string)\nFQDN is the fully qualified domain name from which the audit originated\n\nhostname: (string)\nHostname is the hostname from which the audit originated\n\nimageName: (string)\nImageName is the name of the image\n\nmsg: (string)\nMsg is the message explaining the audit\n\nruleName: (string)\nRulesName is contains the name of the rule that was applied, when blocked\n\nsourceIP: (string)\nSourceIP is the remote agent's source IP\n\ntime: (datetime)\nTime is the UTC time of the audit event\n\ntype: (string)\nType is the audit type\n\nuser: (string)\nUser is the user that run the command"
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Audit Access Logs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7a0a61f2-dc77-46ec-b2b1-98b42680417e",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{compute-token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/audits/access",
+							"protocol": "https",
+							"host": [
+								"{{compute-api-endpoint}}{{console-port}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"audits",
+								"access"
+							]
+						},
+						"description": "Deletes all access audits. This deletion cannot be undone."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Audit Access Download Logs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b33ccd4a-a447-4167-9c5b-f7df13dbc2d3",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{compute-token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/audits/access/download?type=docker > audits.csv",
+							"protocol": "https",
+							"host": [
+								"{{compute-api-endpoint}}{{console-port}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"audits",
+								"access",
+								"download"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "docker > audits.csv"
+								}
+							]
+						},
+						"description": "Query Parameters\nallow: (string)\nAllow indicated whether allowed requests should be shown\n\napi: (string)\nAPIs are apis to filter by\n\nhostname: (string)\nHosts are hosts to filter by\n\nruleName: (string)\nRuleNames are the rules names to filter by\n\ntype: (string)\nType is the audit type\n\nuser: (string)\nUsers are users to filter by"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Audit Admission Logs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0f44c11c-e491-4399-b0bc-a21e63ddfe10",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{compute-token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/audits/admission",
+							"protocol": "https",
+							"host": [
+								"{{compute-api-endpoint}}{{console-port}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"audits",
+								"admission"
+							]
+						},
+						"description": "AdmissionAudits returns all admission audits according to the query specification. Minimum role required to access this endpoint: devSecOps.\n\nQuery Parameters\nnamespace: (string)\nNamespaces is the list of namespaces to use for filtering\n\noperation: (string)\nOperations is the list of operations to use for filtering\n\nBody\nMedia type: application/json\n\nType: object\n\nProperties\naccountID: (string)\nAccountID is the cloud account ID\n\ncollections: (string)\nCollections are collections to which this audit applies\n\neffect: (string)\nEffect is the rule effect which was applied to the review which led to this audit\n\nkind: (string)\nKind is the type of object being manipulated. For example: Pod\n\nmessage: (string)\nMessage is the rule user defined message which appears on audit\n\nnamespace: (string)\nNamespace is the namespace associated with the request (if any)\n\noperation: (string)\nOperation is the operation being performed\n\nrawRequest: (string)\nRawRequest is the original review request that caused this audit\n\nresource: (string)\nResource is the name of the resource being requested. This is not the kind. For example: pods\n\nruleName: (string)\nRuleName is the name of the rule which issued this audit\n\ntime: (datetime)\nTime is the time at which the audit was generated\n\nuserGroups: (string)\nUserGroups is the names of groups this user is a part of\n\nuserUid: (string)\nUserUID is a unique value that identifies this user across time. If this user isdeleted and another user by the same name is added, they will havedifferent UIDs\n\nusername: (string)\nUsername is the name that uniquely identifies this user among all active users"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Authenticate",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Authenticate Client",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Backups",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Certificates",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Cloud",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Collections",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Config",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Container Scan Reports",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Credentials",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Custom Compliance Checks",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "CVEs",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Defenders",
+			"item": [
+				{
+					"name": "Install Bundle",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3c07f7c9-d1e5-4af6-ba86-d0f11d60a6d9",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{compute-token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/defenders/install-bundle?consoleaddr={{compute-api-endpoint}}&defenderType=serverLinux",
+							"protocol": "https",
+							"host": [
+								"{{compute-api-endpoint}}{{console-port}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"defenders",
+								"install-bundle"
+							],
+							"query": [
+								{
+									"key": "consoleaddr",
+									"value": "{{compute-api-endpoint}}"
+								},
+								{
+									"key": "defenderType",
+									"value": "serverLinux"
+								}
+							]
+						},
+						"description": "Returns the certsBundle that Defender needs to securely connect to Console."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Demisto Alerts",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Deployments",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Custom Feeds",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Forensics",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Groups",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "High Availability",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Host Scan Reports",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Images Scan Reports",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Kubernetes ",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Logs",
+			"item": [
+				{
+					"name": "Console Logs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b0b4c551-d8e2-4314-aceb-e428d1233dfe",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{compute-token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/logs/console?lines=10",
+							"protocol": "https",
+							"host": [
+								"{{compute-api-endpoint}}{{console-port}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"logs",
+								"console"
+							],
+							"query": [
+								{
+									"key": "lines",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Retrieves the latest Console log messages by line number"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Pivotal Cloud Foundry (PCF) Droplet Scan Reports",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Policies",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Profiles",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Projects",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Radar",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Registry Scan Reports",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "SCAP",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Scripts",
+			"item": [
+				{
+					"name": "Defender Install Script",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3d05fdaf-2c0a-4961-8b23-095890c813b3",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{compute-token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/scripts/defender.sh",
+							"protocol": "https",
+							"host": [
+								"{{compute-api-endpoint}}{{console-port}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"scripts",
+								"defender.sh"
+							]
+						},
+						"description": "Download the Defender set up script for Linux hosts."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Serverless Scan Reports",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Settings",
+			"item": [
+				{
+					"name": "Serverless Scan Settings",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "283cf909-3e25-4967-99d1-9d31663ecd15",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{compute-token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/settings/serverless",
+							"protocol": "https",
+							"host": [
+								"{{compute-api-endpoint}}{{console-port}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"settings",
+								"serverless"
+							]
+						},
+						"description": "{\n\t\"cap\":\"integer\",\n\t\"credential\":\"object\",\n\t\"_id\":\"string\",\n\t\"accountGUID\":\"string\",\n\t\"accountID\":\"string\",\n\t\"apiToken\":\"object\",\n\t\"encrypted\":\"string\",\n\t\"plain\":\"string\",\n\t\"caCert\":\"string\",\n\t\"lastModified\":\"datetime\",\n\t\"owner\":\"string\",\n\t\"secret\":\"object\",\n\t\"type\":\"object\",\n\t\"pattern\": \"string\",\n\t\"provider\":\"object\",\n\t\"region\":\"string\",\n\t\"roleArn\":\"string\",\n\t\"useAWSRole\":\"boolean\"\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "Serverless Scan Settings Add",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e5d1f0c7-5613-4ff9-b21d-4147f2e979b8",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{compute-token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t{\n\t\t\"region\": \"us-east-1\",\n\t\t\"provider\": \"aws\",\n    \t\"cap\": 5,\n    \t\"useAWSRole\": false,\n    \t\"credential\": \n    {\n      \"type\":\"aws\",\n      \"_id\": \"SSull_AWS\"\n    }\n  }\n]"
+						},
+						"url": {
+							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/settings/serverless",
+							"protocol": "https",
+							"host": [
+								"{{compute-api-endpoint}}{{console-port}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"settings",
+								"serverless"
+							]
+						},
+						"description": "{\n\t\"cap\":\"integer\",\n\t\"credential\":\"object\",\n\t\"_id\":\"string\",\n\t\"accountGUID\":\"string\",\n\t\"accountID\":\"string\",\n\t\"apiToken\":\"object\",\n\t\"encrypted\":\"string\",\n\t\"plain\":\"string\",\n\t\"caCert\":\"string\",\n\t\"lastModified\":\"datetime\",\n\t\"owner\":\"string\",\n\t\"secret\":\"object\",\n\t\"type\":\"object\",\n\t\"pattern\": \"string\",\n\t\"provider\":\"object\",\n\t\"region\":\"string\",\n\t\"roleArn\":\"string\",\n\t\"useAWSRole\":\"boolean\"\n}"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Signup",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Static",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Statistics",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Status",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Tags",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Trusted Images",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Users",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Utilities",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Version",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "VM Image Scan Reports",
+			"item": [],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "e5ea375c-e695-4c64-b880-1742d8571abf",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "f1c890ee-11a8-467e-bb26-c30060661f93",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

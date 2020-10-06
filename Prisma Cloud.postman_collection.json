@@ -1,0 +1,4295 @@
+{
+	"info": {
+		"_postman_id": "cdebb92d-9cb0-40e8-824a-56ca07d0335c",
+		"name": "Prisma Cloud",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Login Generate Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "73f33f8a-0357-4083-9ca8-4bad3ab6d601",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"user_or_accesskey\",\n    \"password\": \"password_or_secretkey\",\n    \"customerName\": \"tenant_name\"\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/login",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"login"
+							]
+						},
+						"description": "Returns a JWT auth token for accessing the Prisma Cloud APIs. To generate a token, you must have an access key and include the following values in the request body parameter — access key ID as the username and your secret key as the password. Prisma Cloud requires this JWT in the request header to authorize API access."
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json; charset=UTF-8",
+								"type": "text"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-redlock-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/auth_token/extend",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"auth_token",
+								"extend"
+							]
+						},
+						"description": "Extend a user's session. The JWT token returned is valid until the next session timeout occurs. This method requires a valid session token to be passed (token from a prior successful extend or login calls)."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "System",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/check",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"check"
+							]
+						},
+						"description": "Check's the current Prisma Cloud API status. You should receive a \"hello from the other side\" message.\n\nNote this does NOT need a jwt-token to perform."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "User Profile",
+			"item": [
+				{
+					"name": "Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/user/me",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"user",
+								"me"
+							]
+						},
+						"description": "Returns the information about the current authenticated user/access-key."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\":\"email_to_update\",\n\t\"firstName\":\"first\",\n\t\"lastName\":\"last\",\n\t\"timeZone\":\"America/New_York\",\n\t\"roleId\":\"ROLE_ID_HERE\",\n\t\"accessKeysAllowed\":true,\n\t\"onlyAllowCIAccess\":true,\n\t\"onlyAllowComputeAccess\":true\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/user/me",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"user",
+								"me"
+							]
+						},
+						"description": "Updates the current authenticated user/access-key account information. "
+					},
+					"response": []
+				},
+				{
+					"name": "List Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/user",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"user"
+							]
+						},
+						"description": "List all users in the current Prisma Cloud tenant. "
+					},
+					"response": []
+				},
+				{
+					"name": "Add New User Profile",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\":\"email_to_update\",\n\t\"firstName\":\"first\",\n\t\"lastName\":\"last\",\n\t\"timeZone\":\"America/New_York\",\n\t\"roleId\":\"ROLE_ID_HERE\",\n\t\"accessKeysAllowed\":true,\n\t\"onlyAllowCIAccess\":true,\n\t\"onlyAllowComputeAccess\":true\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/auth_token/extend",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"auth_token",
+								"extend"
+							]
+						},
+						"description": "Creates a new users profile. You need to query a valid ROLE_ID before executing here with a List User Roles GET call. "
+					},
+					"response": []
+				},
+				{
+					"name": "List Usernames",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json; charset=UTF-8",
+								"type": "text"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-redlock-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/user/name",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"user",
+								"name"
+							]
+						},
+						"description": "List all usernames in the current Prisma Cloud tenant. "
+					},
+					"response": []
+				},
+				{
+					"name": "List User Role Type",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/user/role/type",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"user",
+								"role",
+								"type"
+							]
+						},
+						"description": "List user roles for the current Prisma Cloud tenant. "
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users Profile (other than your own)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json; charset=UTF-8",
+								"type": "text"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-redlock-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/user/{{email-id}}",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"user",
+								"{{email-id}}"
+							]
+						},
+						"description": "Returns the information about a specific user/accounts information. "
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Profile (other than your own)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json; charset=UTF-8",
+								"type": "text"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-redlock-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/user/{{email-id}}",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"user",
+								"{{email-id}}"
+							]
+						},
+						"description": "Updates the information of a specific user/account. "
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User Profile",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/user/USER_ID_HERE",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"user",
+								"USER_ID_HERE"
+							]
+						},
+						"description": "Extend a user's session. The JWT token returned is valid until the next session timeout occurs. This method requires a valid session token to be passed (token from a prior successful extend or login calls)."
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Status",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/user/{{email-id}}/status/TRUE_FALSE",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"user",
+								"{{email-id}}",
+								"status",
+								"TRUE_FALSE"
+							]
+						},
+						"description": "Enables or disables a specific users login status. "
+					},
+					"response": []
+				},
+				{
+					"name": "List Email Domains",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/user/domain",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"user",
+								"domain"
+							]
+						},
+						"description": "List all domains any user accounts have within the current Prisma Cloud tenant. "
+					},
+					"response": []
+				},
+				{
+					"name": "List SSO Bypass Allowed Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json; charset=UTF-8",
+								"type": "text"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-redlock-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/user/saml/bypass",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"user",
+								"saml",
+								"bypass"
+							]
+						},
+						"description": "List current user accounts that are allowed to bypass SSO and sign in to Prisma Cloud directly. "
+					},
+					"response": []
+				},
+				{
+					"name": "Update SSO Bypass Allowed Users",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/auth_token/extend",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"auth_token",
+								"extend"
+							]
+						},
+						"description": "Update the list of which users are allowed to bypass SSO and sign in to Prisma Cloud directly. "
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "User Roles",
+			"item": [
+				{
+					"name": "List User Roles",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/user/role",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"user",
+								"role"
+							]
+						},
+						"description": "Lists all accounts and associated Roles in the current Prisma Cloud tenant. "
+					},
+					"response": []
+				},
+				{
+					"name": "Add User Role",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"accountGroupIds\":[\"ACCOUNT_GROUP_ID\"],\n\t\"name\":\"ROLE_NAME\",\n\t\"description\":\"Role Description\",\n\t\"roleType\":\"PERMISSION_GROUP_NAME\",\n\t\"restrictDismissalAccess\":false,\n\"additionalAttributes\":\n\t{\"onlyAllowCIAccess\":false,\n\t\"onlyAllowComputeAccess\":false}\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/user/role",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"user",
+								"role"
+							]
+						},
+						"description": "Adds a new User Role, much be combined with Account Group ID from \"List Account Groups\" GET. \nAlso needs to match a corresponding \"Permission Group\" from within Prisma Cloud. "
+					},
+					"response": []
+				},
+				{
+					"name": "List User Role Names",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/user/role/name",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"user",
+								"role",
+								"name"
+							]
+						},
+						"description": "Returns list of user role IDs and names."
+					},
+					"response": []
+				},
+				{
+					"name": "User Role Info",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/user/role/ROLE_ID_HERE",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"user",
+								"role",
+								"ROLE_ID_HERE"
+							]
+						},
+						"description": "Retrieve all information about an user role using its ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Role",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"accountGroupIds\":[\"ACCOUNT_GROUP_ID\"],\n\t\"name\":\"ROLE_NAME\",\n\t\"description\":\"Role Description\",\n\t\"roleType\":\"PERMISSION_GROUP_NAME\",\n\t\"restrictDismissalAccess\":false,\n\"additionalAttributes\":\n\t{\"onlyAllowCIAccess\":false,\n\t\"onlyAllowComputeAccess\":false}\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/user/role/ROLE_ID_HERE",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"user",
+								"role",
+								"ROLE_ID_HERE"
+							]
+						},
+						"description": "Updates a specific user role based upon ID. "
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User Role",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/user/role/ROLE_ID_HERE",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"user",
+								"role",
+								"ROLE_ID_HERE"
+							]
+						},
+						"description": "Delete a specific user Role."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Access Keys",
+			"item": [
+				{
+					"name": "List Access Keys",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/access_keys",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"access_keys"
+							]
+						},
+						"description": "Lists all access keys within the current Prisma Cloud tenant. "
+					},
+					"response": []
+				},
+				{
+					"name": "List Access Keys Copy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"ACCESS_KEY_ID\",\n\t\"expiresOn\":9999999999\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/access_keys",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"access_keys"
+							]
+						},
+						"description": "Creates access key with the current users permissions, and sets expiry in milliseconds. "
+					},
+					"response": []
+				},
+				{
+					"name": "Get Access Key by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/access_keys/ACCESS_KEY_ID",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"access_keys",
+								"ACCESS_KEY_ID"
+							]
+						},
+						"description": "Lists a specific access key related to ID. "
+					},
+					"response": []
+				},
+				{
+					"name": "Update Access Key",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"ACCESS_KEY_NAME\",\n\t\"expiresOn\":999999999\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/access_keys/ACCESS_KEY_ID",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"access_keys",
+								"ACCESS_KEY_ID"
+							]
+						},
+						"description": "Updates a specific access key within the current Prisma Cloud tenant. "
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Access Key",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/access_keys/ACCESS_KEY_ID",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"access_keys",
+								"ACCESS_KEY_ID"
+							]
+						},
+						"description": "Deletes a specific access key in the current Prisma Cloud tenant. "
+					},
+					"response": []
+				},
+				{
+					"name": "Update Access Key Status",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/access_keys/ACCESS_KEY_ID/status/TRUE_OR_FALSE",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"access_keys",
+								"ACCESS_KEY_ID",
+								"status",
+								"TRUE_OR_FALSE"
+							]
+						},
+						"description": "Updates a specific access key based on ID, and set to active = true/false. "
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Cloud Accounts",
+			"item": [
+				{
+					"name": "List Cloud Accounts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/cloud",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"cloud"
+							]
+						},
+						"description": "Lists all accounts groups and cloud accounts in the current Prisma Cloud tenant. "
+					},
+					"response": []
+				},
+				{
+					"name": "List Cloud Account Names",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/cloud/name?onlyActive=true&accountGroupIds=ACCOUNT_GROUP_ID&cloudType=CLOUD_TYPE",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"cloud",
+								"name"
+							],
+							"query": [
+								{
+									"key": "onlyActive",
+									"value": "true",
+									"description": "Can be true or false"
+								},
+								{
+									"key": "accountGroupIds",
+									"value": "ACCOUNT_GROUP_ID",
+									"description": "ID of the account group"
+								},
+								{
+									"key": "cloudType",
+									"value": "CLOUD_TYPE",
+									"description": "aws, azure, gcp, or alibaba_cloud"
+								}
+							]
+						},
+						"description": "Lists all Cloud Account names within the current Prisma Cloud tenant. "
+					},
+					"response": []
+				},
+				{
+					"name": "List Cloud Org Accounts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/cloud/CLOUD_TYPE/CLOUD_ACCOUNT_ID/project",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"cloud",
+								"CLOUD_TYPE",
+								"CLOUD_ACCOUNT_ID",
+								"project"
+							]
+						},
+						"description": "List all cloud accounts onboarded as children of an Org account."
+					},
+					"response": []
+				},
+				{
+					"name": "List Cloud Types",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/cloud/type",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"cloud",
+								"type"
+							]
+						},
+						"description": "List all current cloud types. "
+					},
+					"response": []
+				},
+				{
+					"name": "Add Cloud Account (AWS)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"accountId\":\"AWS_ACCOUNT_ID\",\n\t\"enabled\":true,\n\t\"externalId\":\"AWS_EXTERNAL_ID\",\n\t\"groupIds\": [],\n\t\"name\":\"FRIENDLY_NAME\",\n\t\"roleArn\":\"AWS_ROLE_ARN\"\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/cloud/aws",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"cloud",
+								"aws"
+							]
+						},
+						"description": "Adds a new AWS Cloud Account from the body parameters"
+					},
+					"response": []
+				},
+				{
+					"name": "Add Cloud Account (Azure)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cloudAccount\": \n  {\n    \"accountId\": \"AZURE_SUBSCRIPTION_ID\",\n    \"enabled\": true,\n    \"groupIds\": [],\n    \"name\": \"FRIENDLY_NAME\"\n  },\n  \"clientId\": \"APPLICATION_ID\",\n  \"key\": \"APPLICATION_SECRET\",\n  \"monitorFlowLogs\": true,\n  \"tenantId\": \"AZURE_AD_ID\",\n  \"servicePrincipalId\": \"ENTERPRISE_APP_OBJECT_ID\"\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/cloud/azure",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"cloud",
+								"azure"
+							]
+						},
+						"description": "Adds a new Azure Cloud Account from the body parameters"
+					},
+					"response": []
+				},
+				{
+					"name": "Add Cloud Account (GCP)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cloudAccount\": \n  {\n    \"accountId\": \"GCP_PROJECT_ID\",\n    \"enabled\": true,\n    \"groupIds\": [],\n    \"name\": \"FRIENDLY_NAME\" \n  },\n  \"compressionEnabled\": false,\n  \"dataflowEnabledProject\": \"\",\n  \"flowLogStorageBucket\": \"\",\n  \"credentials\": \n  {\n    \"type\": \"\",\n    \"project_id\": \"\",\n    \"private_key_id\": \"\",\n    \"private_key\": \"\",\n    \"client_email\": \"\",\n    \"client_id\": \"\",\n    \"auth_uri\": \"\",\n    \"token_uri\": \"\",\n    \"auth_provider_x509_cert_url\": \"\",\n    \"client_x509_cert_url\": \"\"\n  }\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/cloud/gcp",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"cloud",
+								"gcp"
+							]
+						},
+						"description": "Adds a new GCP Cloud Account from the body parameters.\n\"Credentials\" section is the entire JSON file from the service account key creation."
+					},
+					"response": []
+				},
+				{
+					"name": "Add Cloud Account (AliCloud)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"accountId\": \"ALIBABA_ACCOUNT_ID\",\n  \"groupIds\": [],\n  \"name\": \"FRIENDLY_NAME\",\n  \"ramArn\": \"ALIBABA_RAM_RESOURCE\"\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/cloud/alibaba_cloud",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"cloud",
+								"alibaba_cloud"
+							]
+						},
+						"description": "Adds a new Alibaba Cloud Account from the body parameters"
+					},
+					"response": []
+				},
+				{
+					"name": "Cloud Account Info",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/CLOUD_TYPE/CLOUD_ID",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"CLOUD_TYPE",
+								"CLOUD_ID"
+							]
+						},
+						"description": "Get information about a specific cloud account. "
+					},
+					"response": []
+				},
+				{
+					"name": "Update Cloud Account (AWS)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"accountId\":\"AWS_ACCOUNT_ID\",\n\t\"enabled\":true,\n\t\"externalId\":\"AWS_EXTERNAL_ID\",\n\t\"groupIds\": [],\n\t\"name\":\"FRIENDLY_NAME\",\n\t\"roleArn\":\"AWS_ROLE_ARN\"\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/cloud/aws/CLOUD_ACCOUNT_ID",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"cloud",
+								"aws",
+								"CLOUD_ACCOUNT_ID"
+							]
+						},
+						"description": "Updates an existing AWS Cloud Account from the body parameters"
+					},
+					"response": []
+				},
+				{
+					"name": "Add Cloud Account (Azure)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cloudAccount\": \n  {\n    \"accountId\": \"AZURE_SUBSCRIPTION_ID\",\n    \"enabled\": true,\n    \"groupIds\": [],\n    \"name\": \"FRIENDLY_NAME\"\n  },\n  \"clientId\": \"APPLICATION_ID\",\n  \"key\": \"APPLICATION_SECRET\",\n  \"monitorFlowLogs\": true,\n  \"tenantId\": \"AZURE_AD_ID\",\n  \"servicePrincipalId\": \"ENTERPRISE_APP_OBJECT_ID\"\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/cloud/azure/CLOUD_ACCOUNT_ID",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"cloud",
+								"azure",
+								"CLOUD_ACCOUNT_ID"
+							]
+						},
+						"description": "Updates and existing Azure Cloud Account from the body parameters"
+					},
+					"response": []
+				},
+				{
+					"name": "Add Cloud Account (GCP)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cloudAccount\": \n  {\n    \"accountId\": \"GCP_PROJECT_ID\",\n    \"enabled\": true,\n    \"groupIds\": [],\n    \"name\": \"FRIENDLY_NAME\" \n  },\n  \"compressionEnabled\": false,\n  \"dataflowEnabledProject\": \"\",\n  \"flowLogStorageBucket\": \"\",\n  \"credentials\": \n  {\n    \"type\": \"\",\n    \"project_id\": \"\",\n    \"private_key_id\": \"\",\n    \"private_key\": \"\",\n    \"client_email\": \"\",\n    \"client_id\": \"\",\n    \"auth_uri\": \"\",\n    \"token_uri\": \"\",\n    \"auth_provider_x509_cert_url\": \"\",\n    \"client_x509_cert_url\": \"\"\n  }\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/cloud/gcp/CLOUD_ACCOUNT_ID",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"cloud",
+								"gcp",
+								"CLOUD_ACCOUNT_ID"
+							]
+						},
+						"description": "Updates and existing  GCP Cloud Account from the body parameters.\n\"Credentials\" section is the entire JSON file from the service account key creation."
+					},
+					"response": []
+				},
+				{
+					"name": "Add Cloud Account (AliCloud)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"accountId\": \"ALIBABA_ACCOUNT_ID\",\n  \"groupIds\": [],\n  \"name\": \"FRIENDLY_NAME\",\n  \"ramArn\": \"ALIBABA_RAM_RESOURCE\"\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/cloud/alibaba_cloud/CLOUD_ACCOUNT_ID",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"cloud",
+								"alibaba_cloud",
+								"CLOUD_ACCOUNT_ID"
+							]
+						},
+						"description": "Updates and existing  Alibaba Cloud Account from the body parameters"
+					},
+					"response": []
+				},
+				{
+					"name": "CAUTION - DELETE Cloud Account",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"description": "CAUTION, DISABLED AS TO NOT ACCIDENTALLY REMOVE CLOUD ACCOUNTS",
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/CLOUD_TYPE/CLOUD_ID",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"CLOUD_TYPE",
+								"CLOUD_ID"
+							]
+						},
+						"description": "Deletes a specific cloud account from the Prisma Cloud tenant. \nThe account and associated data will be deleted in 24 hours. If you accidentally deleted the account, you can add it back within 24 hours and have all the associated data restored.\n\n** The \"x-redlock-auth\" has been disabled for this specific call, re-enable at your own risk**"
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Cloud Account",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"groupIds\":[\"ACCOUNT_GROUP_IDS\"],\n\t\"enabled\":true,\n\t\"updateChildrenStatus\":true\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/CLOUD_TYPE/CLOUD_ID",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"CLOUD_TYPE",
+								"CLOUD_ID"
+							]
+						},
+						"description": "Enable or disable a cloud account (and children) or update Account Groups. "
+					},
+					"response": []
+				},
+				{
+					"name": "Get Cloud Account Status (AWS)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"accountId\":\"AWS_ACCOUNT_ID\",\n\t\"enabled\":true,\n\t\"externalId\":\"AWS_EXTERNAL_ID\",\n\t\"groupIds\": [],\n\t\"name\":\"FRIENDLY_NAME\",\n\t\"roleArn\":\"AWS_ROLE_ARN\"\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/cloud/status/aws",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"cloud",
+								"status",
+								"aws"
+							]
+						},
+						"description": "Gets the current status of an onboarded AWS account"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Cloud Account Status (Azure)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cloudAccount\": \n  {\n    \"accountId\": \"AZURE_SUBSCRIPTION_ID\",\n    \"enabled\": true,\n    \"groupIds\": [],\n    \"name\": \"FRIENDLY_NAME\"\n  },\n  \"clientId\": \"APPLICATION_ID\",\n  \"key\": \"APPLICATION_SECRET\",\n  \"monitorFlowLogs\": true,\n  \"tenantId\": \"AZURE_AD_ID\",\n  \"servicePrincipalId\": \"ENTERPRISE_APP_OBJECT_ID\"\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/cloud/status/azure",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"cloud",
+								"status",
+								"azure"
+							]
+						},
+						"description": "Gets the current status of an onboarded Azure account"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Cloud Account Status (GCP)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cloudAccount\": \n  {\n    \"accountId\": \"GCP_PROJECT_ID\",\n    \"enabled\": true,\n    \"groupIds\": [],\n    \"name\": \"FRIENDLY_NAME\" \n  },\n  \"compressionEnabled\": false,\n  \"dataflowEnabledProject\": \"\",\n  \"flowLogStorageBucket\": \"\",\n  \"credentials\": \n  {\n    \"type\": \"\",\n    \"project_id\": \"\",\n    \"private_key_id\": \"\",\n    \"private_key\": \"\",\n    \"client_email\": \"\",\n    \"client_id\": \"\",\n    \"auth_uri\": \"\",\n    \"token_uri\": \"\",\n    \"auth_provider_x509_cert_url\": \"\",\n    \"client_x509_cert_url\": \"\"\n  }\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/cloud/status/gcp",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"cloud",
+								"status",
+								"gcp"
+							]
+						},
+						"description": "Gets the current status of an onboarded GCP account"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Cloud Account Status (AliCloud)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"accountId\": \"ALIBABA_ACCOUNT_ID\",\n  \"groupIds\": [],\n  \"name\": \"FRIENDLY_NAME\",\n  \"ramArn\": \"ALIBABA_RAM_RESOURCE\"\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/cloud/status/alibaba_cloud",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"cloud",
+								"status",
+								"alibaba_cloud"
+							]
+						},
+						"description": "Gets the current status of an onboarded Alibaba Cloud account"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Cloud Account Status",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"groupIds\":[\"ACCOUNT_GROUP_IDS\"],\n\t\"enabled\":true,\n\t\"updateChildrenStatus\":true\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/cloud/ACCOUNT_ID/status/TRUE_FALSE?updateChildren=true",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"cloud",
+								"ACCOUNT_ID",
+								"status",
+								"TRUE_FALSE"
+							],
+							"query": [
+								{
+									"key": "updateChildren",
+									"value": "true"
+								}
+							]
+						},
+						"description": "Enable or disable a cloud account (and children) or update Account Groups. "
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Account Groups",
+			"item": [
+				{
+					"name": "List Account Groups",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/cloud/group",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"cloud",
+								"group"
+							]
+						},
+						"description": "Lists all accounts groups and cloud accounts in the current Prisma Cloud tenant. "
+					},
+					"response": []
+				},
+				{
+					"name": "Account Account Group",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"accountIds\":[\"CLOUD_ACCOUNT_ID_1\",\"CLOUD_ACCOUNT_ID_2\"],\n\t\"name\":\"ACCOUNT_GROUP_NAME\",\n\t\"description\":\"ACCOUNT_GROUP_DESCRIPTION\"\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/cloud/group",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"cloud",
+								"group"
+							]
+						},
+						"description": "Adds an Account group with corresponding Cloud Accounts from the body. "
+					},
+					"response": []
+				},
+				{
+					"name": "List Account Group Names",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/cloud/group/name",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"cloud",
+								"group",
+								"name"
+							]
+						},
+						"description": "Lists all accounts groups and their names within the current Prisma Cloud tenant. "
+					},
+					"response": []
+				},
+				{
+					"name": "List Account Group Names by Cloud Type",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/cloud/group/name/CLOUD_TYPE",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"cloud",
+								"group",
+								"name",
+								"CLOUD_TYPE"
+							]
+						},
+						"description": "Lists all accounts groups by cloud type and their names within the current Prisma Cloud tenant. "
+					},
+					"response": []
+				},
+				{
+					"name": "Account Group Info",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/cloud/group/ACCOUNT_GROUP_ID",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"cloud",
+								"group",
+								"ACCOUNT_GROUP_ID"
+							]
+						},
+						"description": "Gets a specific account groups information based on ID. "
+					},
+					"response": []
+				},
+				{
+					"name": "Update Account Group",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"accountIds\":[\"CLOUD_ACCOUNT_ID_1\",\"CLOUD_ACCOUNT_ID_2\"],\n\t\"name\":\"ACCOUNT_GROUP_NAME\",\n\t\"description\":\"DESCRIPTION\"\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/cloud/group/ACCOUNT_GROUP_ID",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"cloud",
+								"group",
+								"ACCOUNT_GROUP_ID"
+							]
+						},
+						"description": "Updates a specific Account group based on ID and Cloud Accounts in the body. "
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Account Group",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/cloud/group/ACCOUNT_GROUP_ID",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"cloud",
+								"group",
+								"ACCOUNT_GROUP_ID"
+							]
+						},
+						"description": "Deletes a specific account group based on ID. "
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Policy",
+			"item": [
+				{
+					"name": "List Policy Filters",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/filter/policy/suggest",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"filter",
+								"policy",
+								"suggest"
+							]
+						},
+						"description": "Returns an object whose keys are the supported policy filters and corresponding values are the default or recent options for that filter."
+					},
+					"response": []
+				},
+				{
+					"name": "List Policy Filter Autocomplete Suggestions",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"query\":\"AUTO_COMPLETE_FILTER\",\n\t\"filterName\":\"FILTER_NAME\"\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/filter/policy/suggest",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"filter",
+								"policy",
+								"suggest"
+							]
+						},
+						"description": "Returns available options for a policy filter key. Also supports fuzzy autocomplete search for easier filtering."
+					},
+					"response": []
+				},
+				{
+					"name": "List Policies",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/policy?policy.name=POLICY_NAME&policy.severity=high&policy.label=POLICY_LABEL&policy.type=config&policy.complianceStandard=C_STANDARD&policy.complianceRequirement=C_REQUIREMENT&policy.complianceSection=C_SECTION&policy.enabled=true&policy.policyMode=custom&policy.remediable=true&cloud.type=aws",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"policy"
+							],
+							"query": [
+								{
+									"key": "policy.name",
+									"value": "POLICY_NAME",
+									"description": "Policy name"
+								},
+								{
+									"key": "policy.severity",
+									"value": "high",
+									"description": "Policy severity"
+								},
+								{
+									"key": "policy.label",
+									"value": "POLICY_LABEL",
+									"description": "Policy label"
+								},
+								{
+									"key": "policy.type",
+									"value": "config",
+									"description": "config, network, or audit_event"
+								},
+								{
+									"key": "policy.complianceStandard",
+									"value": "C_STANDARD",
+									"description": "Compliance Standard name"
+								},
+								{
+									"key": "policy.complianceRequirement",
+									"value": "C_REQUIREMENT",
+									"description": "Compliance requirement name"
+								},
+								{
+									"key": "policy.complianceSection",
+									"value": "C_SECTION",
+									"description": "Compliance section name"
+								},
+								{
+									"key": "policy.enabled",
+									"value": "true",
+									"description": "true or false"
+								},
+								{
+									"key": "policy.policyMode",
+									"value": "custom",
+									"description": "custom or redlock_default"
+								},
+								{
+									"key": "policy.remediable",
+									"value": "true",
+									"description": "true or false"
+								},
+								{
+									"key": "cloud.type",
+									"value": "aws",
+									"description": "aws, azure, gcp, or alibaba_cloud"
+								}
+							]
+						},
+						"description": "Returns all available policies, both system default and custom. You can apply filters to narrow the returned policy list to a subset of policies or potentially to a specific policy. Response includes open alert counts, which can affect performance."
+					},
+					"response": []
+				},
+				{
+					"name": "List Policies V2",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/v2/policy?policy.name=POLICY_NAME&policy.severity=high&policy.label=POLICY_LABEL&policy.type=config&policy.complianceStandard=C_STANDARD&policy.complianceRequirement=C_REQUIREMENT&policy.complianceSection=C_SECTION&policy.enabled=true&policy.policyMode=custom&policy.remediable=true&cloud.type=aws",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"v2",
+								"policy"
+							],
+							"query": [
+								{
+									"key": "policy.name",
+									"value": "POLICY_NAME",
+									"description": "Policy name"
+								},
+								{
+									"key": "policy.severity",
+									"value": "high",
+									"description": "Policy severity"
+								},
+								{
+									"key": "policy.label",
+									"value": "POLICY_LABEL",
+									"description": "Policy label"
+								},
+								{
+									"key": "policy.type",
+									"value": "config",
+									"description": "config, network, or audit_event"
+								},
+								{
+									"key": "policy.complianceStandard",
+									"value": "C_STANDARD",
+									"description": "Compliance Standard name"
+								},
+								{
+									"key": "policy.complianceRequirement",
+									"value": "C_REQUIREMENT",
+									"description": "Compliance requirement name"
+								},
+								{
+									"key": "policy.complianceSection",
+									"value": "C_SECTION",
+									"description": "Compliance section name"
+								},
+								{
+									"key": "policy.enabled",
+									"value": "true",
+									"description": "true or false"
+								},
+								{
+									"key": "policy.policyMode",
+									"value": "custom",
+									"description": "custom or redlock_default"
+								},
+								{
+									"key": "policy.remediable",
+									"value": "true",
+									"description": "true or false"
+								},
+								{
+									"key": "cloud.type",
+									"value": "aws",
+									"description": "aws, azure, gcp, or alibaba_cloud"
+								}
+							]
+						},
+						"description": "Returns all available policies, both system default and custom. You can apply filters to narrow the returned policy list to a subset of policies or potentially to a specific policy. Response includes open alert counts, which can affect performance."
+					},
+					"response": []
+				},
+				{
+					"name": "(incomplete) COMPLEX - Add Policy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"rule\":\n\t{\"parameters\":\n\t{\"savedSearch\":\"true\"},\n\t\"name\":\"RULE_NAME\",\n\t\"criteria\":\"SEARCH_ID\",\n\t\"type\":\"Config\"},\n\t\"complianceMetadata\":[\n\t\t{\"standardName\":\"standardName\",\n\t\t\"standardDescription\":\"standardDescription\",\n\t\t\"requirementId\":\"requirementId\",\n\t\t\"requirementName\":\"requirementName\",\n\t\t\"requirementDescription\":\"requirementDescription\",\n\t\t\"sectionId\":\"sectionId\",\n\t\t\"sectionDescription\":\"sectionDescription\",\n\t\t\"policyId\":\"policyId\",\n\t\t\"complianceId\":\"complianceId\",\n\t\t\"sectionLabel\":\"sectionLabel\",\n\t\t\"customAssigned\":true}],\n\t\t\"remediation\":{\n\t\t\t\"templateType\":\"StaticTemplate\",\n\t\t\t\"description\":\"AUTO_REMEDIATION_DESCRIPTION\",\n\t\t\t\"cliScriptTemplate\":\"CLI_TEMPLATE\"\n\t\t},\n\t\t\t\"labels\":[\"POLICY_LABEL\"],\n\t\t\t\"name\":\"POLICY_NAME\",\n\t\t\t\"policyType\":\"config\",\n\t\t\t\"description\":\"POLICY_DESCRIPTION\",\n\t\t\t\"severity\":\"medium\",\n\t\t\t\"recommendation\":\"RECOMMENDATION_ACTION\",\n\t\t\t\"cloudType\":\"aws\",\n\t\t\t\"enabled\":true\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/policy",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"policy"
+							]
+						},
+						"description": "**Very complex**\n\nAdds a new policy. "
+					},
+					"response": []
+				},
+				{
+					"name": "Policy Info",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/policy/POLICY_ID",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"policy",
+								"POLICY_ID"
+							]
+						},
+						"description": "Get specific policy info based on ID."
+					},
+					"response": []
+				},
+				{
+					"name": "(incomplete) COMPLEX - Update Policy",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"rule\":\n\t{\"parameters\":\n\t{\"savedSearch\":\"true\"},\n\t\"name\":\"RULE_NAME\",\n\t\"criteria\":\"SEARCH_ID\",\n\t\"type\":\"Config\"},\n\t\"complianceMetadata\":[\n\t\t{\"standardName\":\"standardName\",\n\t\t\"standardDescription\":\"standardDescription\",\n\t\t\"requirementId\":\"requirementId\",\n\t\t\"requirementName\":\"requirementName\",\n\t\t\"requirementDescription\":\"requirementDescription\",\n\t\t\"sectionId\":\"sectionId\",\n\t\t\"sectionDescription\":\"sectionDescription\",\n\t\t\"policyId\":\"policyId\",\n\t\t\"complianceId\":\"complianceId\",\n\t\t\"sectionLabel\":\"sectionLabel\",\n\t\t\"customAssigned\":true}],\n\t\t\"remediation\":{\n\t\t\t\"templateType\":\"StaticTemplate\",\n\t\t\t\"description\":\"AUTO_REMEDIATION_DESCRIPTION\",\n\t\t\t\"cliScriptTemplate\":\"CLI_TEMPLATE\"\n\t\t},\n\t\t\t\"labels\":[\"POLICY_LABEL\"],\n\t\t\t\"name\":\"POLICY_NAME\",\n\t\t\t\"policyType\":\"config\",\n\t\t\t\"description\":\"POLICY_DESCRIPTION\",\n\t\t\t\"severity\":\"medium\",\n\t\t\t\"recommendation\":\"RECOMMENDATION_ACTION\",\n\t\t\t\"cloudType\":\"aws\",\n\t\t\t\"enabled\":true\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/policy",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"policy"
+							]
+						},
+						"description": "**Very complex**\n\nUpdates an existing policy. "
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Policy",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/policy/POLICY_ID",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"policy",
+								"POLICY_ID"
+							]
+						},
+						"description": "Delete specific policy info based on ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Policy Status",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/policy/POLICY_ID/status/TRUE_FALSE",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"policy",
+								"POLICY_ID",
+								"status",
+								"TRUE_FALSE"
+							]
+						},
+						"description": "Updates a specific policy status based on ID. "
+					},
+					"response": []
+				},
+				{
+					"name": "List Policy Compliance Standards",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/policy/compliance",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"policy",
+								"compliance"
+							]
+						},
+						"description": "Returns a list of compliance standards that Prisma Cloud supports and for each compliance standard, lists the supported sections."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Time Range Model (Info Only)",
+			"item": [
+				{
+					"name": "Absolute Time",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// Used when both start and end unix timestamps (in ms) are available\n// E.g. from 1504448933000 to 1504794533000\n\n// Inside request body (POST / PUT)                \n{\n    \"timeRange\": {\n        \"type\": \"absolute\",\n        \"value\": {\n            \"startTime\": 1504448933000,\n            \"endTime\": 1504794533000\n        }\n    }\n}\n\n// Inside query params (GET)\n&timeType=absolute&startTime=1504448933000&endTime=1504794533000"
+						},
+						"url": {
+							"raw": ""
+						},
+						"description": "// Used when both start and end unix timestamps (in ms) are available\n// E.g. from 1504448933000 to 1504794533000\n\n// Inside request body (POST / PUT)                \n{\n    \"timeRange\": {\n        \"type\": \"absolute\",\n        \"value\": {\n            \"startTime\": 1504448933000,\n            \"endTime\": 1504794533000\n        }\n    }\n}\n\n// Inside query params (GET)\n&timeType=absolute&startTime=1504448933000&endTime=1504794533000"
+					},
+					"response": []
+				},
+				{
+					"name": "Relative Time",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// Time from now to some relative point in the past\n// E.g. last 3 days\n\n// Inside request body (POST / PUT)\n{\n    \"timeRange\": {\n        \"type\": \"relative\",\n        \"value\": {\n           \"amount\": 3,\n           \"unit\": \"day\" // Supported units: hour, day, week, month, year \n        }\n    }\n}\n\n// Inside query params (GET)\n&timeType=relative&timeAmount=3&timeUnit=day"
+						},
+						"url": {
+							"raw": ""
+						},
+						"description": "// Time from now to some relative point in the past\n// E.g. last 3 days\n\n// Inside request body (POST / PUT)\n{\n    \"timeRange\": {\n        \"type\": \"relative\",\n        \"value\": {\n           \"amount\": 3,\n           \"unit\": \"day\" // Supported units: hour, day, week, month, year \n        }\n    }\n}\n\n// Inside query params (GET)\n&timeType=relative&timeAmount=3&timeUnit=day"
+					},
+					"response": []
+				},
+				{
+					"name": "Time To Now",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// From some time in the past to now\n// E.g. from last login to now\n\n// Inside request body (POST / PUT)\n{\n    \"timeRange\": {\n        \"type\": \"to_now\",\n        \"value\": {\n            \"unit\": \"login\"\n        }\n\n        // Supported values: \n        // login - from last login\n        // epoch - from account onboarding\n        // day   - from beginning of the day\n        // week  - from beginning of the week\n        // month - from beginning of the month\n        // year  - from beginning of the year\n    }\n}\n\n// Inside query params (GET)\n&timeType=to_now&timeUnit=login"
+						},
+						"url": {
+							"raw": ""
+						},
+						"description": "// From some time in the past to now\n// E.g. from last login to now\n\n// Inside request body (POST / PUT)\n{\n    \"timeRange\": {\n        \"type\": \"to_now\",\n        \"value\": {\n            \"unit\": \"login\"\n        }\n\n        // Supported values: \n        // login - from last login\n        // epoch - from account onboarding\n        // day   - from beginning of the day\n        // week  - from beginning of the week\n        // month - from beginning of the month\n        // year  - from beginning of the year\n    }\n}\n\n// Inside query params (GET)\n&timeType=to_now&timeUnit=login"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Alerts (incomplete)",
+			"item": [
+				{
+					"name": "https://api.prismacloud.io/v2/alert",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f6914377-387f-4465-a4a4-db15fd502d06",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-redlock-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\t\"detailed\": true,\r\t\"filters\": [\r\t\t{\r\t\t\t\"operator\": \"=\",\r\t\t\t\"name\": \"alert.status\",\r\t\t\t\"value\": \"open\"\r\t\t},\r\t\t{\r\t\t\t\"operator\": \"=\",\r\t\t\t\"name\": \"alert.status\",\r\t\t\t\"value\": \"dismissed\"\r\t\t},\r\t\t{\r\t\t\t\"operator\": \"=\",\r\t\t\t\"name\": \"policy.type\",\r\t\t\t\"value\": \"config\"\r\t\t}\r\t\t],\r\t\t\"timeRange\": {\r\t\t\t\"type\": \"relative\",\r\t\t\t\"value\": {\r\t\t\t\t\"amount\": 30, \r\t\t\t\t\"unit\": \"day\"\r\t\t\t}\r\t\t},\r\t\t\"sortBy\": [\"id:asc\"],\r\t\t\"offset\": 0,\r\t\t\"limit\": 5000\r}\r"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/alerts",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"alerts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "https://api.prismacloud.io/alert/id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f6914377-387f-4465-a4a4-db15fd502d06",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json; charset=UTF-8",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-redlock-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\t\"detailed\": true,\r\t\"filters\": [\r\t\t{\r\t\t\t\"operator\": \"=\",\r\t\t\t\"name\": \"alert.status\",\r\t\t\t\"value\": \"open\"\r\t\t},\r\t\t{\r\t\t\t\"operator\": \"=\",\r\t\t\t\"name\": \"alert.status\",\r\t\t\t\"value\": \"dismissed\"\r\t\t},\r\t\t{\r\t\t\t\"operator\": \"=\",\r\t\t\t\"name\": \"policy.type\",\r\t\t\t\"value\": \"config\"\r\t\t}\r\t\t],\r\t\t\"timeRange\": {\r\t\t\t\"type\": \"relative\",\r\t\t\t\"value\": {\r\t\t\t\t\"amount\": 30, \r\t\t\t\t\"unit\": \"day\"\r\t\t\t}\r\t\t},\r\t\t\"sortBy\": [\"id:asc\"],\r\t\t\"offset\": 0,\r\t\t\"limit\": 5000\r}\r"
+						},
+						"url": {
+							"raw": "https://api.prismacloud.io/alert/P-117144",
+							"protocol": "https",
+							"host": [
+								"api",
+								"prismacloud",
+								"io"
+							],
+							"path": [
+								"alert",
+								"P-117144"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Alert Remediation Commands",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f6914377-387f-4465-a4a4-db15fd502d06",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json; charset=UTF-8",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-redlock-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"alerts\":[\"P-153248\"],\n\t\"filter\":{\n\t\t\"timeRange\":{\n\t\t\t\"type\":\"to_now\",\n\t\t\t\"value\":\"epoch\"\n\t\t\t}\n\t\t}\n\t}"
+						},
+						"url": {
+							"raw": "https://api.prismacloud.io/alert/remediation",
+							"protocol": "https",
+							"host": [
+								"api",
+								"prismacloud",
+								"io"
+							],
+							"path": [
+								"alert",
+								"remediation"
+							]
+						},
+						"description": "Generates and returns a list of remediation commands for the specified alerts and policies. Data returned for a successful call include fully constructed commands for remediation."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Asset Inventory",
+			"item": [
+				{
+					"name": "List Inventory Filters V2",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/filter/v2/inventory/suggest\n",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"filter",
+								"v2",
+								"inventory",
+								"suggest\n"
+							]
+						},
+						"description": "Returns an object whose keys are supported asset inventory filters and values contain default recent options."
+					},
+					"response": []
+				},
+				{
+					"name": "List Inventory Dashboard Filter Autocomplete Suggestions V2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"query\":\"QUERY\",\n\t\"filterName\":\"FILTER\"\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/filter/v2/inventory/suggest\n",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"filter",
+								"v2",
+								"inventory",
+								"suggest\n"
+							]
+						},
+						"description": "Returns filter autocomplete suggestions."
+					},
+					"response": []
+				},
+				{
+					"name": "Asset Inventory View V2",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/v2/inventory?timeType=relative&timeAmount=40&timeUnit=hour",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"v2",
+								"inventory"
+							],
+							"query": [
+								{
+									"key": "timeType",
+									"value": "relative"
+								},
+								{
+									"key": "timeAmount",
+									"value": "40"
+								},
+								{
+									"key": "timeUnit",
+									"value": "hour"
+								}
+							]
+						},
+						"description": "Returns asset inventory pass/fail data for the specified time period."
+					},
+					"response": []
+				},
+				{
+					"name": "Asset Inventory Trend View V2",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/v2/inventory/trend?timeType=relative&timeAmount=40&timeUnit=hour",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"v2",
+								"inventory",
+								"trend"
+							],
+							"query": [
+								{
+									"key": "timeType",
+									"value": "relative"
+								},
+								{
+									"key": "timeAmount",
+									"value": "40"
+								},
+								{
+									"key": "timeUnit",
+									"value": "hour"
+								}
+							]
+						},
+						"description": "Returns asset inventory pass/fail trends for the specified time period."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Compliance Reports",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Compliance Posture",
+			"item": [
+				{
+					"name": "Get Compliance Statistics Breakdown",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/compliance/posture?timeType=relative&timeAmount=40&timeUnit=hour",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"compliance",
+								"posture"
+							],
+							"query": [
+								{
+									"key": "timeType",
+									"value": "relative"
+								},
+								{
+									"key": "timeAmount",
+									"value": "40"
+								},
+								{
+									"key": "timeUnit",
+									"value": "hour"
+								}
+							]
+						},
+						"description": "Returns a breakdown of the passed/failed statistics and associated policies for compliance standards, requirements, and sections. Also returns a summary for all compliance standards."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Compliance Statistics for Compliance Standard ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/compliance/posture/fd9e3d3a-29a0-4ddc-b058-6f7eabd7d85a?timeType=relative&timeAmount=40&timeUnit=hour",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"compliance",
+								"posture",
+								"fd9e3d3a-29a0-4ddc-b058-6f7eabd7d85a"
+							],
+							"query": [
+								{
+									"key": "timeType",
+									"value": "relative"
+								},
+								{
+									"key": "timeAmount",
+									"value": "40"
+								},
+								{
+									"key": "timeUnit",
+									"value": "hour"
+								}
+							]
+						},
+						"description": "Returns a breakdown of the passed/failed statistics and associated policies for compliance standards, requirements, and sections for the given compliance standard ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Compliance Statistics for Requirement ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/compliance/posture/fd9e3d3a-29a0-4ddc-b058-6f7eabd7d85a/a467eb11-b55b-4484-83ba-f55a7ef4358b?timeType=relative&timeAmount=40&timeUnit=hour",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"compliance",
+								"posture",
+								"fd9e3d3a-29a0-4ddc-b058-6f7eabd7d85a",
+								"a467eb11-b55b-4484-83ba-f55a7ef4358b"
+							],
+							"query": [
+								{
+									"key": "timeType",
+									"value": "relative"
+								},
+								{
+									"key": "timeAmount",
+									"value": "40"
+								},
+								{
+									"key": "timeUnit",
+									"value": "hour"
+								}
+							]
+						},
+						"description": "Returns a breakdown of the passed/failed statistics and associated policies for compliance sections for the specified compliance standard ID and compliance requirement ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Compliance Statistics Over Time",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/compliance/posture/trend?timeType=relative&timeAmount=40&timeUnit=hour",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"compliance",
+								"posture",
+								"trend"
+							],
+							"query": [
+								{
+									"key": "timeType",
+									"value": "relative"
+								},
+								{
+									"key": "timeAmount",
+									"value": "40"
+								},
+								{
+									"key": "timeUnit",
+									"value": "hour"
+								}
+							]
+						},
+						"description": "Returns a compliance posture summary that describes the passed/failed statistics trend."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Compliance Statistics Over Time for Compliance Standard ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/compliance/posture/trend/fd9e3d3a-29a0-4ddc-b058-6f7eabd7d85a?timeType=relative&timeAmount=40&timeUnit=hour",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"compliance",
+								"posture",
+								"trend",
+								"fd9e3d3a-29a0-4ddc-b058-6f7eabd7d85a"
+							],
+							"query": [
+								{
+									"key": "timeType",
+									"value": "relative"
+								},
+								{
+									"key": "timeAmount",
+									"value": "40"
+								},
+								{
+									"key": "timeUnit",
+									"value": "hour"
+								}
+							]
+						},
+						"description": "Returns a compliance posture summary that describes the passed/failed statistics trend for the specified compliance standard ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Compliance Statistics Over Time for Requirement ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/compliance/posture/trend/fd9e3d3a-29a0-4ddc-b058-6f7eabd7d85a/a467eb11-b55b-4484-83ba-f55a7ef4358b?timeType=relative&timeAmount=40&timeUnit=hour",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"compliance",
+								"posture",
+								"trend",
+								"fd9e3d3a-29a0-4ddc-b058-6f7eabd7d85a",
+								"a467eb11-b55b-4484-83ba-f55a7ef4358b"
+							],
+							"query": [
+								{
+									"key": "timeType",
+									"value": "relative"
+								},
+								{
+									"key": "timeAmount",
+									"value": "40"
+								},
+								{
+									"key": "timeUnit",
+									"value": "hour"
+								}
+							]
+						},
+						"description": "Returns the compliance posture summary that describes the passed/failed statistics trend for the given compliance standard ID and compliance requirement ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Compliance Overview Filters and Options",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/filter/compliance/posture/suggest",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"filter",
+								"compliance",
+								"posture",
+								"suggest"
+							]
+						},
+						"description": "Returns an object whose key/value pairs identify filter options for compliance posture data. The keys are supported filters, and the corresponding values identify the available and saved filter options."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Compliance Dashboard",
+			"item": [
+				{
+					"name": "Compliance Resource Statistics Breakdown ",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/compliance/dashboard?timeType=relative&timeAmount=40&timeUnit=hour",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"compliance",
+								"dashboard"
+							],
+							"query": [
+								{
+									"key": "timeType",
+									"value": "relative"
+								},
+								{
+									"key": "timeAmount",
+									"value": "40"
+								},
+								{
+									"key": "timeUnit",
+									"value": "hour"
+								}
+							]
+						},
+						"description": "Used to get a full breakdown of pass / failed statistics and associated policies for compliance standards, requirements, or sections (Deprecated)."
+					},
+					"response": []
+				},
+				{
+					"name": "Overall Compliance Resource Statistics Over Time",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/compliance/dashboard/history?timeType=relative&timeAmount=40&timeUnit=hour",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"compliance",
+								"dashboard",
+								"history"
+							],
+							"query": [
+								{
+									"key": "timeType",
+									"value": "relative"
+								},
+								{
+									"key": "timeAmount",
+									"value": "40"
+								},
+								{
+									"key": "timeUnit",
+									"value": "hour"
+								}
+							]
+						},
+						"description": "Used to get the overall compliance centric resource count and pass / fail statistics over a given period of time "
+					},
+					"response": []
+				},
+				{
+					"name": "Get Compliance Dashboard Filters",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/filter/compliance/suggest",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"filter",
+								"compliance",
+								"suggest"
+							]
+						},
+						"description": "Returns an object with key/value pairs that identify filter options for Compliance Dashboard data. The keys are supported filters, and the corresponding values identify the available and saved filter options"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Compliance Dashboard Filters Copy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/filter/compliance/suggest",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"filter",
+								"compliance",
+								"suggest"
+							]
+						},
+						"description": "Returns an object with key/value pairs that identify filter options for Compliance Dashboard data. The keys are supported filters, and the corresponding values identify the available and saved filter options"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Compliance Standards",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Resource Explorer",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Audit Logs",
+			"item": [
+				{
+					"name": "Prisma Cloud Audit Logs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/audit/redlock?timeType=relative&timeAmount=40&timeUnit=hour",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"audit",
+								"redlock"
+							],
+							"query": [
+								{
+									"key": "timeType",
+									"value": "relative"
+								},
+								{
+									"key": "timeAmount",
+									"value": "40"
+								},
+								{
+									"key": "timeUnit",
+									"value": "hour"
+								}
+							]
+						},
+						"description": "Allows a user to retrieve audit logs for events that took place on the Prisma Cloud platform."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Licensing",
+			"item": [
+				{
+					"name": "Licensing Usage Count for Compute ",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"aggregate\":true,\n\t\"timeRange\":\n\t{\n\t\t\"type\":\"to_now\",\"value\":\"epoch\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/usage/compute/twistlock",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"usage",
+								"compute",
+								"twistlock"
+							]
+						},
+						"description": "Gets the current Compute licensing usage until now. "
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "IP Whitelisting",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Search Manager",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Search",
+			"item": [
+				{
+					"name": "https://api.prismacloud.io/search/config",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f6914377-387f-4465-a4a4-db15fd502d06",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-redlock-auth",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"query\": \"config where api.name = 'aws-ec2-describe-instances' AND json.rule =  'networkInterfaces[*].ownerId is member of (154600454722,55555)' \",\n    \"timeRange\": {\n        \"type\": \"relative\",\n        \"value\": {\n            \"unit\": \"hour\",\n            \"amount\": 24\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "https://api.prismacloud.io/search/config",
+							"protocol": "https",
+							"host": [
+								"api",
+								"prismacloud",
+								"io"
+							],
+							"path": [
+								"search",
+								"config"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Alert Rules",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Notification Templates",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Integrations (incomplete)",
+			"item": [
+				{
+					"name": "Integration Configuration (Info Only)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": ""
+						},
+						"description": "Integration Configuration\nThe model for an integration between Prisma Cloud and an external system includes an integrationConfig parameter that is a map of key/value pairs. The type of integration defines the content of these key/value pairs.\n\n \nServiceNow Integration\nIntegrate Prisma Cloud with ServiceNow and get automatically notified about Prisma Cloud alerts through ServiceNow tickets to prioritize incidents and vulnerabilities that impact your business. Prisma Cloud integrates with the ITSM module (incident table), the Security Incident Response module (sn_si_incident table), and the Event Management modules (em_event table) on ServiceNow to generate alerts in the form of ITSM Incident, Security Incident, and Event tickets.\n\nAdd, Update, or Test a ServiceNow Integration\nTo add a ServiceNow integration, invoke the API with the corresponding response body described in Add Integration. As part of that response body, the integrationType parameter for a ServiceNow integration is service_now, and the integrationConfig parameter contains the following key/value pairs.\n\nKey\tValue Description\tValue Type\tDefault Value (* required)\nhostUrl\n\nServiceNow Url\n\nString\n\n*\n\nlogin\n\nServiceNow login\n\nString\n\n*\n\npassword\n\nServiceNow password for login\n\nString\n\n*\n\ntables\n\nArray of key/value pairs that identify the ServiceNow module tables with which to integrate. The possible keys are:\n\nincident\nsn_si_incident\nem_event\nThe possible values fore each key are:\n\ntrue\nfalse\nArray\n\n*\n\nversion\n\nServiceNow release version\n\nString\n\n*\n\nTo update a Servicenow integration, invoke the API with the corresponding response body described in Update Integration. The values of the integrationConfig key/value pairs are updatable.\n\nTo test a ServiceNow integration, invoke the API with the corresponding response body described in Test Integration ."
+					},
+					"response": []
+				},
+				{
+					"name": "Test Integration (incomplete)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"INTEG_NAME\",\n\t\"integrationType\":\"SLACK\",\n\t\"description\":\"INTEG_DESC\",\n\t\"enabled\":true,\n\t\"status\":\"GREEN\"\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/integration/test",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"integration",
+								"test"
+							]
+						},
+						"description": "Runs a test of the integration for the specified data."
+					},
+					"response": []
+				},
+				{
+					"name": "List Metadata for All Integrations",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/integration/name?type=",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"integration",
+								"name"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "",
+									"description": "  \"slack\",\n    \"splunk\",\n    \"amazon_sqs\",\n    \"webhook\",\n    \"microsoft_teams\",\n    \"jira\",\n    \"service_now\",\n    \"pager_duty\",\n    \"demisto\",\n    \"tenable\",\n    \"qualys\",\n    \"google_cscc\",\n    \"aws_security_hub\""
+								}
+							]
+						},
+						"description": "Returns the metadata for your integrations filtered by type:\n    \"slack\",\n    \"splunk\",\n    \"amazon_sqs\",\n    \"webhook\",\n    \"microsoft_teams\",\n    \"jira\",\n    \"service_now\",\n    \"pager_duty\",\n    \"demisto\",\n    \"tenable\",\n    \"qualys\",\n    \"google_cscc\",\n    \"aws_security_hub\""
+					},
+					"response": []
+				},
+				{
+					"name": "List All Integration Types",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/integration/type",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"integration",
+								"type"
+							]
+						},
+						"description": "Lists all integration types"
+					},
+					"response": []
+				},
+				{
+					"name": "List All Integrations",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/integration",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"integration"
+							]
+						},
+						"description": "List all integrations. "
+					},
+					"response": []
+				},
+				{
+					"name": "Add Integration (incomplete)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/integration/test",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"integration",
+								"test"
+							]
+						},
+						"description": "Adds an integration with the specified external system."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Integrations By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/integration/INTEG_ID",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"integration",
+								"INTEG_ID"
+							]
+						},
+						"description": "Returns integration details for the specified ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Integration",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"INTEG_NAME\",\n\t\"integrationType\":\"SLACK\",\n\t\"description\":\"INTEG_DESC\",\n\t\"enabled\":true,\n\t\"status\":\"GREEN\"\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/integration/INTEG_ID",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"integration",
+								"INTEG_ID"
+							]
+						},
+						"description": "Runs a test of the integration for the specified data."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Integration",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/integration/INTEG_ID",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"integration",
+								"INTEG_ID"
+							]
+						},
+						"description": "Deletes a specific integration based on ID."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Settings",
+			"item": [
+				{
+					"name": "Enterprise Settings",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/settings/enterprise",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"settings",
+								"enterprise"
+							]
+						},
+						"description": "Get Entperprise settings for the current Prisma Cloud tenant. "
+					},
+					"response": []
+				},
+				{
+					"name": "Enterprise Settings Copy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"defaultPoliciesEnabled\":\n\t{\n\t\t\"low\":true,\n\t\t\"medium\":true,\n\t\t\"high\":true\n\t},\n\t\t\"sessionTimeout\":999999,\n\t\t\"anomalyTrainingModelThreshold\":\"High\",\n\t\t\"anomalyAlertDisposition\":\"High\",\n\t\t\"userAttributionInNotification\":true,\n\t\t\"requireAlertDismissalNote\":true,\n\t\t\"applyDefaultPoliciesEnabled\":true\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/settings/enterprise",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"settings",
+								"enterprise"
+							]
+						},
+						"description": "Updates enterprise settings based on body parameters."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "DevOps Security API",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Infrastructure as Code",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Support App",
+			"item": [
+				{
+					"name": "Get Support App Customers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/_support/customer",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"_support",
+								"customer"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
