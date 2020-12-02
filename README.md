@@ -12,6 +12,7 @@ To use these collections and environment, there are a few setup pieces after imp
    1. You will be replacing the **compute-api-endpoint** variable
 
 
+
 1. Depending on what Admin console you see when you log in will determine which API Endpoint you will use. 
    1. The corresponding value below will replace the **api-endpoint** variable.
 
