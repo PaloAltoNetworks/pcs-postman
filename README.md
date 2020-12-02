@@ -42,4 +42,4 @@ console-port | Used only for self-hosted versions of the Compute Console |
 
 
 # Set your access and secret key in the username and password fields in the BODY of the /login and /authenticate requests.
-These will be the first 2 requests of both Collections under the **Login** folder. 
+* These will be the first 2 requests of both Collections under the **Login** folder. 
