@@ -46,7 +46,7 @@
 								"authenticate"
 							]
 						},
-						"description": "Returns a JWT auth token for accessing the Prisma Cloud Compute APIs. To generate a token, you must have an access key and include the following values in the request body parameter — access key ID as the username and your secret key as the password. Prisma Cloud Compute requires this JWT in the request header to authorize API access."
+						"description": "Returns a JWT auth token for accessing the Prisma Cloud Compute APIs. To generate a token, you must have an access key and include the following values in the request body parameter — access key ID as the username and your secret key as the password. Prisma Cloud Compute requires this JWT in the request header to authorize API access. "
 					},
 					"response": []
 				}
