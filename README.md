@@ -28,7 +28,7 @@ https://app.prismacloud.cn	| https://api.prismacloud.cn
 https://app.ca.prismacloud.io	| https://api.ca.prismacloud.io
 https://app.sg.prismacloud.io	| https://api.sg.prismacloud.io
 
-1. The rest of the variables shouldn't need altered, and are either auto-generated or for future/other scenarios.
+## The rest of the variables shouldn't need altered, and are either auto-generated or for future/other scenarios.
 
 Postman Variable | Use | Value/Example
 ------------ | ------------- | -------------
