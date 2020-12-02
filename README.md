@@ -1,5 +1,3 @@
-# pcpostman
-
 # Instructions on how to setup the Postman Collections and Environments relating to Prisma Cloud (including Compute Console) API requests
 
 To use these Collections and Environment, there are a few setup pieces after importing the 3 files into Postman:
@@ -43,5 +41,5 @@ console-port | Used only for self-hosted versions of the Compute Console |
 
 
 
-# Set your access/secret key in the BODY of the /login and /authenticate requests.
+# Set your access and secret key in the username and password fields in the BODY of the /login and /authenticate requests.
 These will be the first 2 requests of both Collections under the **Login** folder. 
