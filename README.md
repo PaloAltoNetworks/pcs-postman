@@ -43,4 +43,5 @@ console-port | Used only for self-hosted versions of the Compute Console |
 
 
 
-# Set your access/secret key in the BODY of the /login request (Does this make sense? Should it be an env variable?)
+# Set your access/secret key in the BODY of the /login and /authenticate requests.
+These will be the first 2 requests of both Collections under the **Login** folder. 
