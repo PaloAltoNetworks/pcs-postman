@@ -9,10 +9,11 @@ To use these collections and environment, there are a few setup pieces after imp
 
 1. To get the address/URL for your Console, go to *Compute > Manage > System > Downloads*, and copy the string under **Path to Console**
 **The URL should look something like this:** https://us-east1.cloud.twistlock.com/us-1-123456789
-  1. You will be replacing the **compute-api-endpoint** variable
+   1. You will be replacing the **compute-api-endpoint** variable
 
 1. Depending on what Admin console you see when you log in will determine which API Endpoint you will use. 
 The corresponding value below will replace the **api-endpoint** variable.
+
 Prisma Cloud Admin Console | 	Prisma Cloud API Endpoint
 ------------ | -------------
 https://app.prismacloud.io	| https://api.prismacloud.io
