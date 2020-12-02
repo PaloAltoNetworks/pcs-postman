@@ -6,6 +6,7 @@ To use these collections and environment, there are a few setup pieces after imp
 * [Import the 3 files](https://learning.postman.com/docs/getting-started/importing-and-exporting-data/) in this repo (2 Collections and 1 Environment) into Postman.
 
 * Set the Prisma Cloud API and Console URL in the [Postman Environment variable](https://learning.postman.com/docs/sending-requests/variables/)
+
 Prisma Cloud Admin Console | 	Prisma Cloud API Endpoint
 ------------ | -------------
 https://app.prismacloud.io	| https://api.prismacloud.io
