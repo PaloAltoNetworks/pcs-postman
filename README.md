@@ -48,8 +48,7 @@ These will be the first 2 requests of both Collections under the **Login** folde
 `
 { 
 
-    "username": "abcde-fghi-jklm-nopq-rstuvwxyz",
-    
+    "username": "abcde-fghi-jklm-nopq-rstuvwxyz",   
     "password": "a1b2c3d4e5f6g7h8i9"  
     
 }
