@@ -44,7 +44,11 @@ console-port | Used only for self-hosted versions of the Compute Console |
 # Set your access and secret key in the username and password fields in the BODY of the /login and /authenticate requests.
 These will be the first 2 requests of both Collections under the **Login** folder. 
 * Prisma Cloud API /login BODY example:
-`*{
+`
+*{
+    
     "username": "abcde-fghi-jklm-nopq-rstuvwxyz",
+   
     "password": "a1b2c3d4e5f6g7h8i9"
+    
 }*`
