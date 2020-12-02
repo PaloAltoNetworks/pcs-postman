@@ -51,3 +51,11 @@ These will be the first 2 requests of both Collections under the **Login** folde
     "password": "a1b2c3d4e5f6g7h8i9"   
 }
 `
+* There is also an optional parameter to send if you have access to more than 1 Prisma Cloud tenant called *customerName*, example:
+`
+{ 
+    "username": "abcde-fghi-jklm-nopq-rstuvwxyz",   
+    "password": "a1b2c3d4e5f6g7h8i9",
+    "customerName": "Company XYZ - 123456"
+}
+`
