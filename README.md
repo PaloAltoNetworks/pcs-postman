@@ -29,6 +29,7 @@ https://app.ca.prismacloud.io	| https://api.ca.prismacloud.io
 https://app.sg.prismacloud.io	| https://api.sg.prismacloud.io
 
 ## The rest of the variables shouldn't need altered, and are either auto-generated or for future/other scenarios.
+The below table shows an example of what a completed Environment should look like **before** generating any JWT tokens
 
 Postman Variable | Use | Value/Example
 ------------ | ------------- | -------------
@@ -40,7 +41,6 @@ api-version | Used only for the Compute collection for future API versions | v1
 console-port | Used only for self-hosted versions of the Compute Console | 
 
 
-*token, compute-token, api-version* and *
 
 
--Set your access/secret key in the BODY of the /login request (Does this make sense? Should it be an env variable?)
+# Set your access/secret key in the BODY of the /login request (Does this make sense? Should it be an env variable?)
