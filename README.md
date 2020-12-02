@@ -26,7 +26,7 @@ https://app.prismacloud.cn	| https://api.prismacloud.cn
 https://app.ca.prismacloud.io	| https://api.ca.prismacloud.io
 https://app.sg.prismacloud.io	| https://api.sg.prismacloud.io
 
-## The rest of the variables shouldn't need altered, and are either auto-generated or for future/other scenarios.
+## The rest of the variables shouldn't need altered, and are either auto-generated or for future or other scenarios.
 The below table shows an example of what a completed Environment should look like **before** generating any JWT tokens
 
 Postman Variable | Use | Value/Example
@@ -69,3 +69,5 @@ These will be the first 2 requests of both Collections under the **Login** folde
     "password": "a1b2c3d4e5f6g7h8i9"   
 }
 `
+
+## That's it! The Collections are not fully complete, so if you find a request that hasn't been created (or needs updated) please feel free to submit a PR. 
