@@ -22,8 +22,7 @@ https://app.ca.prismacloud.io	| https://api.ca.prismacloud.io
 https://app.sg.prismacloud.io	| https://api.sg.prismacloud.io
 
 * To get the address/URL for your Console, go to *Compute > Manage > System > Downloads*, and copy the string under **Path to Console**
-The URL should look something like this: 
-Prisma Cloud Compute Console | 	Compute Console URL (example)
+**The URL should look something like this:** https://us-east1.cloud.twistlock.com/us-1-123456789
 
 
 -Set your access/secret key in the BODY of the /login request (Does this make sense? Should it be an env variable?)
