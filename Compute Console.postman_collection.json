@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "Login",
+			"name": "Authenticate (Login)",
 			"item": [
 				{
 					"name": "Login Generate Token",
@@ -33,11 +33,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n \"username\":\"AccessKey\",\n \"password\":\"SecretKey\"\n}"
+							"raw": "{\n \"username\":\"ACCESS KEY\",\n \"password\":\"SECRET KEY\"\n}"
 						},
 						"url": {
-							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/authenticate",
-							"protocol": "https",
+							"raw": "{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/authenticate",
 							"host": [
 								"{{compute-api-endpoint}}{{console-port}}"
 							],
@@ -50,6 +49,28 @@
 						"description": "Returns a JWT auth token for accessing the Prisma Cloud Compute APIs. To generate a token, you must have an access key and include the following values in the request body parameter — access key ID as the username and your secret key as the password. Prisma Cloud Compute requires this JWT in the request header to authorize API access."
 					},
 					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "aa63b04f-f7ae-477d-bdef-7ac3db64274b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "147c1312-27e4-4970-86cc-4de6b73f06ed",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -92,8 +113,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/_ping",
-							"protocol": "https",
+							"raw": "{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/_ping",
 							"host": [
 								"{{compute-api-endpoint}}{{console-port}}"
 							],
@@ -147,8 +167,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/alert-profiles",
-							"protocol": "https",
+							"raw": "{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/alert-profiles",
 							"host": [
 								"{{compute-api-endpoint}}{{console-port}}"
 							],
@@ -193,8 +212,7 @@
 							"raw": "{\n  \"name\": \"jira\",\n  \"_id\": \"jira\",\n  \"jira\": {\n    \"enabled\": true,\n    \"projectKey\": \"TWIS\",\n    \"issueType\": \"Task\",\n    \"priority\": \"High\",\n    \"labels\": [],\n    \"assignee\": \"\"\n  }\n}"
 						},
 						"url": {
-							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/alert-profiles",
-							"protocol": "https",
+							"raw": "{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/alert-profiles",
 							"host": [
 								"{{compute-api-endpoint}}{{console-port}}"
 							],
@@ -242,8 +260,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/alert-profiles/names",
-							"protocol": "https",
+							"raw": "{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/alert-profiles/names",
 							"host": [
 								"{{compute-api-endpoint}}{{console-port}}"
 							],
@@ -289,8 +306,7 @@
 							"raw": "##This is from the GET Alert Profiles API call##\n"
 						},
 						"url": {
-							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/alert-profiles/test",
-							"protocol": "https",
+							"raw": "{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/alert-profiles/test",
 							"host": [
 								"{{compute-api-endpoint}}{{console-port}}"
 							],
@@ -336,8 +352,7 @@
 							"raw": "##This is from the GET Alert Profiles API call##\n"
 						},
 						"url": {
-							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/alert-profiles/ID",
-							"protocol": "https",
+							"raw": "{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/alert-profiles/ID",
 							"host": [
 								"{{compute-api-endpoint}}{{console-port}}"
 							],
@@ -392,8 +407,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/audits/access",
-							"protocol": "https",
+							"raw": "{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/audits/access",
 							"host": [
 								"{{compute-api-endpoint}}{{console-port}}"
 							],
@@ -439,8 +453,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/audits/access",
-							"protocol": "https",
+							"raw": "{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/audits/access",
 							"host": [
 								"{{compute-api-endpoint}}{{console-port}}"
 							],
@@ -489,8 +502,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/audits/access/download?type=docker > audits.csv",
-							"protocol": "https",
+							"raw": "{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/audits/access/download?type=docker > audits.csv",
 							"host": [
 								"{{compute-api-endpoint}}{{console-port}}"
 							],
@@ -546,8 +558,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/audits/admission",
-							"protocol": "https",
+							"raw": "{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/audits/admission",
 							"host": [
 								"{{compute-api-endpoint}}{{console-port}}"
 							],
@@ -566,11 +577,6 @@
 			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "Authenticate",
-			"item": [],
-			"protocolProfileBehavior": {}
-		},
-		{
 			"name": "Authenticate Client",
 			"item": [],
 			"protocolProfileBehavior": {}
@@ -582,12 +588,111 @@
 		},
 		{
 			"name": "Certificates",
-			"item": [],
+			"item": [
+				{
+					"name": "Certificate Settings",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8c2cb371-c33f-4b02-9224-abda272fe7fd",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{compute-token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/certs/service-parameter",
+							"host": [
+								"{{compute-api-endpoint}}{{console-port}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"certs",
+								"service-parameter"
+							]
+						}
+					},
+					"response": []
+				}
+			],
 			"protocolProfileBehavior": {}
 		},
 		{
 			"name": "Cloud",
-			"item": [],
+			"item": [
+				{
+					"name": "Get Cloud Discovery Results",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ccf0e007-b490-4c15-84f4-014218233d43",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{compute-token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/cloud/discovery",
+							"host": [
+								"{{compute-api-endpoint}}{{console-port}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"cloud",
+								"discovery"
+							]
+						},
+						"description": "Returns a list of all cloud discovery scan results."
+					},
+					"response": []
+				}
+			],
 			"protocolProfileBehavior": {}
 		},
 		{
@@ -657,8 +762,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/defenders/install-bundle?consoleaddr={{compute-api-endpoint}}&defenderType=serverLinux",
-							"protocol": "https",
+							"raw": "{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/defenders/install-bundle?consoleaddr={{compute-api-endpoint}}&defenderType=daemonset",
 							"host": [
 								"{{compute-api-endpoint}}{{console-port}}"
 							],
@@ -675,11 +779,62 @@
 								},
 								{
 									"key": "defenderType",
-									"value": "serverLinux"
+									"value": "daemonset",
+									"description": "Available options: docker, dockerWindows, swarm, daemonset, serverLinux, serverWindows, cri, fargate, appEmbedded, pcf, serverless, dcos"
 								}
 							]
 						},
 						"description": "Returns the certsBundle that Defender needs to securely connect to Console."
+					},
+					"response": []
+				},
+				{
+					"name": "Defender Summary",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d5581d70-d7cb-4bd1-be0f-075651ffc4ac",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{compute-token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/defenders/summary",
+							"protocol": "https",
+							"host": [
+								"{{compute-api-endpoint}}{{console-port}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"defenders",
+								"summary"
+							]
+						},
+						"description": "List the number of Defenders in each defender category."
 					},
 					"response": []
 				}
@@ -939,6 +1094,54 @@
 							]
 						},
 						"description": "{\n\t\"cap\":\"integer\",\n\t\"credential\":\"object\",\n\t\"_id\":\"string\",\n\t\"accountGUID\":\"string\",\n\t\"accountID\":\"string\",\n\t\"apiToken\":\"object\",\n\t\"encrypted\":\"string\",\n\t\"plain\":\"string\",\n\t\"caCert\":\"string\",\n\t\"lastModified\":\"datetime\",\n\t\"owner\":\"string\",\n\t\"secret\":\"object\",\n\t\"type\":\"object\",\n\t\"pattern\": \"string\",\n\t\"provider\":\"object\",\n\t\"region\":\"string\",\n\t\"roleArn\":\"string\",\n\t\"useAWSRole\":\"boolean\"\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "Certificate Settings",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "55fd7740-c2f7-45b4-81bd-cd7180c1d285",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{compute-token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/settings/certs",
+							"host": [
+								"{{compute-api-endpoint}}{{console-port}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"settings",
+								"certs"
+							]
+						}
 					},
 					"response": []
 				},
