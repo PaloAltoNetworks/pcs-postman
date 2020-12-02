@@ -6,8 +6,8 @@ To use these collections and environment, there are a few setup pieces after imp
 
 -Set your access/secret key in the BODY of the /login request (Does this make sense? Should it be an env variable?)
 
--Set the Prisma Cloud API and Console endpoint/URL (api, api2, api3, etc) in the Env variable
-Prisma Cloud Admin Console | 	Prisma Cloud APIs
+-Set the Prisma Cloud API and Console endpoint/URL in the [Postman Environment variable](https://learning.postman.com/docs/sending-requests/variables/)
+Prisma Cloud Admin Console | 	Prisma Cloud API Endpoint
 ------------ | -------------
 https://app.prismacloud.io	| https://api.prismacloud.io
 https://app2.prismacloud.io	| https://api2.prismacloud.io
