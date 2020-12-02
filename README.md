@@ -32,11 +32,11 @@ https://app.sg.prismacloud.io	| https://api.sg.prismacloud.io
 
 Postman Variable | Use | Value/Example
 ------------ | ------------- | -------------
-api-endpoint | Main API endpoint for Prisma Cloud requests | https://api.prismacloud.io
+api-endpoint | Main API endpoint for Prisma Cloud requests | api.prismacloud.io
 token	| JWT token auto-generated after the /login request | 
 compute-api-endpoint	| API endpoint for all things within the Compute tab | https://us-east1.cloud.twistlock.com/us-1-123456789
 compute-token	| JWT token auto-generated after the Compute /authenticate request | 
-api-version | Used only for the Compute collection for future API versions | 
+api-version | Used only for the Compute collection for future API versions | v1
 console-port | Used only for self-hosted versions of the Compute Console | 
 
 
