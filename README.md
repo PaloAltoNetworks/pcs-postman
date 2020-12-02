@@ -1,8 +1,8 @@
 # pcpostman
 
-# Used for Postman collections and environments relating to Prisma Cloud API requests
+# Instructions on how to setup the Postman Collections and Environments relating to Prisma Cloud (including Compute Console) API requests
 
-To use these collections and environment, there are a few setup pieces after importing the 3 files into Postman:
+To use these Collections and Environment, there are a few setup pieces after importing the 3 files into Postman:
 1. [Import the 3 files](https://learning.postman.com/docs/getting-started/importing-and-exporting-data/) in this repo (2 Collections and 1 Environment) into Postman.
 
 1. Set the Prisma Cloud API and Console URL in the [Postman Environment variable](https://learning.postman.com/docs/sending-requests/variables/)
