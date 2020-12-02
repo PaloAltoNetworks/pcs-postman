@@ -61,6 +61,8 @@ These will be the first 2 requests of both Collections under the **Login** folde
 }
 `
 
+
+
 * Prisma Cloud Compute Console /authenticate BODY example:
 
 `
