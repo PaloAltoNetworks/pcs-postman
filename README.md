@@ -11,8 +11,6 @@ To use these collections and environment, there are a few setup pieces after imp
 **The URL should look something like this:** https://us-east1.cloud.twistlock.com/us-1-123456789
    1. You will be replacing the **compute-api-endpoint** variable
 
-
-
 1. Depending on what Admin console you see when you log in will determine which API Endpoint you will use. 
    1. The corresponding value below will replace the **api-endpoint** variable.
 
@@ -30,7 +28,19 @@ https://app.prismacloud.cn	| https://api.prismacloud.cn
 https://app.ca.prismacloud.io	| https://api.ca.prismacloud.io
 https://app.sg.prismacloud.io	| https://api.sg.prismacloud.io
 
+1. The rest of the variables shouldn't need altered, and are either auto-generated or for future/other scenarios.
 
+Variable | 	Use | Value Example
+------------ | ------------- | -------------
+api-endpoint | Main API endpoint for Prisma Cloud requests | https://api.prismacloud.io
+token	| https://api2.prismacloud.io
+compute-api-endpoint	| https://api3.prismacloud.io
+compute-token	| https://api4.prismacloud.io
+api-version | 
+console-port | 
+
+
+*token, compute-token, api-version* and *
 
 
 -Set your access/secret key in the BODY of the /login request (Does this make sense? Should it be an env variable?)
