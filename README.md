@@ -3,9 +3,9 @@
 # Used for Postman collections and environments relating to Prisma Cloud API requests
 
 To use these collections and environment, there are a few setup pieces after importing the 3 files into Postman:
-l. [Import the 3 files](https://learning.postman.com/docs/getting-started/importing-and-exporting-data/) in this repo (2 Collections and 1 Environment) into Postman.
+1. [Import the 3 files](https://learning.postman.com/docs/getting-started/importing-and-exporting-data/) in this repo (2 Collections and 1 Environment) into Postman.
 
-l. Set the Prisma Cloud API and Console URL in the [Postman Environment variable](https://learning.postman.com/docs/sending-requests/variables/)
+1. Set the Prisma Cloud API and Console URL in the [Postman Environment variable](https://learning.postman.com/docs/sending-requests/variables/)
 
 Prisma Cloud Admin Console | 	Prisma Cloud API Endpoint
 ------------ | -------------
@@ -21,7 +21,7 @@ https://app.prismacloud.cn	| https://api.prismacloud.cn
 https://app.ca.prismacloud.io	| https://api.ca.prismacloud.io
 https://app.sg.prismacloud.io	| https://api.sg.prismacloud.io
 
-l. To get the address/URL for your Console, go to *Compute > Manage > System > Downloads*, and copy the string under **Path to Console**
+1. To get the address/URL for your Console, go to *Compute > Manage > System > Downloads*, and copy the string under **Path to Console**
 **The URL should look something like this:** https://us-east1.cloud.twistlock.com/us-1-123456789
 
 
