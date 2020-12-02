@@ -6,7 +6,7 @@ To use these collections and environment, there are a few setup pieces after imp
 * [Import the 3 files](https://learning.postman.com/docs/getting-started/importing-and-exporting-data/) in this repo (2 Collections and 1 Environment) into Postman.
 
 * Set the Prisma Cloud API and Console URL in the [Postman Environment variable](https://learning.postman.com/docs/sending-requests/variables/)
-1. Prisma Cloud Admin Console | 	Prisma Cloud API Endpoint
+Prisma Cloud Admin Console | 	Prisma Cloud API Endpoint
 ------------ | -------------
 https://app.prismacloud.io	| https://api.prismacloud.io
 https://app2.prismacloud.io	| https://api2.prismacloud.io
@@ -19,5 +19,10 @@ https://app.gov.prismacloud.io	| https://api.gov.prismacloud.io
 https://app.prismacloud.cn	| https://api.prismacloud.cn
 https://app.ca.prismacloud.io	| https://api.ca.prismacloud.io
 https://app.sg.prismacloud.io	| https://api.sg.prismacloud.io
+
+* To get the address/URL for your Console, go to *Compute > Manage > System > Downloads*, and copy the string under **Path to Console**
+The URL should look something like this: 
+Prisma Cloud Compute Console | 	Compute Console URL (example)
+
 
 -Set your access/secret key in the BODY of the /login request (Does this make sense? Should it be an env variable?)
