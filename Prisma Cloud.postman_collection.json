@@ -37,7 +37,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"user_or_accesskey\",\n    \"password\": \"password_or_secretkey\",\n    \"customerName\": \"tenant_name\"\n}"
+							"raw": "{\n    \"username\": \"ACCESS KEY\",\n    \"password\": \"SECRET KEY\"\n}"
 						},
 						"url": {
 							"raw": "https://{{api-endpoint}}/login",
@@ -1528,7 +1528,7 @@
 				{
 					"name": "Add Cloud Account (GCP)",
 					"request": {
-						"method": "POST",
+						"method": "PUT",
 						"header": [
 							{
 								"key": "accept",
@@ -1626,17 +1626,17 @@
 								"description": "CAUTION, DISABLED AS TO NOT ACCIDENTALLY REMOVE CLOUD ACCOUNTS",
 								"key": "x-redlock-auth",
 								"type": "text",
-								"value": "{{token}}",
-								"disabled": true
+								"value": "{{token}}"
 							}
 						],
 						"url": {
-							"raw": "https://{{api-endpoint}}/CLOUD_TYPE/CLOUD_ID",
+							"raw": "https://{{api-endpoint}}/cloud/CLOUD_TYPE/CLOUD_ACCOUNT_ID",
 							"protocol": "https",
 							"host": [
 								"{{api-endpoint}}"
 							],
 							"path": [
+								"cloud",
 								"CLOUD_TYPE",
 								"CLOUD_ID"
 							]
@@ -2367,7 +2367,7 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{api-endpoint}}/v2/policy?policy.name=POLICY_NAME&policy.severity=high&policy.label=POLICY_LABEL&policy.type=config&policy.complianceStandard=C_STANDARD&policy.complianceRequirement=C_REQUIREMENT&policy.complianceSection=C_SECTION&policy.enabled=true&policy.policyMode=custom&policy.remediable=true&cloud.type=aws",
+							"raw": "https://{{api-endpoint}}/v2/policy?policy.severity=high&policy.type=config&policy.enabled=true&policy.remediable=true&cloud.type=aws",
 							"protocol": "https",
 							"host": [
 								"{{api-endpoint}}"
@@ -2380,7 +2380,8 @@
 								{
 									"key": "policy.name",
 									"value": "POLICY_NAME",
-									"description": "Policy name"
+									"description": "Policy name",
+									"disabled": true
 								},
 								{
 									"key": "policy.severity",
@@ -2390,7 +2391,8 @@
 								{
 									"key": "policy.label",
 									"value": "POLICY_LABEL",
-									"description": "Policy label"
+									"description": "Policy label",
+									"disabled": true
 								},
 								{
 									"key": "policy.type",
@@ -2400,17 +2402,20 @@
 								{
 									"key": "policy.complianceStandard",
 									"value": "C_STANDARD",
-									"description": "Compliance Standard name"
+									"description": "Compliance Standard name",
+									"disabled": true
 								},
 								{
 									"key": "policy.complianceRequirement",
 									"value": "C_REQUIREMENT",
-									"description": "Compliance requirement name"
+									"description": "Compliance requirement name",
+									"disabled": true
 								},
 								{
 									"key": "policy.complianceSection",
 									"value": "C_SECTION",
-									"description": "Compliance section name"
+									"description": "Compliance section name",
+									"disabled": true
 								},
 								{
 									"key": "policy.enabled",
@@ -2420,7 +2425,8 @@
 								{
 									"key": "policy.policyMode",
 									"value": "custom",
-									"description": "custom or redlock_default"
+									"description": "custom or redlock_default",
+									"disabled": true
 								},
 								{
 									"key": "policy.remediable",
@@ -2732,7 +2738,55 @@
 			"name": "Alerts (incomplete)",
 			"item": [
 				{
-					"name": "https://api.prismacloud.io/v2/alert",
+					"name": "List Alert Filters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cd92cd72-52f2-4c3c-922f-336884f17418",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/filter/alert/suggest",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"filter",
+								"alert",
+								"suggest"
+							]
+						},
+						"description": "Returns an object whose keys are the available policy filters. The corresponding values are default or recently set filter options"
+					},
+					"response": []
+				},
+				{
+					"name": "List Alerts V2",
 					"event": [
 						{
 							"listen": "test",
@@ -2768,23 +2822,43 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\t\"detailed\": true,\r\t\"filters\": [\r\t\t{\r\t\t\t\"operator\": \"=\",\r\t\t\t\"name\": \"alert.status\",\r\t\t\t\"value\": \"open\"\r\t\t},\r\t\t{\r\t\t\t\"operator\": \"=\",\r\t\t\t\"name\": \"alert.status\",\r\t\t\t\"value\": \"dismissed\"\r\t\t},\r\t\t{\r\t\t\t\"operator\": \"=\",\r\t\t\t\"name\": \"policy.type\",\r\t\t\t\"value\": \"config\"\r\t\t}\r\t\t],\r\t\t\"timeRange\": {\r\t\t\t\"type\": \"relative\",\r\t\t\t\"value\": {\r\t\t\t\t\"amount\": 30, \r\t\t\t\t\"unit\": \"day\"\r\t\t\t}\r\t\t},\r\t\t\"sortBy\": [\"id:asc\"],\r\t\t\"offset\": 0,\r\t\t\"limit\": 5000\r}\r"
+							"raw": "{\r\n\t\"detailed\": true,\r\n\t\"filters\": [\r\n\t\t{\r\n\t\t\t\"operator\": \"=\",\r\n\t\t\t\"name\": \"alert.status\",\r\n\t\t\t\"value\": \"open\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"operator\": \"=\",\r\n\t\t\t\"name\": \"alert.status\",\r\n\t\t\t\"value\": \"dismissed\"\r\n\t\t},\r\n        {\r\n\t\t\t\"operator\": \"=\",\r\n\t\t\t\"name\": \"alert.status\",\r\n\t\t\t\"value\": \"snoozed\"\r\n\t\t},\r\n        {\r\n\t\t\t\"operator\": \"=\",\r\n\t\t\t\"name\": \"alert.status\",\r\n\t\t\t\"value\": \"resolved\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"operator\": \"=\",\r\n\t\t\t\"name\": \"policy.type\",\r\n\t\t\t\"value\": \"config\"\r\n\t\t}\r\n\t\t],\r\n\t\t\"timeRange\": {\r\n\t\t\t\"type\": \"relative\",\r\n\t\t\t\"value\": {\r\n\t\t\t\t\"amount\": 30, \r\n\t\t\t\t\"unit\": \"day\"\r\n\t\t\t}\r\n\t\t},\r\n\t\t\"sortBy\": [\"id:asc\"],\r\n\t\t\"offset\": 0,\r\n\t\t\"limit\": 5000\r\n}\r\n"
 						},
 						"url": {
-							"raw": "https://{{api-endpoint}}/alerts",
+							"raw": "https://{{api-endpoint}}/v2/alert?timeType=relative&timeAmount=7&timeUnit=day&detailed=false",
 							"protocol": "https",
 							"host": [
 								"{{api-endpoint}}"
 							],
 							"path": [
-								"alerts"
+								"v2",
+								"alert"
+							],
+							"query": [
+								{
+									"key": "timeType",
+									"value": "relative"
+								},
+								{
+									"key": "timeAmount",
+									"value": "7"
+								},
+								{
+									"key": "timeUnit",
+									"value": "day"
+								},
+								{
+									"key": "detailed",
+									"value": "false"
+								}
 							]
-						}
+						},
+						"description": "Returns a paginated list of alerts from the Prisma Cloud platform.\n\n"
 					},
 					"response": []
 				},
 				{
-					"name": "https://api.prismacloud.io/alert/id",
+					"name": "Alert Info",
 					"event": [
 						{
 							"listen": "test",
@@ -2808,19 +2882,19 @@
 						"header": [
 							{
 								"key": "Accept",
-								"value": "application/json; charset=UTF-8",
-								"type": "text"
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
 							},
 							{
 								"key": "Content-Type",
 								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"type": "text",
+								"value": "application/json"
 							},
 							{
 								"key": "x-redlock-auth",
-								"value": "{{token}}",
-								"type": "text"
+								"type": "text",
+								"value": "{{token}}"
 							}
 						],
 						"body": {
@@ -2828,18 +2902,17 @@
 							"raw": "{\r\t\"detailed\": true,\r\t\"filters\": [\r\t\t{\r\t\t\t\"operator\": \"=\",\r\t\t\t\"name\": \"alert.status\",\r\t\t\t\"value\": \"open\"\r\t\t},\r\t\t{\r\t\t\t\"operator\": \"=\",\r\t\t\t\"name\": \"alert.status\",\r\t\t\t\"value\": \"dismissed\"\r\t\t},\r\t\t{\r\t\t\t\"operator\": \"=\",\r\t\t\t\"name\": \"policy.type\",\r\t\t\t\"value\": \"config\"\r\t\t}\r\t\t],\r\t\t\"timeRange\": {\r\t\t\t\"type\": \"relative\",\r\t\t\t\"value\": {\r\t\t\t\t\"amount\": 30, \r\t\t\t\t\"unit\": \"day\"\r\t\t\t}\r\t\t},\r\t\t\"sortBy\": [\"id:asc\"],\r\t\t\"offset\": 0,\r\t\t\"limit\": 5000\r}\r"
 						},
 						"url": {
-							"raw": "https://api.prismacloud.io/alert/P-117144",
+							"raw": "https://{{api-endpoint}}/alert/P-117144",
 							"protocol": "https",
 							"host": [
-								"api",
-								"prismacloud",
-								"io"
+								"{{api-endpoint}}"
 							],
 							"path": [
 								"alert",
 								"P-117144"
 							]
-						}
+						},
+						"description": "Returns information about an alert for the specified ID."
 					},
 					"response": []
 				},
@@ -2942,6 +3015,79 @@
 							]
 						},
 						"description": "Returns an object whose keys are supported asset inventory filters and values contain default recent options."
+					},
+					"response": []
+				},
+				{
+					"name": "List Saved Asset Inventory Filters",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/filter/inventory",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"filter",
+								"inventory"
+							]
+						},
+						"description": "Returns a list of all the saved asset inventory filters."
+					},
+					"response": []
+				},
+				{
+					"name": "List Saved Asset Inventory Filters Copy",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/filter/inventory/TestSSull",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"filter",
+								"inventory",
+								"TestSSull"
+							]
+						},
+						"description": "Returns a list of all the saved asset inventory filters."
 					},
 					"response": []
 				},
@@ -3121,7 +3267,7 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{api-endpoint}}/compliance/posture?timeType=relative&timeAmount=40&timeUnit=hour",
+							"raw": "https://{{api-endpoint}}/compliance/posture?to_now&cloud.account=AWS_Sull_Acct&cloud.type=aws",
 							"protocol": "https",
 							"host": [
 								"{{api-endpoint}}"
@@ -3132,16 +3278,16 @@
 							],
 							"query": [
 								{
-									"key": "timeType",
-									"value": "relative"
+									"key": "to_now",
+									"value": null
 								},
 								{
-									"key": "timeAmount",
-									"value": "40"
+									"key": "cloud.account",
+									"value": "CLOUD_ACCOUNT_NAME"
 								},
 								{
-									"key": "timeUnit",
-									"value": "hour"
+									"key": "cloud.type",
+									"value": "CLOUD_TYPE"
 								}
 							]
 						},
@@ -3757,7 +3903,7 @@
 			"name": "Search",
 			"item": [
 				{
-					"name": "RQL Config Search",
+					"name": "https://api.prismacloud.io/search/config",
 					"event": [
 						{
 							"listen": "test",
@@ -3779,26 +3925,29 @@
 							{
 								"key": "Content-Type",
 								"name": "Content-Type",
-								"value": "application/json",
+								"value": "text/csv",
 								"type": "text"
 							},
 							{
 								"key": "x-redlock-auth",
 								"value": "{{token}}",
 								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json; text/csv; charset=UTF-8",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"query\": \"config where api.name = 'aws-ec2-describe-instances' AND json.rule =  'networkInterfaces[*].ownerId is member of (154600454722,55555)' \",\n    \"timeRange\": {\n        \"type\": \"relative\",\n        \"value\": {\n            \"unit\": \"hour\",\n            \"amount\": 24\n        }\n    }\n}"
+							"raw": "{\n    \"query\": \"config where api.name = 'azure-network-nic-list' \",\n    \"timeRange\": {\n        \"type\": \"relative\",\n        \"value\": {\n            \"unit\": \"hour\",\n            \"amount\": 24\n        }\n    }\n}"
 						},
 						"url": {
 							"raw": "https://{{api-endpoint}}/search/config",
 							"protocol": "https",
 							"host": [
-								"api",
-								"prismacloud",
-								"io"
+								"{{api-endpoint}}"
 							],
 							"path": [
 								"search",
@@ -3806,7 +3955,109 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "https://api.prismacloud.io/search/config",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "text/csv",
+										"type": "text"
+									},
+									{
+										"key": "x-redlock-auth",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"query\": \"config where api.name = 'azure-network-nic-list' \",\n    \"timeRange\": {\n        \"type\": \"relative\",\n        \"value\": {\n            \"unit\": \"hour\",\n            \"amount\": 24\n        }\n    }\n}"
+								},
+								"url": {
+									"raw": "https://{{api-endpoint}}/search/config",
+									"protocol": "https",
+									"host": [
+										"{{api-endpoint}}"
+									],
+									"path": [
+										"search",
+										"config"
+									]
+								}
+							},
+							"status": "Unsupported Media Type",
+							"code": 415,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 05 Oct 2020 18:26:03 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "x-redlock-request-id,x-redlock-auth,rl-json-rule,terraform-version,terraform-012-parameters,rl-variable-file-names,rl-parameters,Content-Type"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "POST, PUT, GET, OPTIONS, DELETE, PATCH"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "x-redlock-auth,x-redlock-request-id,x-redlock-status, x-redlock-fileName"
+								},
+								{
+									"key": "Access-Control-Max-Age",
+									"value": "60"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=31536000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self'"
+								},
+								{
+									"key": "x-redlock-request-id",
+									"value": "85e71b7c274148e3b33167628e7e3621"
+								},
+								{
+									"key": "Accept",
+									"value": "application/json;charset=UTF-8"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
 				}
 			],
 			"protocolProfileBehavior": {}
