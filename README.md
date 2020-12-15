@@ -1,7 +1,7 @@
 # Instructions on how to setup the Postman Collections and Environments relating to Prisma Cloud (including Compute Console) API requests
 
 To use these Collections and Environment, there are a few setup pieces after importing the 3 files into Postman:
-1. [Import the 3 files](https://learning.postman.com/docs/getting-started/importing-and-exporting-data/) in this repo (2 Collections and 1 Environment) into Postman.
+1. [Import the 3 files](https://learning.postman.com/docs/getting-started/importing-and-exporting-data/) in root of this repo (2 Collections and 1 Environment) into Postman.
 
 1. Set the Prisma Cloud API and Console URL in the [Postman Environment variable](https://learning.postman.com/docs/sending-requests/variables/)
 
@@ -69,5 +69,11 @@ These will be the first 2 requests of both Collections under the **Login** folde
     "password": "a1b2c3d4e5f6g7h8i9"   
 }
 `
+
+## Advanced Postman scenarios using Collection Runner
+
+In the **Collection_Runner** folder, there are specific examples for use-cases where using Postman's Collection Runner makes sense. 
+
+This is an easy way to iterate through files/CSVs/etc for a specific subset of API calls you want to make. More instructions in the README within that folder.
 
 ## That's it! The Collections are not fully complete, so if you find a request that hasn't been created (or needs updated) please feel free to submit a PR. 
