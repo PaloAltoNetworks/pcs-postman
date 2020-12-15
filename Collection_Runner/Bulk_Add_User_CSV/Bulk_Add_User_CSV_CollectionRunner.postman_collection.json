@@ -1,0 +1,143 @@
+{
+	"info": {
+		"_postman_id": "c650416e-58dc-4342-aeb9-ba644dfd10f8",
+		"name": "Bulk_Add_User_CSV_CollectionRunner",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login Generate Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "02eac0e0-b896-4d47-a017-0973cf99867e",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json; charset=UTF-8"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"ACCESS KEY\",\n    \"password\": \"SECRET KEY\"\n}"
+				},
+				"url": {
+					"raw": "https://{{api-endpoint}}/login",
+					"protocol": "https",
+					"host": [
+						"{{api-endpoint}}"
+					],
+					"path": [
+						"login"
+					]
+				},
+				"description": "Returns a JWT auth token for accessing the Prisma Cloud APIs. To generate a token, you must have an access key and include the following values in the request body parameter — access key ID as the username and your secret key as the password. Prisma Cloud requires this JWT in the request header to authorize API access."
+			},
+			"response": []
+		},
+		{
+			"name": "List User Roles",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"type": "text",
+						"value": "application/json; charset=UTF-8"
+					},
+					{
+						"key": "content-type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "x-redlock-auth",
+						"type": "text",
+						"value": "{{token}}"
+					}
+				],
+				"url": {
+					"raw": "https://{{api-endpoint}}/user/role",
+					"protocol": "https",
+					"host": [
+						"{{api-endpoint}}"
+					],
+					"path": [
+						"user",
+						"role"
+					]
+				},
+				"description": "Lists all accounts and associated Roles in the current Prisma Cloud tenant. "
+			},
+			"response": []
+		},
+		{
+			"name": "Add New User Profile v2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7d1c2415-1091-4a95-9f65-991b5a6371c6",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"type": "text",
+						"value": "application/json; charset=UTF-8"
+					},
+					{
+						"key": "content-type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "x-redlock-auth",
+						"type": "text",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"roleIds\":[\"{{defaultRoleId}}\"],\n    \"email\":\"{{email}}\",\n    \"firstName\":\"{{firstName}}\",\n    \"lastName\":\"{{lastName}}\",\n    \"timeZone\":\"{{timeZone}}\",\n    \"accessKeysAllowed\":{{accessKeysAllowed}},\n    \"defaultRoleId\":\"{{defaultRoleId}}\"\n}"
+				},
+				"url": {
+					"raw": "https://{{api-endpoint}}/v2/user",
+					"protocol": "https",
+					"host": [
+						"{{api-endpoint}}"
+					],
+					"path": [
+						"v2",
+						"user"
+					]
+				},
+				"description": "Creates a new users profile. You need to query a valid ROLE_ID before executing here with a List User Roles GET call. "
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

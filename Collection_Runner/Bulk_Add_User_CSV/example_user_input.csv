@@ -1,0 +1,3 @@
+email,firstName,lastName,timeZone,accessKeysAllowed,defaultRoleId
+user01@test.com,Test01,User01,GMT,false,role-id-from-ROLE-GET-request
+user05@test.com,Test05,User05,America/New_York,true,role-id-from-ROLE-GET-request
