@@ -74,6 +74,6 @@ These will be the first 2 requests of both Collections under the **Login** folde
 
 In the **Collection_Runner** folder, there are specific examples for use-cases where using Postman's Collection Runner makes sense. 
 
-This is an easy way to iterate through files/CSVs/etc for a specific subset of API calls you want to make. More instructions in the README within that folder.
+This is an easy way to iterate through files/CSVs/etc for a specific subset of API calls you want to make. More instructions in the README within [this folder](https://github.com/PaloAltoNetworks/pcs-postman/tree/main/Collection_Runner).
 
 ## That's it! The Collections are not fully complete, so if you find a request that hasn't been created (or needs updated) please feel free to submit a PR. 
