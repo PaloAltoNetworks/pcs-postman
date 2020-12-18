@@ -1940,7 +1940,7 @@
 					"response": []
 				},
 				{
-					"name": "Account Account Group",
+					"name": "Add Account Group",
 					"request": {
 						"method": "POST",
 						"header": [
