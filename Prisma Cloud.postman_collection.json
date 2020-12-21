@@ -14,7 +14,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "73f33f8a-0357-4083-9ca8-4bad3ab6d601",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
 									"postman.setEnvironmentVariable(\"token\", jsonData.token);"
@@ -89,8 +88,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "System",
@@ -130,8 +128,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "User Profile",
@@ -248,7 +245,7 @@
 					"response": []
 				},
 				{
-					"name": "Add New User Profile",
+					"name": "Add New User Profile v2",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -270,17 +267,17 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\":\"email_to_update\",\n\t\"firstName\":\"first\",\n\t\"lastName\":\"last\",\n\t\"timeZone\":\"America/New_York\",\n\t\"roleId\":\"ROLE_ID_HERE\",\n\t\"accessKeysAllowed\":true,\n\t\"onlyAllowCIAccess\":true,\n\t\"onlyAllowComputeAccess\":true\n}"
+							"raw": "{\n    \"roleIds\":[\"ROLE_IDs_HERE\"],\n    \"email\":\"NEW_USER_EMAIL\",\n    \"firstName\":\"FIRST_NAME\",\n    \"lastName\":\"LAST_NAME\",\n    \"timeZone\":\"GMT\",\n    \"accessKeysAllowed\":true,\n    \"defaultRoleId\":\"DEFAULT_ROLE_ID\"\n}"
 						},
 						"url": {
-							"raw": "https://{{api-endpoint}}/auth_token/extend",
+							"raw": "https://{{api-endpoint}}/v2/user",
 							"protocol": "https",
 							"host": [
 								"{{api-endpoint}}"
 							],
 							"path": [
-								"auth_token",
-								"extend"
+								"v2",
+								"user"
 							]
 						},
 						"description": "Creates a new users profile. You need to query a valid ROLE_ID before executing here with a List User Roles GET call. "
@@ -615,8 +612,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "User Roles",
@@ -849,8 +845,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Access Keys",
@@ -1079,8 +1074,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Cloud Accounts",
@@ -1142,7 +1136,7 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{api-endpoint}}/cloud/name?onlyActive=true&accountGroupIds=ACCOUNT_GROUP_ID&cloudType=CLOUD_TYPE",
+							"raw": "https://{{api-endpoint}}/cloud/name?onlyActive=true&accountGroupIds=7b27ef15-6e6e-431e-a0a4-653994cb56b1&cloudType=gcp",
 							"protocol": "https",
 							"host": [
 								"{{api-endpoint}}"
@@ -1159,12 +1153,12 @@
 								},
 								{
 									"key": "accountGroupIds",
-									"value": "ACCOUNT_GROUP_ID",
+									"value": "7b27ef15-6e6e-431e-a0a4-653994cb56b1",
 									"description": "ID of the account group"
 								},
 								{
 									"key": "cloudType",
-									"value": "CLOUD_TYPE",
+									"value": "gcp",
 									"description": "aws, azure, gcp, or alibaba_cloud"
 								}
 							]
@@ -1195,15 +1189,15 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{api-endpoint}}/cloud/CLOUD_TYPE/CLOUD_ACCOUNT_ID/project",
+							"raw": "https://{{api-endpoint}}/cloud/gcp/785895250532/project",
 							"protocol": "https",
 							"host": [
 								"{{api-endpoint}}"
 							],
 							"path": [
 								"cloud",
-								"CLOUD_TYPE",
-								"CLOUD_ACCOUNT_ID",
+								"gcp",
+								"785895250532",
 								"project"
 							]
 						},
@@ -1429,14 +1423,15 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{api-endpoint}}/CLOUD_TYPE/CLOUD_ID",
+							"raw": "https://{{api-endpoint}}/cloud/aws/909978213250",
 							"protocol": "https",
 							"host": [
 								"{{api-endpoint}}"
 							],
 							"path": [
-								"CLOUD_TYPE",
-								"CLOUD_ID"
+								"cloud",
+								"aws",
+								"909978213250"
 							]
 						},
 						"description": "Get information about a specific cloud account. "
@@ -1446,7 +1441,7 @@
 				{
 					"name": "Update Cloud Account (AWS)",
 					"request": {
-						"method": "POST",
+						"method": "PUT",
 						"header": [
 							{
 								"key": "accept",
@@ -1466,10 +1461,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"accountId\":\"AWS_ACCOUNT_ID\",\n\t\"enabled\":true,\n\t\"externalId\":\"AWS_EXTERNAL_ID\",\n\t\"groupIds\": [],\n\t\"name\":\"FRIENDLY_NAME\",\n\t\"roleArn\":\"AWS_ROLE_ARN\"\n}"
+							"raw": "{\n    \"name\": \"CLOUD_ACCOUNT_NAME\",\n    \"cloudType\": \"aws\",\n    \"accountType\": \"account\",\n    \"enabled\": true,\n    \"lastModifiedTs\": 1607368494285,\n    \"lastModifiedBy\": \"email\",\n    \"storageScanEnabled\": true,\n    \"storageUUID\": \"GUID\",\n    \"protectionMode\": \"MONITOR_AND_PROTECT\",\n    \"ingestionMode\": 7,\n    \"groupIds\": [\n        \"207697d0-b35c-41dc-ae37-b5aab4a45ccc\"\n    ],\n    \"externalId\": \"b09b59d4-26b4-44aa-8aa9-b57d0adda748\",\n    \"roleArn\": \"arn:aws:iam::909978213250:role/PrismaCloudReadWriteRoleWithDLP\",\n    \"canonicalId\": \"dd02d7e04eeb0b8e70f08756cffd062a34d7defcca7c121373df79d9006f51ea\",\n    \"storageScanConfig\": {\n        \"scanOption\": \"Custom\",\n        \"buckets\": {\n            \"backward\": [\n                \"\"\n            ],\n            \"forward\": [\n                \"\"\n            ]\n        },\n        \"snsTopicArn\": \"arn:aws:sns:us-east-1:909978213250:PrismaCloudSNS\"\n    },\n    \"cloudAccountStatus\": {\n        \"accountId\": \"909978213250\",\n        \"lastUpdated\": 1607389350494,\n        \"lastFullSnapshot\": 1607119740164,\n        \"ingestionEndTime\": 0,\n        \"cloudType\": \"aws\"\n    },\n    \"assumeRoleAccount\": \"REDLOCK\",\n    \"accountId\": \"909978213250\",\n    \"addedOn\": 1607119031817\n}"
 						},
 						"url": {
-							"raw": "https://{{api-endpoint}}/cloud/aws/CLOUD_ACCOUNT_ID",
+							"raw": "https://{{api-endpoint}}/cloud/aws/909978213250?skipStatusChecks=true",
 							"protocol": "https",
 							"host": [
 								"{{api-endpoint}}"
@@ -1477,7 +1472,13 @@
 							"path": [
 								"cloud",
 								"aws",
-								"CLOUD_ACCOUNT_ID"
+								"909978213250"
+							],
+							"query": [
+								{
+									"key": "skipStatusChecks",
+									"value": "true"
+								}
 							]
 						},
 						"description": "Updates an existing AWS Cloud Account from the body parameters"
@@ -1551,7 +1552,7 @@
 							"raw": "{\n  \"cloudAccount\": \n  {\n    \"accountId\": \"GCP_PROJECT_ID\",\n    \"enabled\": true,\n    \"groupIds\": [],\n    \"name\": \"FRIENDLY_NAME\" \n  },\n  \"compressionEnabled\": false,\n  \"dataflowEnabledProject\": \"\",\n  \"flowLogStorageBucket\": \"\",\n  \"credentials\": \n  {\n    \"type\": \"\",\n    \"project_id\": \"\",\n    \"private_key_id\": \"\",\n    \"private_key\": \"\",\n    \"client_email\": \"\",\n    \"client_id\": \"\",\n    \"auth_uri\": \"\",\n    \"token_uri\": \"\",\n    \"auth_provider_x509_cert_url\": \"\",\n    \"client_x509_cert_url\": \"\"\n  }\n}"
 						},
 						"url": {
-							"raw": "https://{{api-endpoint}}/cloud/gcp/CLOUD_ACCOUNT_ID",
+							"raw": "https://{{api-endpoint}}/cloud/gcp/785895250532",
 							"protocol": "https",
 							"host": [
 								"{{api-endpoint}}"
@@ -1559,7 +1560,7 @@
 							"path": [
 								"cloud",
 								"gcp",
-								"CLOUD_ACCOUNT_ID"
+								"785895250532"
 							]
 						},
 						"description": "Updates and existing  GCP Cloud Account from the body parameters.\n\"Credentials\" section is the entire JSON file from the service account key creation."
@@ -1630,15 +1631,15 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{api-endpoint}}/cloud/CLOUD_TYPE/CLOUD_ACCOUNT_ID",
+							"raw": "https://{{api-endpoint}}/cloud/gcp/785895250532",
 							"protocol": "https",
 							"host": [
 								"{{api-endpoint}}"
 							],
 							"path": [
 								"cloud",
-								"CLOUD_TYPE",
-								"CLOUD_ID"
+								"gcp",
+								"785895250532"
 							]
 						},
 						"description": "Deletes a specific cloud account from the Prisma Cloud tenant. \nThe account and associated data will be deleted in 24 hours. If you accidentally deleted the account, you can add it back within 24 hours and have all the associated data restored.\n\n** The \"x-redlock-auth\" has been disabled for this specific call, re-enable at your own risk**"
@@ -1897,8 +1898,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Account Groups",
@@ -1940,7 +1940,7 @@
 					"response": []
 				},
 				{
-					"name": "Add Account Group",
+					"name": "Account Account Group",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -2076,7 +2076,7 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{api-endpoint}}/cloud/group/ACCOUNT_GROUP_ID",
+							"raw": "https://{{api-endpoint}}/cloud/group/554f4c9c-bfdc-4fab-8be8-6a58d18db21a",
 							"protocol": "https",
 							"host": [
 								"{{api-endpoint}}"
@@ -2084,7 +2084,7 @@
 							"path": [
 								"cloud",
 								"group",
-								"ACCOUNT_GROUP_ID"
+								"554f4c9c-bfdc-4fab-8be8-6a58d18db21a"
 							]
 						},
 						"description": "Gets a specific account groups information based on ID. "
@@ -2169,8 +2169,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Policy",
@@ -2367,7 +2366,7 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{api-endpoint}}/v2/policy?policy.severity=high&policy.type=config&policy.enabled=true&policy.remediable=true&cloud.type=aws",
+							"raw": "https://{{api-endpoint}}/v2/policy?policy.severity=high&policy.type=config",
 							"protocol": "https",
 							"host": [
 								"{{api-endpoint}}"
@@ -2420,7 +2419,8 @@
 								{
 									"key": "policy.enabled",
 									"value": "true",
-									"description": "true or false"
+									"description": "true or false",
+									"disabled": true
 								},
 								{
 									"key": "policy.policyMode",
@@ -2431,12 +2431,14 @@
 								{
 									"key": "policy.remediable",
 									"value": "true",
-									"description": "true or false"
+									"description": "true or false",
+									"disabled": true
 								},
 								{
 									"key": "cloud.type",
 									"value": "aws",
-									"description": "aws, azure, gcp, or alibaba_cloud"
+									"description": "aws, azure, gcp, or alibaba_cloud",
+									"disabled": true
 								}
 							]
 						},
@@ -2668,8 +2670,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Time Range Model (Info Only)",
@@ -2731,8 +2732,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Alerts (incomplete)",
@@ -2743,7 +2743,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "cd92cd72-52f2-4c3c-922f-336884f17418",
 								"exec": [
 									""
 								],
@@ -2786,12 +2785,67 @@
 					"response": []
 				},
 				{
+					"name": "List Alert Filters Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"timeRange\":{\"value\":{\"unit\":\"hour\",\"amount\":1},\"type\":\"relative\"},\"filters\":[{\"name\":\"alert.status\",\"value\":\"open\",\"operator\":\"=\"}],\"fields\":[\"policy.name\",\"alertCount\"],\"sortBy\":[\":asc\"],\"limit\":2}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/alert/policy?detailed=false",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"alert",
+								"policy"
+							],
+							"query": [
+								{
+									"key": "detailed",
+									"value": "false"
+								}
+							]
+						},
+						"description": "Returns an object whose keys are the available policy filters. The corresponding values are default or recently set filter options"
+					},
+					"response": []
+				},
+				{
 					"name": "List Alerts V2",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "f6914377-387f-4465-a4a4-db15fd502d06",
 								"exec": [
 									""
 								],
@@ -2825,7 +2879,7 @@
 							"raw": "{\r\n\t\"detailed\": true,\r\n\t\"filters\": [\r\n\t\t{\r\n\t\t\t\"operator\": \"=\",\r\n\t\t\t\"name\": \"alert.status\",\r\n\t\t\t\"value\": \"open\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"operator\": \"=\",\r\n\t\t\t\"name\": \"alert.status\",\r\n\t\t\t\"value\": \"dismissed\"\r\n\t\t},\r\n        {\r\n\t\t\t\"operator\": \"=\",\r\n\t\t\t\"name\": \"alert.status\",\r\n\t\t\t\"value\": \"snoozed\"\r\n\t\t},\r\n        {\r\n\t\t\t\"operator\": \"=\",\r\n\t\t\t\"name\": \"alert.status\",\r\n\t\t\t\"value\": \"resolved\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"operator\": \"=\",\r\n\t\t\t\"name\": \"policy.type\",\r\n\t\t\t\"value\": \"config\"\r\n\t\t}\r\n\t\t],\r\n\t\t\"timeRange\": {\r\n\t\t\t\"type\": \"relative\",\r\n\t\t\t\"value\": {\r\n\t\t\t\t\"amount\": 30, \r\n\t\t\t\t\"unit\": \"day\"\r\n\t\t\t}\r\n\t\t},\r\n\t\t\"sortBy\": [\"id:asc\"],\r\n\t\t\"offset\": 0,\r\n\t\t\"limit\": 5000\r\n}\r\n"
 						},
 						"url": {
-							"raw": "https://{{api-endpoint}}/v2/alert?timeType=relative&timeAmount=7&timeUnit=day&detailed=false",
+							"raw": "https://{{api-endpoint}}/v2/alert?timeType=relative&timeAmount=7&timeUnit=hour&detailed=false",
 							"protocol": "https",
 							"host": [
 								"{{api-endpoint}}"
@@ -2845,7 +2899,7 @@
 								},
 								{
 									"key": "timeUnit",
-									"value": "day"
+									"value": "hour"
 								},
 								{
 									"key": "detailed",
@@ -2863,7 +2917,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f6914377-387f-4465-a4a4-db15fd502d06",
 								"exec": [
 									""
 								],
@@ -2922,7 +2975,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f6914377-387f-4465-a4a4-db15fd502d06",
 								"exec": [
 									""
 								],
@@ -2974,8 +3026,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Asset Inventory",
@@ -3076,7 +3127,7 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{api-endpoint}}/filter/inventory/TestSSull",
+							"raw": "https://{{api-endpoint}}/filter/inventory/SAVED_INVENTORY_NAME",
 							"protocol": "https",
 							"host": [
 								"{{api-endpoint}}"
@@ -3084,7 +3135,7 @@
 							"path": [
 								"filter",
 								"inventory",
-								"TestSSull"
+								"SAVED_INVENTORY_NAME"
 							]
 						},
 						"description": "Returns a list of all the saved asset inventory filters."
@@ -3234,13 +3285,11 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Compliance Reports",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Compliance Posture",
@@ -3267,7 +3316,7 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{api-endpoint}}/compliance/posture?to_now&cloud.account=AWS_Sull_Acct&cloud.type=aws",
+							"raw": "https://{{api-endpoint}}/compliance/posture?to_now&cloud.account=CLOUD_ACCOUNT_NAME&cloud.type=aws",
 							"protocol": "https",
 							"host": [
 								"{{api-endpoint}}"
@@ -3287,7 +3336,7 @@
 								},
 								{
 									"key": "cloud.type",
-									"value": "CLOUD_TYPE"
+									"value": "aws"
 								}
 							]
 						},
@@ -3592,8 +3641,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Compliance Dashboard",
@@ -3773,18 +3821,198 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Compliance Standards",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": [
+				{
+					"name": "List Compliance Standards",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/compliance",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"compliance"
+							]
+						},
+						"description": "Returns all system supported and custom compliance standards"
+					},
+					"response": []
+				},
+				{
+					"name": "List Compliance Standards by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/compliance/COMPLIANCE_ID_HERE",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"compliance",
+								"COMPLIANCE_ID_HERE"
+							]
+						},
+						"description": "Returns a specific compliance standards based on ID"
+					},
+					"response": []
+				},
+				{
+					"name": "List Compliance Requirements by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/compliance/COMPLIANCE_ID_HERE/requirement",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"compliance",
+								"COMPLIANCE_ID_HERE",
+								"requirement"
+							]
+						},
+						"description": "Returns a list of all compliance requirements for the specified compliance standard ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Compliance Requirement by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/compliance/requirement/REQUIREMENT_ID_HERE",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"compliance",
+								"requirement",
+								"REQUIREMENT_ID_HERE"
+							]
+						},
+						"description": "Returns compliance requirement data for the specified requirements ID."
+					},
+					"response": []
+				},
+				{
+					"name": "List Compliance Requirement Sections",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"type": "text",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/compliance/REQUIREMENT_ID_HERE/section",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"compliance",
+								"REQUIREMENT_ID_HERE",
+								"section"
+							]
+						},
+						"description": "Returns a list of all compliance requirement sections for the specified compliance requirement ID."
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Resource Explorer",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Audit Logs",
@@ -3839,8 +4067,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Licensing",
@@ -3886,18 +4113,15 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "IP Whitelisting",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Search Manager",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Search",
@@ -3908,7 +4132,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f6914377-387f-4465-a4a4-db15fd502d06",
 								"exec": [
 									""
 								],
@@ -4059,18 +4282,63 @@
 						}
 					]
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Alert Rules",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": [
+				{
+					"name": "List Alert Rules V2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-endpoint}}/v2/alert/rule",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"v2",
+								"alert",
+								"rule"
+							]
+						},
+						"description": "Returns all alert rules you have permission to see based on your role. The data returned does not include an open alerts count."
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Notification Templates",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Integrations (incomplete)",
@@ -4405,8 +4673,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Settings",
@@ -4487,18 +4754,15 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "DevOps Security API",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Infrastructure as Code",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Support App",
@@ -4538,9 +4802,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }

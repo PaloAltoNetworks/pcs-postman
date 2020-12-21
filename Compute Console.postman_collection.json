@@ -46,7 +46,7 @@
 								"authenticate"
 							]
 						},
-						"description": "Returns a JWT auth token for accessing the Prisma Cloud Compute APIs. To generate a token, you must have an access key and include the following values in the request body parameter — access key ID as the username and your secret key as the password. Prisma Cloud Compute requires this JWT in the request header to authorize API access. "
+						"description": "Returns a JWT auth token for accessing the Prisma Cloud Compute APIs. To generate a token, you must have an access key and include the following values in the request body parameter — access key ID as the username and your secret key as the password. Prisma Cloud Compute requires this JWT in the request header to authorize API access."
 					},
 					"response": []
 				}
@@ -55,7 +55,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "aa63b04f-f7ae-477d-bdef-7ac3db64274b",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -65,15 +64,13 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "147c1312-27e4-4970-86cc-4de6b73f06ed",
 						"type": "text/javascript",
 						"exec": [
 							""
 						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Ping",
@@ -84,7 +81,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "4e258219-d3a0-45d9-86fd-184a0a945884",
 								"exec": [
 									""
 								],
@@ -127,8 +123,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Alert Profiles",
@@ -139,7 +134,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fa682fa1-b686-4741-a250-0c6b71843ec1",
 								"exec": [
 									""
 								],
@@ -187,7 +181,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "15745ccf-1898-4c17-8eb6-3b780d0a047f",
 								"exec": [
 									""
 								],
@@ -232,7 +225,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ac0d1a1f-be46-409b-8568-9456e6f35169",
 								"exec": [
 									""
 								],
@@ -281,7 +273,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c3780e7c-2814-4311-9296-fe2233da2cce",
 								"exec": [
 									""
 								],
@@ -327,7 +318,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6fd47b15-16d7-44cb-b635-a3fc3d2fc509",
 								"exec": [
 									""
 								],
@@ -367,8 +357,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Audits",
@@ -379,7 +368,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "67aa96f2-e728-4e0c-a922-b938803fe2a1",
 								"exec": [
 									""
 								],
@@ -428,7 +416,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7a0a61f2-dc77-46ec-b2b1-98b42680417e",
 								"exec": [
 									""
 								],
@@ -474,7 +461,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b33ccd4a-a447-4167-9c5b-f7df13dbc2d3",
 								"exec": [
 									""
 								],
@@ -530,7 +516,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0f44c11c-e491-4399-b0bc-a21e63ddfe10",
 								"exec": [
 									""
 								],
@@ -573,18 +558,15 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Authenticate Client",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Backups",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Certificates",
@@ -595,7 +577,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8c2cb371-c33f-4b02-9224-abda272fe7fd",
 								"exec": [
 									""
 								],
@@ -637,8 +618,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Cloud",
@@ -649,7 +629,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ccf0e007-b490-4c15-84f4-014218233d43",
 								"exec": [
 									""
 								],
@@ -692,38 +671,31 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Collections",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Config",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Container Scan Reports",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Credentials",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Custom Compliance Checks",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "CVEs",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Defenders",
@@ -734,7 +706,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3c07f7c9-d1e5-4af6-ba86-d0f11d60a6d9",
 								"exec": [
 									""
 								],
@@ -762,7 +733,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/defenders/install-bundle?consoleaddr={{compute-api-endpoint}}&defenderType=daemonset",
+							"raw": "{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/defenders/install-bundle?consoleaddr={{compute-api-endpoint}}&defenderType=appEmbedded",
 							"host": [
 								"{{compute-api-endpoint}}{{console-port}}"
 							],
@@ -779,7 +750,7 @@
 								},
 								{
 									"key": "defenderType",
-									"value": "daemonset",
+									"value": "appEmbedded",
 									"description": "Available options: docker, dockerWindows, swarm, daemonset, serverLinux, serverWindows, cri, fargate, appEmbedded, pcf, serverless, dcos"
 								}
 							]
@@ -794,7 +765,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d5581d70-d7cb-4bd1-be0f-075651ffc4ac",
 								"exec": [
 									""
 								],
@@ -838,53 +808,139 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Demisto Alerts",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Deployments",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Custom Feeds",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": [
+				{
+					"name": "Customer Feeds Malware ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{compute-token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"name\": \"malware-sigs\",\n\"feed\": [\n    \n{\"name\": \"rule CORE-2019.4.5220.20574-SolarWinds-Core-v2019.4.5220-Hotfix5.msp\",\"md5\": \"02af7cec58b9a5da1c542b5a32151ba1\"},\n\n{\"name\": \"rule Solarwinds Worldwide, LLC\",\"md5\": \"08e35543d6110ed11fdf558bb093d401\"},\n\n{\"name\": \"rule SolarWinds.Orion.Core.BusinessLayer.dll_1\",\"md5\": \"2c4a910a1299cdae2a4e55988a2f102e\"},\n\n{\"name\": \"rule SolarWinds.Orion.Core.BusinessLayer.dll_2\",\"md5\": \"846e27a652a5e1bfbd0ddd38a16dc865\"},\n\n{\"name\": \"rule SolarWinds.Orion.Core.BusinessLayer.dll_3\",\"md5\": \"b91ce2fa41029f6955bff20079468448\"},\n\n{\"name\": \"rule OrionImprovementBusinessLayer.2.cs\",\"md5\": \"4f2eb62fa529c0283b28d05ddd311fae\"},\n\n{\"name\": \"rule app_web_logoimagehandler.ashx.b6031896.dll\",\"md5\": \"56ceb6d0011d87b6e4d7023d7ef85676\"}\n\n]\n}"
+						},
+						"url": {
+							"raw": "{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/feeds/custom/malware",
+							"host": [
+								"{{compute-api-endpoint}}{{console-port}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"feeds",
+								"custom",
+								"malware"
+							]
+						},
+						"description": "Query Parameters\nallow: (string)\nAllow indicated whether allowed requests should be shown\n\napi: (string)\nAPIs are apis to filter by\n\nhostname: (string)\nHosts are hosts to filter by\n\nruleName: (string)\nRuleNames are the rules names to filter by\n\ntype: (string)\nType is the audit type\n\nuser: (string)\nUsers are users to filter by\n\nBody\nMedia type: application/json\n\nType: object\n\nProperties\n_id: (object)\nID is id representation\n\naccountID: (string)\nAccountID is the cloud account ID where the audit was created\n\nallow: (boolean)\nAllow indicates whether the command was allowe or denied\n\napi: (string)\nAPI is the api that is being audited\n\ncollections: (string)\nCollections are collections to which this audit applies\n\ncontainerName: (string)\nContainerName is the name of the container\n\nfqdn: (string)\nFQDN is the fully qualified domain name from which the audit originated\n\nhostname: (string)\nHostname is the hostname from which the audit originated\n\nimageName: (string)\nImageName is the name of the image\n\nmsg: (string)\nMsg is the message explaining the audit\n\nruleName: (string)\nRulesName is contains the name of the rule that was applied, when blocked\n\nsourceIP: (string)\nSourceIP is the remote agent's source IP\n\ntime: (datetime)\nTime is the UTC time of the audit event\n\ntype: (string)\nType is the audit type\n\nuser: (string)\nUser is the user that run the command"
+					},
+					"response": []
+				},
+				{
+					"name": "Customer Feeds Malware  Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{compute-token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/feeds/custom/malware",
+							"host": [
+								"{{compute-api-endpoint}}{{console-port}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"feeds",
+								"custom",
+								"malware"
+							]
+						},
+						"description": "Query Parameters\nallow: (string)\nAllow indicated whether allowed requests should be shown\n\napi: (string)\nAPIs are apis to filter by\n\nhostname: (string)\nHosts are hosts to filter by\n\nruleName: (string)\nRuleNames are the rules names to filter by\n\ntype: (string)\nType is the audit type\n\nuser: (string)\nUsers are users to filter by\n\nBody\nMedia type: application/json\n\nType: object\n\nProperties\n_id: (object)\nID is id representation\n\naccountID: (string)\nAccountID is the cloud account ID where the audit was created\n\nallow: (boolean)\nAllow indicates whether the command was allowe or denied\n\napi: (string)\nAPI is the api that is being audited\n\ncollections: (string)\nCollections are collections to which this audit applies\n\ncontainerName: (string)\nContainerName is the name of the container\n\nfqdn: (string)\nFQDN is the fully qualified domain name from which the audit originated\n\nhostname: (string)\nHostname is the hostname from which the audit originated\n\nimageName: (string)\nImageName is the name of the image\n\nmsg: (string)\nMsg is the message explaining the audit\n\nruleName: (string)\nRulesName is contains the name of the rule that was applied, when blocked\n\nsourceIP: (string)\nSourceIP is the remote agent's source IP\n\ntime: (datetime)\nTime is the UTC time of the audit event\n\ntype: (string)\nType is the audit type\n\nuser: (string)\nUser is the user that run the command"
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Forensics",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Groups",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "High Availability",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Host Scan Reports",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Images Scan Reports",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Kubernetes ",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Logs",
@@ -895,7 +951,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b0b4c551-d8e2-4314-aceb-e428d1233dfe",
 								"exec": [
 									""
 								],
@@ -945,43 +1000,35 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Pivotal Cloud Foundry (PCF) Droplet Scan Reports",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Policies",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Profiles",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Projects",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Radar",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Registry Scan Reports",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "SCAP",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Scripts",
@@ -992,7 +1039,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3d05fdaf-2c0a-4961-8b23-095890c813b3",
 								"exec": [
 									""
 								],
@@ -1036,13 +1082,11 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Serverless Scan Reports",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Settings",
@@ -1053,7 +1097,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "283cf909-3e25-4967-99d1-9d31663ecd15",
 								"exec": [
 									""
 								],
@@ -1103,7 +1146,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "55fd7740-c2f7-45b4-81bd-cd7180c1d285",
 								"exec": [
 									""
 								],
@@ -1151,7 +1193,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e5d1f0c7-5613-4ff9-b21d-4147f2e979b8",
 								"exec": [
 									""
 								],
@@ -1173,7 +1214,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n\t{\n\t\t\"region\": \"us-east-1\",\n\t\t\"provider\": \"aws\",\n    \t\"cap\": 5,\n    \t\"useAWSRole\": false,\n    \t\"credential\": \n    {\n      \"type\":\"aws\",\n      \"_id\": \"SSull_AWS\"\n    }\n  }\n]"
+							"raw": "[\n\t{\n\t\t\"region\": \"us-east-1\",\n\t\t\"provider\": \"aws\",\n    \t\"cap\": 5,\n    \t\"useAWSRole\": false,\n    \t\"credential\": \n    {\n      \"type\":\"aws\",\n      \"_id\": \"CLOUD_ACCOUNT_NAME\"\n    }\n  }\n]"
 						},
 						"url": {
 							"raw": "https://{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/settings/serverless",
@@ -1192,65 +1233,53 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Signup",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Static",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Statistics",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Status",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Tags",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Trusted Images",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Users",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Utilities",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "Version",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		},
 		{
 			"name": "VM Image Scan Reports",
-			"item": [],
-			"protocolProfileBehavior": {}
+			"item": []
 		}
 	],
 	"event": [
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "e5ea375c-e695-4c64-b880-1742d8571abf",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1260,13 +1289,11 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "f1c890ee-11a8-467e-bb26-c30060661f93",
 				"type": "text/javascript",
 				"exec": [
 					""
 				]
 			}
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
