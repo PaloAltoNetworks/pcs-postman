@@ -7,6 +7,7 @@ To use these Collections and Environment, there are a few setup pieces after imp
 
 ![2](./Images/Import2.png)
 
+![3](./Images/import3.png)
 
 1. Set the Prisma Cloud API and Console URL in the [Postman Environment variable](https://learning.postman.com/docs/sending-requests/variables/)
 
@@ -15,6 +16,7 @@ To use these Collections and Environment, there are a few setup pieces after imp
 ![2](./Images/Env2.png)
 
 ![3](./Images/Env3.png)
+
 
 1. To get the address/URL for your Console, go to *Compute > Manage > System > Downloads*, and copy the string under **Path to Console**
 **The URL should look something like this:** https://us-east1.cloud.twistlock.com/us-1-123456789
@@ -72,6 +74,14 @@ These will be the first 2 requests of both Collections under the **Login** folde
     "customerName": "Company XYZ - 123456"
 }
 `
+* Before
+
+![5](./Images/userpassbefore.png)
+
+* After
+
+
+![6](./Images/userpassafter.png)
 
 * Prisma Cloud Compute Console /authenticate BODY example:
 
