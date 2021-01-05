@@ -3,7 +3,20 @@
 To use these Collections and Environment, there are a few setup pieces after importing the 3 files into Postman:
 1. [Import the 3 files](https://learning.postman.com/docs/getting-started/importing-and-exporting-data/) in root of this repo (2 Collections and 1 Environment) into Postman.
 
+![1](./Images/Import1.png)
+
+![2](./Images/Import2.png)
+
+![3](./Images/import3.png)
+
 1. Set the Prisma Cloud API and Console URL in the [Postman Environment variable](https://learning.postman.com/docs/sending-requests/variables/)
+
+![1](./Images/Env1.png)
+
+![2](./Images/Env2.png)
+
+![3](./Images/Env3.png)
+
 
 1. To get the address/URL for your Console, go to *Compute > Manage > System > Downloads*, and copy the string under **Path to Console**
 **The URL should look something like this:** https://us-east1.cloud.twistlock.com/us-1-123456789
@@ -11,6 +24,7 @@ To use these Collections and Environment, there are a few setup pieces after imp
 
 1. Depending on what Admin console you see when you log in will determine which API Endpoint you will use. 
    1. The corresponding value below will replace the **api-endpoint** variable.
+
 
 Prisma Cloud Admin Console | 	Prisma Cloud API Endpoint
 ------------ | -------------
@@ -60,6 +74,14 @@ These will be the first 2 requests of both Collections under the **Login** folde
     "customerName": "Company XYZ - 123456"
 }
 `
+* Before
+
+![5](./Images/userpassbefore.png)
+
+* After
+
+
+![6](./Images/userpassafter.png)
 
 * Prisma Cloud Compute Console /authenticate BODY example:
 
