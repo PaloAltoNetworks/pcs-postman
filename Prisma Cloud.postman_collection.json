@@ -4762,7 +4762,189 @@
 		},
 		{
 			"name": "Infrastructure as Code",
-			"item": []
+			"item": [
+				{
+					"name": "Add Scan Asset",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"async-scan\",\n        \"attributes\": {\n            \"assetName\": \"Asset name that will appear as the Resource name in the Prisma Cloud DevOps Inventory\",\n            \"assetType\": \"IaC-API\",\n            \"failureCriteria\": {\n                \"high\": 1,\n                \"medium\": 2,\n                \"low\": 3,\n                \"operator\": \"or\"\n            },\n            \"scanAttributes\": {\n                \"scanName\": \"Example\",\n                \"scanVersion\": \"2.0\"\n            },\n            \"tags\": {\n                \"org\": \"Palo Alto Networks\",\n                \"team\": \"Prisma Cloud SE\"\n            }\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/iac/v2/scans",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"iac",
+								"v2",
+								"scans"
+							]
+						},
+						"description": "Create an IaC scan asset in Prisma Cloud.\n\nReturns a SCAN_ID (data.id) and a URL (data.links.url) for uploading the templates to be scanned. \n\nThe SCAN_ID is required by the Initiate Scan Job, Get Scan Job Status, and Get Scan Result Details endpoints."
+					},
+					"response": []
+				},
+				{
+					"name": "Initiate Scan Job",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"attributes\": {\n            \"templateType\": \"TF\",\n            \"templateVersion\": \"0.13\"\n        },\n        \"id\": \"SCAN_UUID\",\n        \"templateParameters\": {\n            \"variableFiles\": [\n                \"RELATIVE/PATH/TO/VARIABLE/FILE\"\n            ],\n            \"policyIdFilters\": [\n                \"1abcdef2-3gh4-5ij6-7kl8-9mnopqrstuv0\"\n            ],\n            \"files\": [\n                \"RELATIVE/PATH/TO/FILE\"\n            ],\n            \"folders\": [\n                \"RELATIVE/PATH/TO/FOLDER\"\n            ]\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/iac/v2/scans/SCAN_ID",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"iac",
+								"v2",
+								"scans",
+								"SCAN_ID"
+							]
+						},
+						"description": "Start a job to perform an asynchronous scan of the templates uploaded to the IaC scan asset.\n\nBefore using this endpoint, you must use the URL returned by the Add Scan Asset endpoint to upload the templates to be scanned."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Scan Job Status",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/iac/v2/scans/SCAN_ID/status",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"iac",
+								"v2",
+								"scans",
+								"SCAN_ID",
+								"status"
+							]
+						},
+						"description": "Query scan job status.\n\nBefore using this endpoint, you must use the Initiate Scan Job endpoint to start the scan of the IaC scan asset."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Scan Result Details",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "x-redlock-auth",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/iac/v2/scans/SCAN_ID/results",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"iac",
+								"v2",
+								"scans",
+								"SCAN_ID",
+								"results"
+							]
+						},
+						"description": "Request IaC scan results.\n\nBefore using this endpoint, you must use the Get Scan Job Status endpoint to verify that the scan job is completed."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
 		},
 		{
 			"name": "Support App",
