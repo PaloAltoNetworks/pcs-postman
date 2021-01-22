@@ -790,7 +790,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"accountGroupIds\":[\"ACCOUNT_GROUP_ID\"],\n\t\"name\":\"ROLE_NAME\",\n\t\"description\":\"Role Description\",\n\t\"roleType\":\"PERMISSION_GROUP_NAME\",\n\t\"restrictDismissalAccess\":false,\n\"additionalAttributes\":\n\t{\"onlyAllowCIAccess\":false,\n\t\"onlyAllowComputeAccess\":false}\n}"
+							"raw": "{\n    \"name\": \"ROLE_NAME\",\n    \"description\": \"Role Description\",\n    \"roleType\": \"PERMISSION_GROUP_NAME\",\n    \"accountGroupIds\": [\"ACCOUNT_GROUP_ID\"],\n    \"resourceListIds\": [\"RESOURCE_LIST_IDS\"],\n    \"associatedUsers\": [\"ASSOCIATED_USERS\"],\n    \"restrictDismissalAccess\": false,\n    \"additionalAttributes\": {\n        \"onlyAllowCIAccess\": false,\n        \"onlyAllowComputeAccess\": false,\n        \"hasDefenderPermissions\": false,\n        \"onlyAllowReadAccess\": false\n    }\n}"
 						},
 						"url": {
 							"raw": "https://{{api-endpoint}}/user/role/ROLE_ID_HERE",
