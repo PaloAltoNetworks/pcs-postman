@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "959507cd-e216-4a02-9695-2cb91a5527e2",
+		"_postman_id": "1375b938-d515-4f65-9a5f-83894da781f4",
 		"name": "Compute Console",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -33,7 +33,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n \"username\":\"ACCESS KEY\",\n \"password\":\"SECRET KEY\"\n}"
+							"raw": "{\n \"username\":\"{{ACCESS_KEY}}\",\n \"password\":\"{{SECRET_KEY}}\"\n}"
 						},
 						"url": {
 							"raw": "{{compute-api-endpoint}}{{console-port}}/api/{{api-version}}/authenticate",

@@ -9,8 +9,11 @@ To use these Collections and Environment, there are a few setup pieces after imp
 
 ![3](./Images/import3.png)
 
-1. Set the Prisma Cloud API and Console URL in the [Postman Environment variable](https://learning.postman.com/docs/sending-requests/variables/)
-
+1. Set some [Postman Environment variables](https://learning.postman.com/docs/sending-requests/variables/). You will need to set:
+    1. api-endpoint
+    1. compute-api-endpoint
+    1. ACCESS_KEY
+    1. SECRET_KEY
 ![1](./Images/Env1.png)
 
 ![2](./Images/Env2.png)
@@ -53,45 +56,6 @@ api-version | Used only for the Compute collection for future API versions | v1
 console-port | Used only for self-hosted versions of the Compute Console | 
 
 
-
-
-# Set your access and secret key in the username and password fields in the BODY of the /login and /authenticate requests.
-These will be the first 2 requests of both Collections under the **Login** folder. 
-* Prisma Cloud API /login BODY example:
-
-`
-{ 
-    "username": "abcde-fghi-jklm-nopq-rstuvwxyz",   
-    "password": "a1b2c3d4e5f6g7h8i9"   
-}
-`
-* There is also an optional parameter to send if you have access to more than 1 Prisma Cloud tenant called *customerName*, example:
-
-`
-{ 
-    "username": "abcde-fghi-jklm-nopq-rstuvwxyz",   
-    "password": "a1b2c3d4e5f6g7h8i9",
-    "customerName": "Company XYZ - 123456"
-}
-`
-* Before
-
-![5](./Images/userpassbefore.png)
-
-* After
-
-
-![6](./Images/userpassafter.png)
-
-* Prisma Cloud Compute Console /authenticate BODY example:
-
-`
-{ 
-    "username": "abcde-fghi-jklm-nopq-rstuvwxyz",   
-    "password": "a1b2c3d4e5f6g7h8i9"   
-}
-`
-
 ## Advanced Postman scenarios using Collection Runner
 
 In the **Collection_Runner** folder, there are specific examples for use-cases where using Postman's Collection Runner makes sense. 
@@ -99,3 +63,6 @@ In the **Collection_Runner** folder, there are specific examples for use-cases w
 This is an easy way to iterate through files/CSVs/etc for a specific subset of API calls you want to make. More instructions in the README within [this folder](https://github.com/PaloAltoNetworks/pcs-postman/tree/main/Collection_Runner).
 
 ## That's it! The Collections are not fully complete, so if you find a request that hasn't been created (or needs updated) please feel free to submit a PR. 
+
+## Accessing Multiple Tenants
+You can easily switch between Prisma Cloud Tenants by creating multiple Environments. To do this just import the `Prisma Cloud.postman_environment.json` file again and set the new api endpoints and credentials. Be sure to change the environment name so you can tell your environments apart! 
