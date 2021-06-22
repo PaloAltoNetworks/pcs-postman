@@ -1,0 +1,129 @@
+{
+	"info": {
+		"_postman_id": "a444b129-1e59-42c7-b3c8-237d7cb9bb40",
+		"name": "Bulk_Add_Cloud_Account_Azure",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login Generate Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json; charset=UTF-8"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"ACCESS KEY\",\n    \"password\": \"SECRET KEY\"\n}"
+				},
+				"url": {
+					"raw": "https://{{api-endpoint}}/login",
+					"protocol": "https",
+					"host": [
+						"{{api-endpoint}}"
+					],
+					"path": [
+						"login"
+					]
+				},
+				"description": "Returns a JWT auth token for accessing the Prisma Cloud APIs. To generate a token, you must have an access key and include the following values in the request body parameter — access key ID as the username and your secret key as the password. Prisma Cloud requires this JWT in the request header to authorize API access."
+			},
+			"response": []
+		},
+		{
+			"name": "List Account Groups",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"type": "text",
+						"value": "application/json; charset=UTF-8"
+					},
+					{
+						"key": "content-type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "x-redlock-auth",
+						"type": "text",
+						"value": "{{token}}"
+					}
+				],
+				"url": {
+					"raw": "https://{{api-endpoint}}/cloud/group",
+					"protocol": "https",
+					"host": [
+						"{{api-endpoint}}"
+					],
+					"path": [
+						"cloud",
+						"group"
+					]
+				},
+				"description": "Lists all accounts groups and cloud accounts in the current Prisma Cloud tenant. "
+			},
+			"response": []
+		},
+		{
+			"name": "Add Cloud Account (Azure)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"type": "text",
+						"value": "application/json; charset=UTF-8"
+					},
+					{
+						"key": "content-type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "x-redlock-auth",
+						"type": "text",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"cloudAccount\": \n  {\n    \"accountId\": \"{{SUBID}}\",\n    \"enabled\": true,\n    \"groupIds\": [\"GROUP_ID_HERE\"],\n    \"name\": \"{{SUBNAME}}\",\n    \"accountType\": \"account\",\n    \"protectionMode\": \"MONITOR\"\n  },\n  \"clientId\": \"APPLICATION_ID_HERE\",\n  \"key\": \"CLIENT_SECRET_HERE\",\n  \"monitorFlowLogs\": true,\n  \"tenantId\": \"AZURE_TENANT_ID_HERE\",\n  \"servicePrincipalId\": \"ENTERPRISE_OBJECT_ID_HERE\"\n}"
+				},
+				"url": {
+					"raw": "https://{{api-endpoint}}/cloud/azure",
+					"protocol": "https",
+					"host": [
+						"{{api-endpoint}}"
+					],
+					"path": [
+						"cloud",
+						"azure"
+					]
+				},
+				"description": "Adds a new Azure Cloud Account from the body parameters"
+			},
+			"response": []
+		}
+	]
+}

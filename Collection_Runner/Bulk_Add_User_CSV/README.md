@@ -25,13 +25,7 @@ The easiest way to get these IDs is to run the included **List User Roles** GET 
 
 ## Steps to iterate the CSV using the Collection Runner
 
-1. After you have the above Collection imported and your Access/Secret key setup, click the **"Runner"** tab at the top-left of Postman. 
-
-1. This should bring up a new screen, where you will select the following:
-
-* **Choose a collection or folder**
-
-This is where you choose the ENTIRE Collection you wish to run, in this case: **Bulk_Add_User_CSV_CollectionRunner**
+1. After you have the above Collection imported and your Access/Secret key setup, click the main collection folder on the left, and then click the **"Run"** tab at the top-right of Postman.
 
 * **Environment**
 
