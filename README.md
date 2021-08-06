@@ -1,17 +1,19 @@
 # Instructions on how to setup the Postman Collections and Environments relating to Prisma Cloud (including Compute Console) API requests
 
-To use these Collections and Environment, there are a few setup pieces after importing the 3 files into Postman:
-1. [Import the 3 files](https://learning.postman.com/docs/getting-started/importing-and-exporting-data/) in root of this repo (2 Collections and 1 Environment) into Postman.
+To use these Collections and Environment, there are a few setup pieces after importing the 4 files into Postman:
+1. [Import the 4 files](https://learning.postman.com/docs/getting-started/importing-and-exporting-data/) in root of this repo (3 Collections and 1 Environment) into Postman.
 
 ![1](./Images/Import1.png)
 
 ![2](./Images/Import2.png)
 
-![3](./Images/import3.png)
+![3](./Images/Import3.png)
 
 1. Set some [Postman Environment variables](https://learning.postman.com/docs/sending-requests/variables/). You will need to set:
     1. api-endpoint
     1. compute-api-endpoint
+    1. aporeto-api-enpoint
+    1. namespace
     1. ACCESS_KEY
     1. SECRET_KEY
 ![1](./Images/Env1.png)
@@ -25,6 +27,10 @@ To use these Collections and Environment, there are a few setup pieces after imp
 **The URL should look something like this:** https://us-east1.cloud.twistlock.com/us-1-123456789
    1. You will be replacing the **compute-api-endpoint** variable
 
+1. To get the address/URL for your Microsegmentation, click on the key icon at the bottom of any page on *Cloud Network Security
+**The URL should look something like this:** https://api.east-01.network.prismacloud.io
+   1. You will be replacing the **aporeto-api-endpoint** variable
+   
 1. Depending on what Admin console you see when you log in will determine which API Endpoint you will use. 
    1. The corresponding value below will replace the **api-endpoint** variable.
 
@@ -54,7 +60,9 @@ compute-api-endpoint	| API endpoint for all things within the Compute tab | http
 compute-token	| JWT token auto-generated after the Compute /authenticate request | 
 api-version | Used only for the Compute collection for future API versions | v1
 console-port | Used only for self-hosted versions of the Compute Console | 
-
+aporeto-api-endpoint | API endpoint for all things within the Microsegmentation tab | https://api.east-01.network.prismacloud.io
+aporeto-token | JWT token auto-generated after the Microsegmentation /issue request
+namespace | The namespace on CNS where you will be operating | /859889522116745232/my-cloud-account/Application
 
 ## Advanced Postman scenarios using Collection Runner
 

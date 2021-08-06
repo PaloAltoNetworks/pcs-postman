@@ -1,0 +1,1380 @@
+{
+	"info": {
+		"_postman_id": "7367ee2f-5a3a-4297-9cc0-d516f094ecd7",
+		"name": "Prisma Cloud - Identity based Microsegmentation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"{{ACCESS_KEY}}\",\n    \"password\": \"{{SECRET_KEY}}\"\n}"
+						},
+						"url": {
+							"raw": "https://{{api-endpoint}}/login",
+							"protocol": "https",
+							"host": [
+								"{{api-endpoint}}"
+							],
+							"path": [
+								"login"
+							]
+						},
+						"description": "Returns a JWT auth token for accessing the Prisma Cloud APIs. To generate a token, you must have an access key and include the following values in the request body parameter — access key ID as the username and your secret key as the password. Prisma Cloud requires this JWT in the request header to authorize API access."
+					},
+					"response": []
+				},
+				{
+					"name": "Exchange Authentication Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "{{aporeto-api-endpoint}}"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "cookie",
+								"value": "x-aporeto-token"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"metadata\":{\"token\":\"{{token}}\"},\"realm\":\"PCIdentityToken\",\"validity\":\"720h\"}"
+						},
+						"url": {
+							"raw": "https://{{aporeto-api-endpoint}}/issue?asCookie=true",
+							"protocol": "https",
+							"host": [
+								"{{aporeto-api-endpoint}}"
+							],
+							"path": [
+								"issue"
+							],
+							"query": [
+								{
+									"key": "asCookie",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Agent (Enforcers)",
+			"item": [
+				{
+					"name": "Get Enforcers Information",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authority",
+								"value": "{{aporeto-api-endpoint}}"
+							},
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "x-namespace",
+								"value": "{{namespace}}"
+							},
+							{
+								"key": "cookie",
+								"value": "{{aporeto-token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{aporeto-api-endpoint}}/enforcers?limit=100&recursive=true",
+							"protocol": "https",
+							"host": [
+								"{{aporeto-api-endpoint}}"
+							],
+							"path": [
+								"enforcers"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "100"
+								},
+								{
+									"key": "recursive",
+									"value": "true"
+								},
+								{
+									"key": "q",
+									"value": "enforcementStatus+%3D%3D+Inactive",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Enforcer Profiles",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Namespace",
+								"value": "{{namespace}}"
+							},
+							{
+								"key": "Cookie",
+								"value": "{{aporeto-token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{aporeto-api-endpoint}}/enforcerprofiles?recursive=true&propagated=true",
+							"protocol": "https",
+							"host": [
+								"{{aporeto-api-endpoint}}"
+							],
+							"path": [
+								"enforcerprofiles"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "100",
+									"disabled": true
+								},
+								{
+									"key": "recursive",
+									"value": "true"
+								},
+								{
+									"key": "propagated",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Enforcer Profile",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Namespace",
+								"value": "{{namespace}}"
+							},
+							{
+								"key": "Cookie",
+								"value": "{{aporeto-token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"remoteEnforcerEnabled\":true,\"linuxProcessesSupportEnabled\":true,\"name\":\"Enforcer_Profile\",\"targetNetworks\":[\"10.0.0.0/8\",\"172.16.0.0/12\",\"192.168.0.0/16\"],\"excludedNetworks\":[\"127.0.0.1/32\"],\"associatedTags\":[]}"
+						},
+						"url": {
+							"raw": "https://{{aporeto-api-endpoint}}/enforcerprofiles",
+							"protocol": "https",
+							"host": [
+								"{{aporeto-api-endpoint}}"
+							],
+							"path": [
+								"enforcerprofiles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Enforcer Profile",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "authority",
+								"value": "{{aporeto-api-endpoint}}"
+							},
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "x-namespace",
+								"value": "{{namespace}}"
+							},
+							{
+								"key": "cookie",
+								"value": "{{aporeto-token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{aporeto-api-endpoint}}/enforcerprofiles/[enforcerprofile-id]",
+							"protocol": "https",
+							"host": [
+								"{{aporeto-api-endpoint}}"
+							],
+							"path": [
+								"enforcerprofiles",
+								"[enforcerprofile-id]"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Enforcer Profile Mappings",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Namespace",
+								"value": "{{namespace}}"
+							},
+							{
+								"key": "Cookie",
+								"value": "{{aporeto-token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{aporeto-api-endpoint}}/enforcerprofilemappingpolicies?limit=100&recursive=true&propagated=true",
+							"protocol": "https",
+							"host": [
+								"{{aporeto-api-endpoint}}"
+							],
+							"path": [
+								"enforcerprofilemappingpolicies"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "100"
+								},
+								{
+									"key": "recursive",
+									"value": "true"
+								},
+								{
+									"key": "propagated",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Enforcer Profile Mapping",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Namespace",
+								"value": "{{namespace}}"
+							},
+							{
+								"key": "Cookie",
+								"value": "{{aporeto-token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"Enforcer Profile\",\"propagate\":true,\"subject\":[[\"@org:group=Anything\",\"@org:cloudaccount=demo-cloud-account\",\"@org:tenant=859809532107743232\"]],\"object\":[[\"enforcerprofile=Anything\"]]}"
+						},
+						"url": {
+							"raw": "https://{{aporeto-api-endpoint}}/enforcerprofilemappingpolicies",
+							"protocol": "https",
+							"host": [
+								"{{aporeto-api-endpoint}}"
+							],
+							"path": [
+								"enforcerprofilemappingpolicies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Enforcer Profile Mapping",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "authority",
+								"value": "{{aporeto-api-endpoint}}"
+							},
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "x-namespace",
+								"value": "{{namespace}}"
+							},
+							{
+								"key": "cookie",
+								"value": "{{aporeto-token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{aporeto-api-endpoint}}/enforcerprofilemappingpolicies/[enforcerprofilemapping-id]",
+							"protocol": "https",
+							"host": [
+								"{{aporeto-api-endpoint}}"
+							],
+							"path": [
+								"enforcerprofilemappingpolicies",
+								"[enforcerprofilemapping-id]"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Manage",
+			"item": [
+				{
+					"name": "List Namespaces",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Namespace",
+								"value": "{{namespace}}"
+							},
+							{
+								"key": "Cookie",
+								"value": "{{aporeto-token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{aporeto-api-endpoint}}/namespaces",
+							"protocol": "https",
+							"host": [
+								"{{aporeto-api-endpoint}}"
+							],
+							"path": [
+								"namespaces"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Cloud Account Level Namespace (Inherit)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Namespace",
+								"value": "{{namespace}}"
+							},
+							{
+								"key": "Cookie",
+								"value": "{{aporeto-token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"type\":\"CloudAccount\",\"name\":\"teste\"}"
+						},
+						"url": {
+							"raw": "https://{{aporeto-api-endpoint}}/namespaces",
+							"protocol": "https",
+							"host": [
+								"{{aporeto-api-endpoint}}"
+							],
+							"path": [
+								"namespaces"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Group Level Namespace (Default Allow)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Namespace",
+								"value": "{{namespace}}"
+							},
+							{
+								"key": "Cookie",
+								"value": "{{aporeto-token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"type\":\"Group\",\"defaultPUIncomingTrafficAction\":\"Allow\",\"defaultPUOutgoingTrafficAction\":\"Allow\",\"name\":\"teste\"}"
+						},
+						"url": {
+							"raw": "https://{{aporeto-api-endpoint}}/namespaces",
+							"protocol": "https",
+							"host": [
+								"{{aporeto-api-endpoint}}"
+							],
+							"path": [
+								"namespaces"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Namespace",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "authority",
+								"value": "{{aporeto-api-endpoint}}"
+							},
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "x-namespace",
+								"value": "{{namespace}}"
+							},
+							{
+								"key": "cookie",
+								"value": "{{aporeto-token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{aporeto-api-endpoint}}/namespaces/[namespace-id]",
+							"protocol": "https",
+							"host": [
+								"{{aporeto-api-endpoint}}"
+							],
+							"path": [
+								"namespaces",
+								"[namespace-id]"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Rulesets",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Namespace",
+								"value": "{{namespace}}"
+							},
+							{
+								"key": "Cookie",
+								"value": "{{aporeto-token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{aporeto-api-endpoint}}/networkrulesetpolicies?recursive=true&propagated=true",
+							"protocol": "https",
+							"host": [
+								"{{aporeto-api-endpoint}}"
+							],
+							"path": [
+								"networkrulesetpolicies"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "100",
+									"disabled": true
+								},
+								{
+									"key": "recursive",
+									"value": "true"
+								},
+								{
+									"key": "propagated",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Ruleset",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "X-Namespace",
+								"value": "{{namespace}}"
+							},
+							{
+								"key": "Cookie",
+								"value": "{{aporeto-token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"propagate\":true,\"name\":\"Allow_Internet\",\"subject\":[[\"@org:cloudaccount=\",\"@org:tenant=\"]],\"incomingRules\":[{\"action\":\"Allow\",\"object\":[[\"externalnetwork:name=Internet\"]],\"protocolPorts\":[\"tcp/80\"]}],\"outgoingRules\":[{\"action\":\"Allow\",\"object\":[[\"externalnetwork:name=Internet\"]],\"protocolPorts\":[\"tcp/80\"]}]}"
+						},
+						"url": {
+							"raw": "https://{{aporeto-api-endpoint}}/networkrulesetpolicies",
+							"protocol": "https",
+							"host": [
+								"{{aporeto-api-endpoint}}"
+							],
+							"path": [
+								"networkrulesetpolicies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Ruleset",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "X-Namespace",
+								"value": "{{namespace}}"
+							},
+							{
+								"key": "Cookie",
+								"value": "{{aporeto-token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{aporeto-api-endpoint}}/networkrulesetpolicies/[ruleset-id]",
+							"protocol": "https",
+							"host": [
+								"{{aporeto-api-endpoint}}"
+							],
+							"path": [
+								"networkrulesetpolicies",
+								"[ruleset-id]"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List External Networks",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Namespace",
+								"value": "{{namespace}}"
+							},
+							{
+								"key": "Cookie",
+								"value": "{{aporeto-token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{aporeto-api-endpoint}}/externalnetworks",
+							"protocol": "https",
+							"host": [
+								"{{aporeto-api-endpoint}}"
+							],
+							"path": [
+								"externalnetworks"
+							],
+							"query": [
+								{
+									"key": "recursive",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "propagated",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create External Network",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Namespace",
+								"value": "{{namespace}}"
+							},
+							{
+								"key": "Cookie",
+								"value": "{{aporeto-token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"propagate\":true,\"name\":\"Teste\",\"entries\":[\"0.0.0.0/0\"],\"associatedTags\":[\"externalnetwork:name=Teste\"]}"
+						},
+						"url": {
+							"raw": "https://{{aporeto-api-endpoint}}/externalnetworks",
+							"protocol": "https",
+							"host": [
+								"{{aporeto-api-endpoint}}"
+							],
+							"path": [
+								"externalnetworks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete External Network",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "X-Namespace",
+								"value": "{{namespace}}"
+							},
+							{
+								"key": "Cookie",
+								"value": "{{aporeto-token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{aporeto-api-endpoint}}/externalnetworks/[externalnetworks-id]",
+							"protocol": "https",
+							"host": [
+								"{{aporeto-api-endpoint}}"
+							],
+							"path": [
+								"externalnetworks",
+								"[externalnetworks-id]"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Processing Units",
+			"item": [
+				{
+					"name": "List Processing Units",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "X-Namespace",
+								"value": "{{namespace}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{aporeto-api-endpoint}}/processingunits?limit=100&recursive=true",
+							"protocol": "https",
+							"host": [
+								"{{aporeto-api-endpoint}}"
+							],
+							"path": [
+								"processingunits"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "100"
+								},
+								{
+									"key": "q",
+									"value": "operationalStatus+%3D%3D+Running",
+									"disabled": true
+								},
+								{
+									"key": "recursive",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Processing Units affected by a ruleset",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							},
+							{
+								"key": "X-Namespace",
+								"value": "{{namespace}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{aporeto-api-endpoint}}/networkrulesetpolicies/[ruleset-id]/processingunits",
+							"protocol": "https",
+							"host": [
+								"{{aporeto-api-endpoint}}"
+							],
+							"path": [
+								"networkrulesetpolicies",
+								"[ruleset-id]",
+								"processingunits"
+							],
+							"query": [
+								{
+									"key": "recursive",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Monitoring",
+			"item": [
+				{
+					"name": "List Activities (audit logs)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Namespace",
+								"value": "{{namespace}}"
+							},
+							{
+								"key": "Cookie",
+								"value": "{{aporeto-token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{aporeto-api-endpoint}}/activities?limit=100&order=-date&recursive=true",
+							"protocol": "https",
+							"host": [
+								"{{aporeto-api-endpoint}}"
+							],
+							"path": [
+								"activities"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "100"
+								},
+								{
+									"key": "order",
+									"value": "-date"
+								},
+								{
+									"key": "recursive",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Alarms",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Namespace",
+								"value": "{{namespace}}"
+							},
+							{
+								"key": "Cookie",
+								"value": "{{aporeto-token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{aporeto-api-endpoint}}/alarms?limit=100&recursive=true",
+							"protocol": "https",
+							"host": [
+								"{{aporeto-api-endpoint}}"
+							],
+							"path": [
+								"alarms"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "100"
+								},
+								{
+									"key": "recursive",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Credentials",
+			"item": [
+				{
+					"name": "List App Credentials",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Namespace",
+								"value": "{{namespace}}"
+							},
+							{
+								"key": "Cookie",
+								"value": "{{aporeto-token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{aporeto-api-endpoint}}/appcredentials?limit=100&recursive=true",
+							"protocol": "https",
+							"host": [
+								"{{aporeto-api-endpoint}}"
+							],
+							"path": [
+								"appcredentials"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "100"
+								},
+								{
+									"key": "recursive",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create App Credential",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Namespace",
+								"value": "{{namespace}}"
+							},
+							{
+								"key": "Cookie",
+								"value": "{{aporeto-token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"AppCred\",\"roles\":[\"@auth:role=namespace.administrator\"],\"CSR\":\"\"}"
+						},
+						"url": {
+							"raw": "https://api.east-01.network.prismacloud.io/appcredentials",
+							"protocol": "https",
+							"host": [
+								"api",
+								"east-01",
+								"network",
+								"prismacloud",
+								"io"
+							],
+							"path": [
+								"appcredentials"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete App Credential",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Namespace",
+								"value": "/859809532107743232/demo-cloud-account/GKE_Demo"
+							},
+							{
+								"key": "Cookie",
+								"value": "{{aporeto-token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{aporeto-api-endpoint}}/appcredentials/[appcredential-id]",
+							"protocol": "https",
+							"host": [
+								"{{aporeto-api-endpoint}}"
+							],
+							"path": [
+								"appcredentials",
+								"[appcredential-id]"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Logs",
+			"item": [
+				{
+					"name": "Export Flow Logs",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "{{aporeto-api-endpoint}}"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "x-namespace",
+								"value": "{{namespace}}"
+							},
+							{
+								"key": "cookie",
+								"value": "{{aporeto-token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"report\":\"Flows\"}"
+						},
+						"url": {
+							"raw": "https://{{aporeto-api-endpoint}}/reportsqueries?recursive=true&order=-timestamp&startRelative=1h",
+							"protocol": "https",
+							"host": [
+								"{{aporeto-api-endpoint}}"
+							],
+							"path": [
+								"reportsqueries"
+							],
+							"query": [
+								{
+									"key": "recursive",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "100",
+									"disabled": true
+								},
+								{
+									"key": "order",
+									"value": "-timestamp"
+								},
+								{
+									"key": "startRelative",
+									"value": "1h"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Export Event Logs",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "{{aporeto-api-endpoint}}"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "x-namespace",
+								"value": "{{namespace}}"
+							},
+							{
+								"key": "cookie",
+								"value": "{{aporeto-token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"report\":\"EventLogs\"}"
+						},
+						"url": {
+							"raw": "https://{{aporeto-api-endpoint}}/reportsqueries?recursive=true&order=-timestamp&startRelative=1h",
+							"protocol": "https",
+							"host": [
+								"{{aporeto-api-endpoint}}"
+							],
+							"path": [
+								"reportsqueries"
+							],
+							"query": [
+								{
+									"key": "recursive",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "100",
+									"disabled": true
+								},
+								{
+									"key": "order",
+									"value": "-timestamp"
+								},
+								{
+									"key": "startRelative",
+									"value": "1h"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Export Enforcer Logs",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "{{aporeto-api-endpoint}}"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							},
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "x-namespace",
+								"value": "{{namespace}}"
+							},
+							{
+								"key": "cookie",
+								"value": "{{aporeto-token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"report\":\"Enforcers\"}"
+						},
+						"url": {
+							"raw": "https://{{aporeto-api-endpoint}}/reportsqueries?recursive=true&order=-timestamp&startRelative=1h",
+							"protocol": "https",
+							"host": [
+								"{{aporeto-api-endpoint}}"
+							],
+							"path": [
+								"reportsqueries"
+							],
+							"query": [
+								{
+									"key": "recursive",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "100",
+									"disabled": true
+								},
+								{
+									"key": "order",
+									"value": "-timestamp"
+								},
+								{
+									"key": "startRelative",
+									"value": "1h"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Backup",
+			"item": [
+				{
+					"name": "Export Configuration",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Namespace",
+								"value": "{{namespace}}"
+							},
+							{
+								"key": "Cookie",
+								"value": "{{aporeto-token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"identities\":[\"networkrulesetpolicy\",\"enforcerprofile\",\"enforcerprofilemappingpolicy\",\"apiauthorizationpolicy\",\"externalnetwork\"],\"label\": \"Backup\"}"
+						},
+						"url": {
+							"raw": "https://{{aporeto-api-endpoint}}/export",
+							"protocol": "https",
+							"host": [
+								"{{aporeto-api-endpoint}}"
+							],
+							"path": [
+								"export"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import Configuration",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Namespace",
+								"value": "{{namespace}}"
+							},
+							{
+								"key": "Cookie",
+								"value": "{{aporeto-token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"data\":{Exported file content}}"
+						},
+						"url": {
+							"raw": "https://{{aporeto-api-endpoint}}/import",
+							"protocol": "https",
+							"host": [
+								"{{aporeto-api-endpoint}}"
+							],
+							"path": [
+								"import"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
