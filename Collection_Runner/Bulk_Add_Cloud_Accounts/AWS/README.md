@@ -1,4 +1,4 @@
-# This Collection Runner example is to add Azure Subscriptions from the input CSV
+# This Collection Runner example is to add AWS Accounts from the input CSV
 
 For all examples here, it is assumed you are using the existing **Postman environment** from [the main repo here](https://github.com/PaloAltoNetworks/pcs-postman)
 
@@ -7,7 +7,7 @@ For all examples here, it is assumed you are using the existing **Postman enviro
 1. Within the attached Collection, go to the **Login Generate Token** POST request, and on the Body tab, enter a valid ACCESS and SECRET key to generate your JWT token. [More info can be found here if required](https://github.com/PaloAltoNetworks/pcs-postman#set-your-access-and-secret-key-in-the-username-and-password-fields-in-the-body-of-the-login-and-authenticate-requests)
 
 
-1. Looking at the CSV of subscriptions, the input file needs to match the data like below:
+1. Looking at the CSV of accounts, the input file needs to match the data like below:
 
 (Note, there are a few other options and inputs you can pass, on the to-do list to update that here)
 
