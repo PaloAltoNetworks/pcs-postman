@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "a444b129-1e59-42c7-b3c8-237d7cb9bb40",
-		"name": "Bulk_Add_Cloud_Account_Azure",
+		"_postman_id": "49a06be7-a911-4a76-92e2-233465bc2f2a",
+		"name": "Bulk_Add_Cloud_Account_AWS",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -86,7 +86,7 @@
 			"response": []
 		},
 		{
-			"name": "Add Cloud Account (Azure)",
+			"name": "Add Cloud Account (AWS)",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -108,20 +108,20 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"cloudAccount\": \n  {\n    \"accountId\": \"{{SUBID}}\",\n    \"enabled\": true,\n    \"groupIds\": [\"GROUP_ID_HERE\"],\n    \"name\": \"{{SUBNAME}}\",\n    \"accountType\": \"account\",\n    \"protectionMode\": \"MONITOR\"\n  },\n  \"clientId\": \"APPLICATION_ID_HERE\",\n  \"key\": \"CLIENT_SECRET_HERE\",\n  \"monitorFlowLogs\": true,\n  \"tenantId\": \"AZURE_TENANT_ID_HERE\",\n  \"servicePrincipalId\": \"ENTERPRISE_OBJECT_ID_HERE\"\n}"
+					"raw": "{\n\t\"accountId\":\"{{ACCOUNTID}}\",\n\t\"enabled\":true,\n\t\"externalId\":\"{{EXTERNALID}}\",\n\t\"groupIds\": [\"ACCOUNT_GROUP_ID_1\", \"ACCOUNT_GROUP_ID_2\"],\n\t\"name\":\"{{AWSACCOUNTNAME}}\",\n\t\"roleArn\":\"{{AWSROLEARN}}\",\n    \"protectionMode\": \"MONITOR_AND_PROTECT\"\n}"
 				},
 				"url": {
-					"raw": "https://{{api-endpoint}}/cloud/azure",
+					"raw": "https://{{api-endpoint}}/cloud/aws",
 					"protocol": "https",
 					"host": [
 						"{{api-endpoint}}"
 					],
 					"path": [
 						"cloud",
-						"azure"
+						"aws"
 					]
 				},
-				"description": "Adds a new Azure Cloud Account from the body parameters"
+				"description": "Adds a new AWS Cloud Account from the body parameters"
 			},
 			"response": []
 		}

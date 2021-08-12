@@ -1,0 +1,3 @@
+ACCOUNTID,EXTERNALID,AWSACCOUNTNAME,AWSROLEARN
+1234567890,abcdef-ghijklmno,AWS Account 123,arn:aws:iam::1234567890:role/PrismaCloudReadWriteRole
+0987654321,pqrstu-vwxyzabcd,AWS Account 789,arn:aws:iam::0987654321:role/PrismaCloudReadWriteRole
