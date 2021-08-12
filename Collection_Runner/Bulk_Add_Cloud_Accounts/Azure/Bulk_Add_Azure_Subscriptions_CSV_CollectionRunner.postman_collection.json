@@ -50,7 +50,7 @@
 			"response": []
 		},
 		{
-			"name": "List Account Groups",
+			"name": "List Account Groups IDs",
 			"request": {
 				"method": "GET",
 				"header": [
