@@ -23,7 +23,7 @@ To use these Collections and Environment, there are a few setup pieces after imp
 ![3](./Images/Env3.png)
 
 
-1. To get the address/URL for your Console, go to *Compute > Manage > System > Downloads*, and copy the string under **Path to Console**
+1. To get the address/URL for your Console, go to *Compute > Manage > System > Utilities*, and copy the string under **Path to Console**
 **The URL should look something like this:** https://us-east1.cloud.twistlock.com/us-1-123456789
    1. You will be replacing the **compute-api-endpoint** variable
 
