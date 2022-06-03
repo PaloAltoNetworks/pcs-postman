@@ -19,7 +19,7 @@ _id |
 
 ## Steps to iterate the CSV using the Collection Runner
 
-1. After you have the above Collection imported and your Access/Secret key setup, click the main collection folder on the left, and then click the **"Run"** tab at the top-right of Postman.
+1. After you have the above Collection imported and your Access/Secret key setup, click the main collection folder on the left, and then click the **"Run Collection"** option for that Collection.
 
 * **Environment**
 
@@ -40,7 +40,7 @@ If getting any errors, check this:
 Error | Did you check?
 ------------ | -------------
 POST Error | Make sure you imported the Prisma Cloud Postman Environment, and you set the correct [API endpoint](https://github.com/PaloAltoNetworks/pcs-postman#instructions-on-how-to-setup-the-postman-collections-and-environments-relating-to-prisma-cloud-including-compute-console-api-requests)
-400 Bad Request | If you are getting 200s for the Login POST and List Incidents GET, and only a 400 for the actual Add User POST, check your CSV format
+400 Bad Request | If you are getting 200s for the Login POST and List Incidents GET, and only a 400 for the actual Archive Incident POST, check your CSV format
 401 Unauthorized | Make sure you set the proper Access/Secret key in the /BODY of the Login request
 
 As always, if anything is incorrect or needs updated, please submit a PR and will take a look. 
