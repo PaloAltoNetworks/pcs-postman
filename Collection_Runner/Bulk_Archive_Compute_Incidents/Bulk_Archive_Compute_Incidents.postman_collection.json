@@ -1,0 +1,162 @@
+{
+	"info": {
+		"_postman_id": "4a878165-87b9-4744-8fa4-ec8b2b6bf5a5",
+		"name": "Bulk_Archive_Compute_Incidents",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7204263"
+	},
+	"item": [
+		{
+			"name": "Login Generate Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json; charset=UTF-8"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"ACCESS_KEY\",\n    \"password\": \"SECRET_KEY\"\n}"
+				},
+				"url": {
+					"raw": "https://{{api-endpoint}}/login",
+					"protocol": "https",
+					"host": [
+						"{{api-endpoint}}"
+					],
+					"path": [
+						"login"
+					]
+				},
+				"description": "Returns a JWT auth token for accessing the Prisma Cloud APIs. To generate a token, you must have an access key and include the following values in the request body parameter — access key ID as the username and your secret key as the password. Prisma Cloud requires this JWT in the request header to authorize API access."
+			},
+			"response": []
+		},
+		{
+			"name": "List Active Incidents",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"type": "text",
+						"value": "application/json; charset=UTF-8"
+					},
+					{
+						"key": "content-type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "x-redlock-auth",
+						"type": "text",
+						"value": "{{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{compute-api-endpoint}}/api/v1/audits/incidents?acknowledged=false&limit=0&offset=0&project=Central+Console&reverse=false",
+					"host": [
+						"{{compute-api-endpoint}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"audits",
+						"incidents"
+					],
+					"query": [
+						{
+							"key": "acknowledged",
+							"value": "false"
+						},
+						{
+							"key": "limit",
+							"value": "0"
+						},
+						{
+							"key": "offset",
+							"value": "0"
+						},
+						{
+							"key": "project",
+							"value": "Central+Console"
+						},
+						{
+							"key": "reverse",
+							"value": "false"
+						}
+					]
+				},
+				"description": "Lists all accounts and associated Roles in the current Prisma Cloud tenant. "
+			},
+			"response": []
+		},
+		{
+			"name": "Archive Incidents",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "accept",
+						"type": "text",
+						"value": "application/json; charset=UTF-8"
+					},
+					{
+						"key": "content-type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "x-redlock-auth",
+						"type": "text",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"acknowledged\":true}"
+				},
+				"url": {
+					"raw": "{{compute-api-endpoint}}/api/v1/audits/incidents/acknowledge/{{_id}}?project=Central+Console",
+					"host": [
+						"{{compute-api-endpoint}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"audits",
+						"incidents",
+						"acknowledge",
+						"{{_id}}"
+					],
+					"query": [
+						{
+							"key": "project",
+							"value": "Central+Console"
+						}
+					]
+				},
+				"description": "Lists all accounts and associated Roles in the current Prisma Cloud tenant. "
+			},
+			"response": []
+		}
+	]
+}
