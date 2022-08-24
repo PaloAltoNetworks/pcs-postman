@@ -1,0 +1,261 @@
+{
+	"info": {
+		"_postman_id": "efd9839b-b0f2-4137-b014-a7e2e6513b9e",
+		"name": "Bulk_Download_Alerts",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17817753"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json; charset=UTF-8"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"{{ACCESS_KEY}}\",\n    \"password\": \"{{SECRET_KEY}}\"\n}"
+				},
+				"url": {
+					"raw": "https://{{api-endpoint}}/login",
+					"protocol": "https",
+					"host": [
+						"{{api-endpoint}}"
+					],
+					"path": [
+						"login"
+					]
+				},
+				"description": "Returns a JWT auth token for accessing the Prisma Cloud APIs. To generate a token, you must have an access key and include the following values in the request body parameter — access key ID as the username and your secret key as the password. Prisma Cloud requires this JWT in the request header to authorize API access."
+			},
+			"response": []
+		},
+		{
+			"name": "Submit Job to List Alerts - JSON",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"statusUri\", jsonData.statusUri);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "x-redlock-auth",
+						"type": "text",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"timeRange\": {\n        \"value\": {\n            \"unit\": \"day\",\n            \"amount\": 1\n        },\n        \"type\": \"relative\"\n    },\n    \"filters\": [\n        {\n            \"name\": \"alert.status\",\n            \"value\": \"open\",\n            \"operator\": \"=\"\n        }\n    ],\n    \"fields\": [\n        \"alert.id\",\n        \"alert.status\",\n        \"alert.time\",\n        \"cloud.account\",\n        \"cloud.accountId\",\n        \"cloud.region\",\n        \"resource.id\",\n        \"resource.name\",\n        \"policy.name\",\n        \"policy.type\",\n        \"policy.severity\"\n    ]\n}"
+				},
+				"url": {
+					"raw": "https://{{api-endpoint}}/alert/jobs",
+					"protocol": "https",
+					"host": [
+						"{{api-endpoint}}"
+					],
+					"path": [
+						"alert",
+						"jobs"
+					]
+				},
+				"description": "Returns an object whose keys are the available policy filters. The corresponding values are default or recently set filter options"
+			},
+			"response": []
+		},
+		{
+			"name": "Submit Job to List Alerts - CSV",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"statusUri\", jsonData.statusUri);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "x-redlock-auth",
+						"type": "text",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"timeRange\": {\n        \"value\": {\n            \"unit\": \"day\",\n            \"amount\": 1\n        },\n        \"type\": \"relative\"\n    },\n    \"filters\": [\n        {\n            \"name\": \"alert.status\",\n            \"value\": \"open\",\n            \"operator\": \"=\"\n        }\n    ],\n    \"fields\": [\n        \"alert.id\",\n        \"alert.status\",\n        \"alert.time\",\n        \"cloud.account\",\n        \"cloud.accountId\",\n        \"cloud.region\",\n        \"resource.id\",\n        \"resource.name\",\n        \"policy.name\",\n        \"policy.type\",\n        \"policy.severity\"\n    ]\n}"
+				},
+				"url": {
+					"raw": "https://{{api-endpoint}}/alert/csv",
+					"protocol": "https",
+					"host": [
+						"{{api-endpoint}}"
+					],
+					"path": [
+						"alert",
+						"csv"
+					]
+				},
+				"description": "Returns an object whose keys are the available policy filters. The corresponding values are default or recently set filter options"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Alerts List Job Status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"if (jsonData.status == \"READY_TO_DOWNLOAD\") {",
+							"    postman.setEnvironmentVariable(\"downloadUri\", jsonData.downloadUri);",
+							"    postman.setEnvironmentVariable(\"statusUri\", \"\");",
+							"}",
+							"else {",
+							"    postman.setEnvironmentVariable(\"downloadUri\", \"\");",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-redlock-auth",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"detailed\": true,\r\n\t\"filters\": [\r\n        {\r\n            \"operator\": \"=\",\r\n            \"name\": \"account.group\",\r\n            \"value\": \"{{ACCOUNT_GROUP}}\"\r\n        }\r\n\t\t{\r\n\t\t\t\"operator\": \"=\",\r\n\t\t\t\"name\": \"alert.status\",\r\n\t\t\t\"value\": \"open\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"operator\": \"=\",\r\n\t\t\t\"name\": \"alert.status\",\r\n\t\t\t\"value\": \"dismissed\"\r\n\t\t},\r\n        {\r\n\t\t\t\"operator\": \"=\",\r\n\t\t\t\"name\": \"alert.status\",\r\n\t\t\t\"value\": \"snoozed\"\r\n\t\t},\r\n        {\r\n\t\t\t\"operator\": \"=\",\r\n\t\t\t\"name\": \"alert.status\",\r\n\t\t\t\"value\": \"resolved\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"operator\": \"=\",\r\n\t\t\t\"name\": \"policy.type\",\r\n\t\t\t\"value\": \"config\"\r\n\t\t}\r\n\t\t],\r\n\t\t\"timeRange\": {\r\n\t\t\t\"type\": \"relative\",\r\n\t\t\t\"value\": {\r\n\t\t\t\t\"amount\": 1, \r\n\t\t\t\t\"unit\": \"day\"\r\n\t\t\t}\r\n\t\t},\r\n\t\t\"sortBy\": [\"id:asc\"],\r\n\t\t\"offset\": 0,\r\n\t\t\"limit\": 5000\r\n}\r\n"
+				},
+				"url": {
+					"raw": "https://{{api-endpoint}}{{statusUri}}",
+					"protocol": "https",
+					"host": [
+						"{{api-endpoint}}{{statusUri}}"
+					]
+				},
+				"description": "Returns a paginated list of alerts from the Prisma Cloud platform.\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Download Alerts List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-redlock-auth",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"detailed\": true,\r\n\t\"filters\": [\r\n        {\r\n            \"operator\": \"=\",\r\n            \"name\": \"account.group\",\r\n            \"value\": \"{{ACCOUNT_GROUP}}\"\r\n        }\r\n\t\t{\r\n\t\t\t\"operator\": \"=\",\r\n\t\t\t\"name\": \"alert.status\",\r\n\t\t\t\"value\": \"open\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"operator\": \"=\",\r\n\t\t\t\"name\": \"alert.status\",\r\n\t\t\t\"value\": \"dismissed\"\r\n\t\t},\r\n        {\r\n\t\t\t\"operator\": \"=\",\r\n\t\t\t\"name\": \"alert.status\",\r\n\t\t\t\"value\": \"snoozed\"\r\n\t\t},\r\n        {\r\n\t\t\t\"operator\": \"=\",\r\n\t\t\t\"name\": \"alert.status\",\r\n\t\t\t\"value\": \"resolved\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"operator\": \"=\",\r\n\t\t\t\"name\": \"policy.type\",\r\n\t\t\t\"value\": \"config\"\r\n\t\t}\r\n\t\t],\r\n\t\t\"timeRange\": {\r\n\t\t\t\"type\": \"relative\",\r\n\t\t\t\"value\": {\r\n\t\t\t\t\"amount\": 1, \r\n\t\t\t\t\"unit\": \"day\"\r\n\t\t\t}\r\n\t\t},\r\n\t\t\"sortBy\": [\"id:asc\"],\r\n\t\t\"offset\": 0,\r\n\t\t\"limit\": 5000\r\n}\r\n"
+				},
+				"url": {
+					"raw": "https://{{api-endpoint}}{{downloadUri}}",
+					"protocol": "https",
+					"host": [
+						"{{api-endpoint}}{{downloadUri}}"
+					]
+				},
+				"description": "Returns a paginated list of alerts from the Prisma Cloud platform.\n\n"
+			},
+			"response": []
+		}
+	]
+}
