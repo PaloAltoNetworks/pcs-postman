@@ -561,16 +561,6 @@
 				{
 					"name": "Download Incident Audit Events",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{compute-token}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [
 							{
@@ -608,16 +598,6 @@
 				{
 					"name": "Get Incident Audit Events",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{compute-token}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [
 							{
@@ -649,6 +629,96 @@
 								},
 								{
 									"key": "limit",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Download Container Runtime",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{compute-api-endpoint}}/api/{{api-version}}/audits/runtime/container/download",
+							"host": [
+								"{{compute-api-endpoint}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"audits",
+								"runtime",
+								"container",
+								"download"
+							],
+							"query": [
+								{
+									"key": "containerID",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "container",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "time",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Runtime Container Audit Events",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{compute-api-endpoint}}/api/{{api-version}}/audits/runtime/container",
+							"host": [
+								"{{compute-api-endpoint}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"audits",
+								"runtime",
+								"container"
+							],
+							"query": [
+								{
+									"key": "containerID",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "container",
 									"value": "",
 									"disabled": true
 								}
@@ -784,76 +854,8 @@
 			"name": "Containers",
 			"item": [
 				{
-					"name": "Download Container Runtime",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{compute-token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json; charset=UTF-8"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "{{compute-api-endpoint}}/api/{{api-version}}/audits/runtime/container/download",
-							"host": [
-								"{{compute-api-endpoint}}"
-							],
-							"path": [
-								"api",
-								"{{api-version}}",
-								"audits",
-								"runtime",
-								"container",
-								"download"
-							],
-							"query": [
-								{
-									"key": "containerID",
-									"value": "",
-									"disabled": true
-								},
-								{
-									"key": "container",
-									"value": "",
-									"disabled": true
-								},
-								{
-									"key": "time",
-									"value": "",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Get Container Scan Results",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{compute-token}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [
 							{
@@ -877,12 +879,115 @@
 							],
 							"query": [
 								{
-									"key": "cluster",
+									"key": "clusters",
 									"value": "",
 									"disabled": true
-								},
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Download Container Scan Results",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{compute-api-endpoint}}/api/{{api-version}}/containers/download",
+							"host": [
+								"{{compute-api-endpoint}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"containers",
+								"download"
+							],
+							"query": [
 								{
-									"key": "time",
+									"key": "clusters",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Container Names",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{compute-api-endpoint}}/api/{{api-version}}/containers/names",
+							"host": [
+								"{{compute-api-endpoint}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"containers",
+								"names"
+							],
+							"query": [
+								{
+									"key": "clusters",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Container Count",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{compute-api-endpoint}}/api/{{api-version}}/containers/count",
+							"host": [
+								"{{compute-api-endpoint}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"containers",
+								"count"
+							],
+							"query": [
+								{
+									"key": "clusters",
 									"value": "",
 									"disabled": true
 								}
@@ -1144,16 +1249,6 @@
 				{
 					"name": "Get Host Scan Results",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{compute-token}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [
 							{
@@ -1166,13 +1261,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{compute-api-endpoint}}/api/v22.12/hosts",
+							"raw": "{{compute-api-endpoint}}/api/{{api-version}}/hosts",
 							"host": [
 								"{{compute-api-endpoint}}"
 							],
 							"path": [
 								"api",
-								"v22.12",
+								"{{api-version}}",
 								"hosts"
 							],
 							"query": [
@@ -1209,16 +1304,6 @@
 				{
 					"name": "Download Host Scan Results",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{compute-token}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [
 							{
@@ -1231,16 +1316,14 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{compute-api-endpoint}}/api/v22.12/{{api-version}}//download",
-							"protocol": "https",
+							"raw": "{{compute-api-endpoint}}/api/{{api-version}}/hosts/download",
 							"host": [
 								"{{compute-api-endpoint}}"
 							],
 							"path": [
 								"api",
-								"v22.12",
 								"{{api-version}}",
-								"",
+								"hosts",
 								"download"
 							],
 							"query": [
@@ -1270,7 +1353,16 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": ""
+							"raw": "{{compute-api-endpoint}}/api/{{api-version}}/hosts/info",
+							"host": [
+								"{{compute-api-endpoint}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"hosts",
+								"info"
+							]
 						}
 					},
 					"response": []
@@ -1592,16 +1684,6 @@
 				{
 					"name": "Get Compliance Stats",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{compute-token}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [
 							{
@@ -1643,16 +1725,6 @@
 				{
 					"name": "Get Dashboard Stats",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{compute-token}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [
 							{
@@ -1665,14 +1737,13 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{compute-api-endpoint}}/api/v22.12/stats/dashboard",
-							"protocol": "https",
+							"raw": "{{compute-api-endpoint}}/api/{{api-version}}/stats/dashboard",
 							"host": [
 								"{{compute-api-endpoint}}"
 							],
 							"path": [
 								"api",
-								"v22.12",
+								"{{api-version}}",
 								"stats",
 								"dashboard"
 							],
@@ -1695,16 +1766,6 @@
 				{
 					"name": "Download Compliance Stats",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{compute-token}}",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [
 							{
@@ -1775,6 +1836,16 @@
 			"item": []
 		}
 	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{compute-token}}",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",
