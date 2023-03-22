@@ -638,7 +638,7 @@
 					"response": []
 				},
 				{
-					"name": "Download Container Runtime",
+					"name": "Download Runtime Container Audit Events",
 					"request": {
 						"method": "GET",
 						"header": [
