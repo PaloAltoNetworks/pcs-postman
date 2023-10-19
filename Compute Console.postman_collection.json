@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "1375b938-d515-4f65-9a5f-83894da781f4",
+		"_postman_id": "d00c281c-8bfc-43dd-8f87-d76e90c7ffec",
 		"name": "Compute Console",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3309461"
 	},
 	"item": [
 		{
@@ -14,7 +15,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c7cf7cd4-eced-4cec-8c94-5e8a839bc306",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
 									"postman.setEnvironmentVariable(\"compute-token\", jsonData.token);"
@@ -557,6 +557,175 @@
 						"description": "AdmissionAudits returns all admission audits according to the query specification. Minimum role required to access this endpoint: devSecOps.\n\nQuery Parameters\nnamespace: (string)\nNamespaces is the list of namespaces to use for filtering\n\noperation: (string)\nOperations is the list of operations to use for filtering\n\nBody\nMedia type: application/json\n\nType: object\n\nProperties\naccountID: (string)\nAccountID is the cloud account ID\n\ncollections: (string)\nCollections are collections to which this audit applies\n\neffect: (string)\nEffect is the rule effect which was applied to the review which led to this audit\n\nkind: (string)\nKind is the type of object being manipulated. For example: Pod\n\nmessage: (string)\nMessage is the rule user defined message which appears on audit\n\nnamespace: (string)\nNamespace is the namespace associated with the request (if any)\n\noperation: (string)\nOperation is the operation being performed\n\nrawRequest: (string)\nRawRequest is the original review request that caused this audit\n\nresource: (string)\nResource is the name of the resource being requested. This is not the kind. For example: pods\n\nruleName: (string)\nRuleName is the name of the rule which issued this audit\n\ntime: (datetime)\nTime is the time at which the audit was generated\n\nuserGroups: (string)\nUserGroups is the names of groups this user is a part of\n\nuserUid: (string)\nUserUID is a unique value that identifies this user across time. If this user isdeleted and another user by the same name is added, they will havedifferent UIDs\n\nusername: (string)\nUsername is the name that uniquely identifies this user among all active users"
 					},
 					"response": []
+				},
+				{
+					"name": "Download Incident Audit Events",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{compute-api-endpoint}}/api/{{api-version}}/audits/incidents/download",
+							"host": [
+								"{{compute-api-endpoint}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"audits",
+								"incidents",
+								"download"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Incident Audit Events",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{compute-api-endpoint}}/api/{{api-version}}//audits/incidents",
+							"host": [
+								"{{compute-api-endpoint}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"",
+								"audits",
+								"incidents"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Download Runtime Container Audit Events",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{compute-api-endpoint}}/api/{{api-version}}/audits/runtime/container/download",
+							"host": [
+								"{{compute-api-endpoint}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"audits",
+								"runtime",
+								"container",
+								"download"
+							],
+							"query": [
+								{
+									"key": "containerID",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "container",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "time",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Runtime Container Audit Events",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{compute-api-endpoint}}/api/{{api-version}}/audits/runtime/container",
+							"host": [
+								"{{compute-api-endpoint}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"audits",
+								"runtime",
+								"container"
+							],
+							"query": [
+								{
+									"key": "containerID",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "container",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -682,8 +851,152 @@
 			"item": []
 		},
 		{
-			"name": "Container Scan Reports",
-			"item": []
+			"name": "Containers",
+			"item": [
+				{
+					"name": "Get Container Scan Results",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{compute-api-endpoint}}/api/{{api-version}}/containers",
+							"host": [
+								"{{compute-api-endpoint}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"containers"
+							],
+							"query": [
+								{
+									"key": "clusters",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Download Container Scan Results",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{compute-api-endpoint}}/api/{{api-version}}/containers/download",
+							"host": [
+								"{{compute-api-endpoint}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"containers",
+								"download"
+							],
+							"query": [
+								{
+									"key": "clusters",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Container Names",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{compute-api-endpoint}}/api/{{api-version}}/containers/names",
+							"host": [
+								"{{compute-api-endpoint}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"containers",
+								"names"
+							],
+							"query": [
+								{
+									"key": "clusters",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Container Count",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{compute-api-endpoint}}/api/{{api-version}}/containers/count",
+							"host": [
+								"{{compute-api-endpoint}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"containers",
+								"count"
+							],
+							"query": [
+								{
+									"key": "clusters",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Credentials",
@@ -931,8 +1244,130 @@
 			"item": []
 		},
 		{
-			"name": "Host Scan Reports",
-			"item": []
+			"name": "Hosts",
+			"item": [
+				{
+					"name": "Get Host Scan Results",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{compute-api-endpoint}}/api/{{api-version}}/hosts",
+							"host": [
+								"{{compute-api-endpoint}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"hosts"
+							],
+							"query": [
+								{
+									"key": "hostname",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "fields",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "type",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "complianceissues",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "binaries",
+									"value": "false",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Download Host Scan Results",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{compute-api-endpoint}}/api/{{api-version}}/hosts/download",
+							"host": [
+								"{{compute-api-endpoint}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"hosts",
+								"download"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "time",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "type",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Host Information",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{compute-api-endpoint}}/api/{{api-version}}/hosts/info",
+							"host": [
+								"{{compute-api-endpoint}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"hosts",
+								"info"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Images Scan Reports",
@@ -1244,8 +1679,133 @@
 			"item": []
 		},
 		{
-			"name": "Statistics",
-			"item": []
+			"name": "Stats",
+			"item": [
+				{
+					"name": "Get Compliance Stats",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{compute-api-endpoint}}/api/{{api-version}}/stats/compliance",
+							"host": [
+								"{{compute-api-endpoint}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"stats",
+								"compliance"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "time",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Dashboard Stats",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{compute-api-endpoint}}/api/{{api-version}}/stats/dashboard",
+							"host": [
+								"{{compute-api-endpoint}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"stats",
+								"dashboard"
+							],
+							"query": [
+								{
+									"key": "cluster",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "time",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Download Compliance Stats",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{compute-api-endpoint}}/api/{{api-version}}/stats/compliance/download",
+							"host": [
+								"{{compute-api-endpoint}}"
+							],
+							"path": [
+								"api",
+								"{{api-version}}",
+								"stats",
+								"compliance",
+								"download"
+							],
+							"query": [
+								{
+									"key": "policyType",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "time",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Status",
@@ -1276,6 +1836,16 @@
 			"item": []
 		}
 	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{compute-token}}",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",
