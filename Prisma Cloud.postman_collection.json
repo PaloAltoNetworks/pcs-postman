@@ -3053,7 +3053,7 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{api-endpoint}}/filter/v2/inventory/suggest\n",
+							"raw": "https://{{api-endpoint}}/filter/v2/inventory/suggest",
 							"protocol": "https",
 							"host": [
 								"{{api-endpoint}}"
@@ -3062,7 +3062,7 @@
 								"filter",
 								"v2",
 								"inventory",
-								"suggest\n"
+								"suggest"
 							]
 						},
 						"description": "Returns an object whose keys are supported asset inventory filters and values contain default recent options."
@@ -3168,7 +3168,7 @@
 							"raw": "{\n\t\"query\":\"QUERY\",\n\t\"filterName\":\"FILTER\"\n}"
 						},
 						"url": {
-							"raw": "https://{{api-endpoint}}/filter/v2/inventory/suggest\n",
+							"raw": "https://{{api-endpoint}}/filter/v2/inventory/suggest",
 							"protocol": "https",
 							"host": [
 								"{{api-endpoint}}"
@@ -3177,7 +3177,7 @@
 								"filter",
 								"v2",
 								"inventory",
-								"suggest\n"
+								"suggest"
 							]
 						},
 						"description": "Returns filter autocomplete suggestions."
