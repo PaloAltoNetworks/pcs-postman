@@ -12,10 +12,10 @@ For all examples here, it is assumed you are using the existing **Postman enviro
 (Note, there are a few other options and inputs you can pass, on the to-do list to update that here)
 
 
-email | firstName | lastName | timeZone | accessKeysAllowed | defaultRoleId
------------- | ------------- | ------------- | ------------ | ------------- | -------------
-user01@test.com | Test01 | User01 | GMT | false | role-id-from-ROLE-GET-request
-user05@test.com | Test05 | User05 | America/New_York | true | role-id-from-ROLE-GET-request
+| email           | firstName | lastName | timeZone         | accessKeysAllowed | defaultRoleId                 |
+|-----------------|-----------|----------|------------------|-------------------|-------------------------------|
+| user01@test.com | Test01    | User01   | GMT              | false             | role-id-from-ROLE-GET-request |
+| user05@test.com | Test05    | User05   | America/New_York | true              | role-id-from-ROLE-GET-request |
 
 ### There is also one other field in the CSV you need more information for, the *roleId* field. 
 
@@ -33,20 +33,21 @@ Choose the existing **Prisma Cloud** environmented imported for the [main repo](
 
 * **Data**
 
-Upload the completed CSV here, and you are then able to see the number of *Iterations* (basically the amount of users to be added) as well as view the *Preview* of what data Postman sees within your CSV. This is also where you should double-check the formatting of the CSV to make sure everything looks correct. 
+Upload the completed CSV, and you are then able to see the number of *Iterations* (basically the amount of users to be added) as well as view the *Preview* of what data Postman sees within your CSV. This is also where you should double-check the formatting of the CSV to make sure everything looks correct. 
 
 ## That should be it!
 
 You should see the Collection Runner "Run Results" iterate through all of the rows of your CSV and add all the users. 
 
-* Quick Troubleshooting
+## Troubleshooting
 
 If getting any errors, check this:
 
-Error | Did you check?
------------- | -------------
-POST Error | Make sure you imported the Prisma Cloud Postman Environment, and you set the correct [API endpoint](https://github.com/PaloAltoNetworks/pcs-postman#instructions-on-how-to-setup-the-postman-collections-and-environments-relating-to-prisma-cloud-including-compute-console-api-requests)
-400 Bad Request | If you are getting 200s for the Login POST and List Roles GET, and only a 400 for the actual Add User POST, check your CSV format
-401 Unauthorized | Make sure you set the proper Access/Secret key in the /BODY of the Login request
+| Error            | Did you check?                                                                                                                                                                                                                                                                             |
+|------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| POST Error       | Make sure you imported the Prisma Cloud Postman Environment, and you set the correct [API endpoint](https://github.com/PaloAltoNetworks/pcs-postman#instructions-on-how-to-setup-the-postman-collections-and-environments-relating-to-prisma-cloud-including-compute-console-api-requests) |
+| 400 Bad Request  | If you are getting 200s for the Login POST and List Roles GET, and only a 400 for the actual Add User POST, check your CSV format                                                                                                                                                          |
+| 401 Unauthorized | Make sure you set the proper Access/Secret key in the /BODY of the Login request                                                                                                                                                                                                           |
 
-As always, if anything is incorrect or needs updated, please submit a PR and will take a look. 
+
+_As always, if anything is incorrect or needs updated, please submit a PR and we will take a look._ 
