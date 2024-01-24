@@ -6,19 +6,18 @@ For all examples here, it is assumed you are using the existing **Postman enviro
 
 1. Within the attached Collection, go to the **Login Generate Token** POST request, and on the Body tab, enter a valid ACCESS and SECRET key to generate your JWT token. [More info can be found here if required](https://github.com/PaloAltoNetworks/pcs-postman#set-your-access-and-secret-key-in-the-username-and-password-fields-in-the-body-of-the-login-and-authenticate-requests)
 
-
-1. Looking at the CSV of accounts, the input file needs to match the data like below:
+2. Looking at the CSV of accounts, the input file needs to match the data like below:
 
 (Note, there are a few other options and inputs you can pass, on the to-do list to update that here)
 
-ACCOUNTID | EXTERNALID | AWSACCOUNTNAME | AWSROLEARN
------------- | ------------- | ------------- | -------------
-1234567890 | abcdef-ghijklmno | AWS Account 123 | arn:aws:iam::1234567890:role/PrismaCloudReadWriteRole
-0987654321 | pqrstu-vwxyzabcd | AWS Account 789 | arn:aws:iam::0987654321:role/PrismaCloudReadWriteRole
+| ACCOUNTID  | EXTERNALID       | AWSACCOUNTNAME  | AWSROLEARN                                            |
+|------------|------------------|-----------------|-------------------------------------------------------|
+| 1234567890 | abcdef-ghijklmno | AWS Account 123 | arn:aws:iam::1234567890:role/PrismaCloudReadWriteRole |
+| 0987654321 | pqrstu-vwxyzabcd | AWS Account 789 | arn:aws:iam::0987654321:role/PrismaCloudReadWriteRole |
 
 ### There are also other fields in the CSV you could add. A *GROUPID*, *PROTECTIONMODE*, etc
 
-**groupIds**  field directly correlates to the **groupIds** in the Body of **Add Cloud Account** POST, since you can pass more than one Account Group based on the structure of the subscriptions.
+The **groupIds**  field directly correlates to the **groupIds** in the Body of **Add Cloud Account** POST, since you can pass more than one Account Group based on the structure of the subscriptions.
 
 The easiest way to get these ID(s) is to run the included **List Account Groups** GET request, see which Group or Group IDs you want to assign, and get the corresponding *id* from there. 
 
@@ -30,7 +29,7 @@ The easiest way to get these ID(s) is to run the included **List Account Groups*
 
 * **Environment**
 
-Choose the existing **Prisma Cloud** environmented imported for the [main repo](https://github.com/PaloAltoNetworks/pcs-postman/blob/main/Prisma%20Cloud.postman_environment.json)
+Choose the existing **Prisma Cloud** environment imported for the [main repo](https://github.com/PaloAltoNetworks/pcs-postman/blob/main/Prisma%20Cloud.postman_environment.json)
 
 * **Data**
 
@@ -44,10 +43,10 @@ You should see the Collection Runner "Run Results" iterate through all of the ro
 
 If getting any errors, check this:
 
-Error | Did you check?
------------- | -------------
-POST Error | Make sure you imported the Prisma Cloud Postman Environment, and you set the correct [API endpoint](https://github.com/PaloAltoNetworks/pcs-postman#instructions-on-how-to-setup-the-postman-collections-and-environments-relating-to-prisma-cloud-including-compute-console-api-requests)
-400 Bad Request | If you are getting 200s for the Login POST and List Account Groups GET, and only a 400 for the actual Add User POST, check your CSV format
-401 Unauthorized | Make sure you set the proper Access/Secret key in the /BODY of the Login request
+| Error            | Did you check?                                                                                                                                                                                                                                                                             |
+|------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| POST Error       | Make sure you imported the Prisma Cloud Postman Environment, and you set the correct [API endpoint](https://github.com/PaloAltoNetworks/pcs-postman#instructions-on-how-to-setup-the-postman-collections-and-environments-relating-to-prisma-cloud-including-compute-console-api-requests) |
+| 400 Bad Request  | If you are getting 200s for the Login POST and List Account Groups GET, and only a 400 for the actual Add User POST, check your CSV format                                                                                                                                                 |
+| 401 Unauthorized | Make sure you set the proper Access/Secret key in the /BODY of the Login request                                                                                                                                                                                                           |
 
-As always, if anything is incorrect or needs updated, please submit a PR and will take a look. 
+_As always, if anything is incorrect or needs updated, please submit a PR and we will take a look._
